@@ -1,77 +1,238 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+<head>
+    <meta charset="utf-8" />
+    <title>Register | Velonic - Bootstrap 5 Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="{{ csrf_token() }}" name="csrf-token">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('assets') }}/images/favicon.ico">
 
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+    <!-- Theme Config Js -->
+    <script src="{{ asset('assets') }}/js/config.js"></script>
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+    <!-- App css -->
+    <link href="{{ asset('assets') }}/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+    <!-- Icons css -->
+    <link href="{{ asset('assets') }}/css/icons.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="authentication-bg">
+
+    <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-8 col-lg-10">
+                    <div class="card overflow-hidden bg-opacity-25">
+                        <div class="row g-0">
+                            <div class="col-lg-12">
+                                <div class="d-flex flex-column h-100">
+                                    <div class="auth-brand p-4">
+                                        <a href="index.html" class="logo-light">
+                                            <img src="{{ asset('assets') }}/images/logo.png" alt="logo"
+                                                height="22">
+                                        </a>
+                                        <a href="index.html" class="logo-dark">
+                                            <img src="{{ asset('assets') }}/images/logo-dark.png" alt="dark logo"
+                                                height="22">
+                                        </a>
+                                    </div>
+                                    <div class="p-4 my-auto">
+                                        <h4 class="fs-20">Sign Up</h4>
+                                        <p class="text-muted mb-3"> Masukkan alamat email / no telepon dan kata sandi
+                                            Anda untuk mengakses akun.</p>
+
+                                        <!-- form -->
+                                        <form id="form">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="mb-3">
+                                                        <label for="first_name" class="form-label">Nama Depan</label>
+                                                        <input class="form-control" type="text" id="first_name"
+                                                            name="first_name" placeholder="Masukan nama depan">
+                                                        <small class="text-danger errorFirstName mt-2"></small>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="mb-3">
+                                                        <label for="last_name" class="form-label">Nama Belakang</label>
+                                                        <input class="form-control" type="text" id="last_name"
+                                                            name="last_name" placeholder="Masukan nama depan">
+                                                        <small class="text-danger errorLastName mt-2"></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input class="form-control" type="email" id="email" name="email"
+                                                    placeholder="Masukan email">
+                                                <small class="text-danger errorEmail mt-2"></small>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="no_telepon" class="form-label">No Telepon</label>
+                                                <input class="form-control" type="number" id="no_telepon"
+                                                    name="no_telepon" placeholder="Masukan no telepon">
+                                                <small class="text-danger errorNoTelepon mt-2"></small>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="mb-3">
+                                                        <label for="password" class="form-label">Password</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <input type="password" id="password" name="password"
+                                                                class="form-control" placeholder="Masukan password">
+                                                            <div class="input-group-text" data-password="false">
+                                                                <span class="password-eye"></span>
+                                                            </div>
+                                                        </div>
+                                                        <small class="text-danger errorPassword mt-2"></small>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="mb-3">
+                                                        <label for="password_confirmation" class="form-label">Konfirmasi
+                                                            Password</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <input type="password" id="password_confirmation"
+                                                                name="password_confirmation" class="form-control"
+                                                                placeholder="Masukan konfirmasi password">
+                                                            <div class="input-group-text" data-password="false">
+                                                                <span class="password-eye"></span>
+                                                            </div>
+                                                        </div>
+                                                        <small class="text-danger errorConfirmPassword mt-2"></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-0 d-grid text-center">
+                                                <button class="btn btn-primary fw-semibold" type="submit"
+                                                    id="register">Sign
+                                                    Up</button>
+                                            </div>
+                                        </form>
+                                        <!-- end form-->
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
                         </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
+                <!-- end row -->
             </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="text-dark-emphasis">Sudah punya akun? <a href="{{ route('login') }}"
+                            class="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline"><b>Sign In</b></a>
+                    </p>
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
         </div>
+        <!-- end container -->
     </div>
-</div>
-@endsection
+    <!-- end page -->
+
+    <footer class="footer footer-alt fw-medium">
+        <span class="text-dark-emphasis">
+            <script>
+                document.write(new Date().getFullYear())
+            </script> © E-Commerce - Rio Akbar Turmuzi
+        </span>
+    </footer>
+
+    <!-- Vendor js -->
+    <script src="{{ asset('assets') }}/js/vendor.min.js"></script>
+
+    <!-- App js -->
+    <script src="{{ asset('assets') }}/js/app.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#form').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    data: $(this).serialize(),
+                    url: "{{ route('register') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    beforeSend: function() {
+                        $('#register').attr('disabled', 'disabled');
+                        $('#register').text('Proses...');
+                    },
+                    complete: function() {
+                        $('#register').removeAttr('disabled');
+                        $('#register').html('Sign Up');
+                    },
+                    success: function(response) {
+                        if (response.errors) {
+                            if (response.errors.first_name) {
+                                $('.errorFirstName').html(response.errors.first_name);
+                            } else {
+                                $('.errorFirstName').html('');
+                            }
+
+                            if (response.errors.last_name) {
+                                $('.errorLastName').html(response.errors.last_name);
+                            } else {
+                                $('.errorLastName').html('');
+                            }
+
+                            if (response.errors.email) {
+                                $('.errorEmail').html(response.errors.email);
+                            } else {
+                                $('.errorEmail').html('');
+                            }
+
+                            if (response.errors.no_telepon) {
+                                $('.errorNoTelepon').html(response.errors.no_telepon);
+                            } else {
+                                $('.errorNoTelepon').html('');
+                            }
+
+                            if (response.errors.password) {
+                                $('.errorPassword').html(response.errors.password);
+                            } else {
+                                $('.errorPassword').html('');
+                            }
+
+                            if (response.errors.password_confirmation) {
+                                $('.errorConfirmPassword').html(response.errors
+                                    .password_confirmation);
+                            } else {
+                                $('.errorConfirmPassword').html('');
+                            }
+
+                        } else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Sukses',
+                                text: 'Data berhasil disimpan',
+                            }).then(function() {
+                                top.location.href =
+                                    "{{ route('login') }}";
+                            });
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.error(xhr.status + "\n" + xhr.responseText + "\n" +
+                            thrownError);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
