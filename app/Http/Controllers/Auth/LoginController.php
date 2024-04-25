@@ -77,11 +77,11 @@ class LoginController extends Controller
             if ($user && Hash::check($credentials['password'], $user->password)) {
                 Auth::loginUsingId($user->id);
                 if ($user->type == 'Owner') {
-                    return response()->json(['redirect' => route('home')]);
+                    return response()->json(['redirect' => route('dashboard.index')]);
                 } elseif ($user->type == 'Administrator') {
-                    return response()->json(['redirect' => route('home')]);
+                    return response()->json(['redirect' => route('dashboard.index')]);
                 } elseif ($user->type == 'User') {
-                    return response()->json(['redirect' => route('home')]);
+                    return response()->json(['redirect' => route('dashboard.index')]);
                 }
             } else {
                 return response()->json(['WrongPassword' => ['message' => 'Password salah.']]);

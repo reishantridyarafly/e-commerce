@@ -118,9 +118,8 @@
     <footer class="footer footer-alt fw-medium">
         <span class="text-dark">
             <script>
-                document.write(new Date().getFullYear());
-            </script>
-            © E-Commerce - Rio Akbar Turmuzi
+                document.write(new Date().getFullYear())
+            </script> © {{ config('app.name') }} - by <b>Rio Akbar Turmuzi </b>
         </span>
     </footer>
     <!-- Vendor js -->

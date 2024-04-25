@@ -136,7 +136,7 @@
         <span class="text-dark-emphasis">
             <script>
                 document.write(new Date().getFullYear())
-            </script> © E-Commerce - Rio Akbar Turmuzi
+            </script> © {{ config('app.name') }} - by <b>Rio Akbar Turmuzi </b>
         </span>
     </footer>
     <!-- Vendor js -->
