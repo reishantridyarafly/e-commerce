@@ -59,8 +59,8 @@
                  <a class="nav-link dropdown-toggle arrow-none nav-user" data-bs-toggle="dropdown" href="#"
                      role="button" aria-haspopup="false" aria-expanded="false">
                      <span class="account-user-avatar">
-                         <img src="{{ asset('assets') }}/images/users/avatar-1.jpg" alt="user-image" width="32"
-                             class="rounded-circle">
+                         <img src="{{ auth()->user()->avatar == '' ? 'https://ui-avatars.com/api/?background=random&name=' . auth()->user()->first_name . ' ' . auth()->user()->last_name : asset('storage/avatar/' . auth()->user()->avatar) }}"
+                             alt="user-image" width="32" class="rounded-circle">
                      </span>
                      <span class="d-lg-block d-none">
                          <h5 class="my-0 fw-normal">{{ auth()->user()->first_name }} <i
@@ -88,7 +88,7 @@
                      <!-- item-->
                      <a href="javascript:void(0);" id="logout-link" class="dropdown-item">
                          <i class="ri-logout-box-line fs-18 align-middle me-1"></i>
-                         <span>Logout</span>
+                         <span>Keluar</span>
                      </a>
                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                          @csrf

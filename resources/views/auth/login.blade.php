@@ -159,7 +159,10 @@
                     },
                     success: function(response) {
                         if (response.errors) {
+                            $('#username').addClass('is-invalid');
                             $('.errorUsername').html(response.errors.username || '');
+
+                            $('#password').addClass('is-invalid');
                             $('.errorPassword').html(response.errors.password || '');
                         } else if (response.NoUsername || response.NonActiveUsername || response
                             .WrongPassword) {

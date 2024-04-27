@@ -178,39 +178,51 @@
                     success: function(response) {
                         if (response.errors) {
                             if (response.errors.first_name) {
+                                $('#first_name').addClass('is-invalid');
                                 $('.errorFirstName').html(response.errors.first_name);
                             } else {
+                                $('#first_name').removeClass('is-invalid');
                                 $('.errorFirstName').html('');
                             }
 
                             if (response.errors.last_name) {
+                                $('#last_name').addClass('is-invalid');
                                 $('.errorLastName').html(response.errors.last_name);
                             } else {
+                                $('#last_name').removeClass('is-invalid');
                                 $('.errorLastName').html('');
                             }
 
                             if (response.errors.email) {
+                                $('#email').addClass('is-invalid');
                                 $('.errorEmail').html(response.errors.email);
                             } else {
+                                $('#email').removeClass('is-invalid');
                                 $('.errorEmail').html('');
                             }
 
                             if (response.errors.no_telepon) {
+                                $('#no_telepon').addClass('is-invalid');
                                 $('.errorNoTelepon').html(response.errors.no_telepon);
                             } else {
+                                $('#no_telepon').removeClass('is-invalid');
                                 $('.errorNoTelepon').html('');
                             }
 
                             if (response.errors.password) {
+                                $('#password').addClass('is-invalid');
                                 $('.errorPassword').html(response.errors.password);
                             } else {
+                                $('#password').removeClass('is-invalid');
                                 $('.errorPassword').html('');
                             }
 
                             if (response.errors.password_confirmation) {
+                                $('#password_confirmation').addClass('is-invalid');
                                 $('.errorConfirmPassword').html(response.errors
                                     .password_confirmation);
                             } else {
+                                $('#password_confirmation').removeClass('is-invalid');
                                 $('.errorConfirmPassword').html('');
                             }
 

@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -62,6 +62,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'no_telepon' => 'required|unique:users|max:15',
             'password' => 'required|string|min:8|confirmed',
+            'password_confirmation' => 'required',
         ], [
             'first_name.required' => 'Silakan isi nama depan terlebih dahulu!',
             'last_name.required' => 'Silakan isi nama belakang terlebih dahulu!',
@@ -75,6 +76,7 @@ class RegisterController extends Controller
             'password.required' => 'Silakan isi password terlebih dahulu!',
             'password.min' => 'Password minimal 8 karakter!',
             'password.confirmed' => 'Konfirmasi password tidak sama!',
+            'password_confirmation.required' => 'Silakan isi konfirmasi password terlebih dahulu!',
         ]);
 
         if ($validator->fails()) {

@@ -49,6 +49,9 @@ class User extends Authenticatable
         'no_telepon',
         'password',
         'avatar',
+        'bio',
+        'jenis_kelamin',
+        'tanggal_lahir',
         'type',
         'aktif_status',
     ];
