@@ -15,12 +15,12 @@
                 </tr>
 
                 <tr>
-                    <th scope="row">Phone</th>
+                    <th scope="row">No Telepon</th>
                     <td class="ng-binding">{{ auth()->user()->no_telepon }}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Address</th>
-                    <td class="ng-binding">WKwkwkwkwk
+                    <th scope="row">Tanggal Lahir</th>
+                    <td class="ng-binding">{{ \Carbon\Carbon::parse(auth()->user()->tanggal_lahir)->isoFormat('LL') }}
                     </td>
                 </tr>
 
@@ -28,3 +28,5 @@
         </table>
     </div> <!-- end profile-desk -->
 </div> <!-- about-me -->
+
+

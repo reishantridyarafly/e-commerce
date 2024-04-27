@@ -21,7 +21,7 @@ class UserAccess
         }
 
         if (in_array(auth()->user()->type, $roles)) {
-            if (Auth::user()->active_status == 0) {
+            if (Auth::user()->aktif_status == 0) {
                 return $next($request);
             }
             Auth::logout();

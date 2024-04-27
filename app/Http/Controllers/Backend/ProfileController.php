@@ -89,6 +89,25 @@ class ProfileController extends Controller
         }
     }
 
+    public function deletePhoto()
+    {
+        $id = auth()->user()->id;
+        $user = User::findOrFail($id);
+
+        if (!empty($user->avatar)) {
+            if (Storage::exists('public/avatar/' . $user->avatar)) {
+                Storage::delete('public/avatar/' . $user->avatar);
+            }
+
+            $user->avatar = null;
+            $user->save();
+
+            return response()->json(['success' => "Foto berhasil dihapus.", 'name' => $user->name]);
+        } else {
+            return response()->json(['success' => false, 'error' => 'Foto tidak tersedia.']);
+        }
+    }
+
     public function changePassword(Request $request)
     {
         $validated = Validator::make(
@@ -117,6 +136,36 @@ class ProfileController extends Controller
                     'password' => Hash::make($request->password)
                 ]);
                 return response()->json(['success' => 'Password berhasil di simpan']);
+            }
+        }
+    }
+
+    public function deleteAccount(Request $request)
+    {
+        $validated = Validator::make(
+            $request->all(),
+            [
+                'password' => 'required|min:8',
+            ],
+            [
+                'password.required' => 'Silakan isi password baru terlebih dahulu.',
+                'password.min' => 'Password harus terdiri dari minimal :min karakter.',
+            ]
+        );
+
+        if ($validated->fails()) {
+            return response()->json(['errors' => $validated->errors()]);
+        } else {
+            $user = auth()->user();
+
+            if (!Hash::check($request->password, $user->password)) {
+                return response()->json(['errors' => ['password' => 'Kata sandi salah. Silakan coba lagi.']]);
+            } else {
+                User::whereId(auth()->user()->id)->update([
+                    'aktif_status' => '1'
+                ]);
+
+                return response()->json(['success' => true]);
             }
         }
     }

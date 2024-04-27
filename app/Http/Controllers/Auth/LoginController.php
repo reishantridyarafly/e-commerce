@@ -70,7 +70,7 @@ class LoginController extends Controller
                 return response()->json(['NoUsername' => ['message' => 'Username tidak tersedia.']]);
             }
 
-            if ($user->active_status == 1) {
+            if ($user->aktif_status == 1) {
                 return response()->json(['NonActiveUsername' => ['message' => 'Akun Anda telah dinonaktifkan.']]);
             }
 

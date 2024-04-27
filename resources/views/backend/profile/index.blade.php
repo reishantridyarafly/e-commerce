@@ -45,10 +45,10 @@
                                                 data-bs-target="#aboutme" type="button" role="tab" aria-controls="home"
                                                 aria-selected="true" href="#aboutme">Tentang</a>
                                         </li>
-
                                         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
                                                 data-bs-target="#settings" type="button" role="tab"
                                                 aria-controls="home" aria-selected="true" href="#settings">Pengaturan</a>
+                                        </li>
                                         </li>
                                         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
                                                 data-bs-target="#password" type="button" role="tab"
