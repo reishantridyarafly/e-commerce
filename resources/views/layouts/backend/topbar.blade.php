@@ -74,15 +74,9 @@
                      </div>
 
                      <!-- item-->
-                     <a href="pages-profile.html" class="dropdown-item">
+                     <a href="{{ route('profile.index') }}" class="dropdown-item">
                          <i class="ri-account-circle-line fs-18 align-middle me-1"></i>
                          <span>Profile</span>
-                     </a>
-
-                     <!-- item-->
-                     <a href="pages-profile.html" class="dropdown-item">
-                         <i class="ri-settings-4-line fs-18 align-middle me-1"></i>
-                         <span>Pengaturan</span>
                      </a>
 
                      <!-- item-->

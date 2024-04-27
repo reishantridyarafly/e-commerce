@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
@@ -13,6 +14,79 @@ class ProfileController extends Controller
     public function index()
     {
         return view('backend.profile.index');
+    }
+
+    public function settingsProfile(Request $request)
+    {
+        $id = auth()->user()->id;
+        $validated = Validator::make(
+            $request->all(),
+            [
+                'first_name' => 'required|string',
+                'last_name' => 'required|string',
+                'email' => 'required|string|unique:users,email,' . $id,
+                'photo' => 'image|mimes:jpg,png,jpeg,webp,svg|file|max:5120',
+                'no_telepon' => 'required|min:11|unique:users,no_telepon,' . $id,
+            ],
+            [
+                'first_name.required' => 'Silakan isi nama depan terlebih dahulu.',
+                'first_name.string' => 'Nama depan harus berupa teks.',
+                'email.required' => 'Silakan isi email terlebih dahulu.',
+                'email.string' => 'Email harus berupa teks.',
+                'email.unique' => 'Email telah digunakan.',
+                'photo.image' => 'File harus berupa gambar.',
+                'photo.mimes' => 'Ekstensi file harus berupa: jpg, png, jpeg, webp, atau svg.',
+                'photo.file' => 'File harus berupa gambar.',
+                'photo.max' => 'Ukuran file tidak boleh lebih dari 5 MB.',
+                'no_telepon.required' => 'Silakan isi no telepon terlbih dahulu.',
+                'no_telepon.min' => 'Nomor telepon harus memiliki minimal :min karakter.',
+                'no_telepon.max' => 'Nomor telepon tidak boleh memiliki lebih dari :max karakter.',
+                'no_telepon.unique' => 'Nomor telepon telah digunakan.',
+            ]
+        );
+
+        if ($validated->fails()) {
+            return response()->json(['errors' => $validated->errors()]);
+        } else {
+            if ($request->hasFile('photo')) {
+                $file = $request->file('photo');
+                if ($file->isValid()) {
+                    $randomFileName = uniqid() . '.' . $file->getClientOriginalExtension();
+                    $request->file('photo')->storeAs('avatar/', $randomFileName, 'public');
+
+                    $user = User::findOrFail($id);
+
+                    if (Storage::exists('public/avatar/' . $user->avatar)) {
+                        Storage::delete('public/avatar/' . $user->avatar);
+                    }
+
+                    $user->first_name = $request->first_name;
+                    $user->last_name = $request->last_name;
+                    $user->email = $request->email;
+                    $user->no_telepon = $request->no_telepon;
+                    $user->avatar = $randomFileName;
+                    $user->bio = $request->bio;
+                    $user->jenis_kelamin = $request->jenis_kelamin;
+                    $user->tanggal_lahir = $request->tanggal_lahir;
+                    $user->save();
+
+                    return response()->json(['success' => 'Data berhasil disimpan']);
+                }
+            } else {
+                $user = User::findOrFail($id);
+
+                $user->first_name = $request->first_name;
+                $user->last_name = $request->last_name;
+                $user->email = $request->email;
+                $user->no_telepon = $request->no_telepon;
+                $user->bio = $request->bio;
+                $user->jenis_kelamin = $request->jenis_kelamin;
+                $user->tanggal_lahir = $request->tanggal_lahir;
+                $user->save();
+
+                return response()->json(['success' => 'Data berhasil disimpan']);
+            }
+        }
     }
 
     public function changePassword(Request $request)

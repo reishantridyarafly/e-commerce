@@ -1,6 +1,6 @@
 <div id="password" class="tab-pane">
     <div class="user-profile-content">
-        <form id="form">
+        <form id="form_password">
             <div class="mb-3">
                 <label for="old_password" class="form-label">Password Lama</label>
                 <div class="input-group input-group-merge">
@@ -15,7 +15,8 @@
             <div class="mb-3">
                 <label for="new_password" class="form-label">New Password</label>
                 <div class="input-group input-group-merge">
-                    <input type="password" class="form-control" name="password" id="new_password" placeholder="Masukan password baru">
+                    <input type="password" class="form-control" name="password" id="new_password"
+                        placeholder="Masukan password baru">
                     <div class="input-group-text" data-password="false">
                         <span class="password-eye"></span>
                     </div>
@@ -51,7 +52,7 @@
             }
         });
 
-        $('#form').submit(function(e) {
+        $('#form_password').submit(function(e) {
             e.preventDefault();
             $.ajax({
                 data: $(this).serialize(),
