@@ -1,5 +1,5 @@
 @extends('layouts.backend.main')
-@section('title', 'Alamat')
+@section('title', 'Tambah Alamat')
 @section('content')
     <!-- Select2 css -->
     <link href="{{ asset('assets') }}/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
@@ -14,8 +14,8 @@
                         <div class="page-title-box">
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Velonic</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route('alamat.index') }}">Alamat</a></li>
                                     <li class="breadcrumb-item active">@yield('title')</li>
                                 </ol>
                             </div>
@@ -31,7 +31,6 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-12">
                                     <div class="mb-3">
-                                        <input type="hidden" name="id" id="id">
                                         <label for="name" class="form-label">Nama</label>
                                         <input type="text" id="name" name="name" class="form-control" autofocus>
                                         <small class="text-danger errorName"></small>
@@ -106,6 +105,16 @@
                                         <label for="detail_alamat" class="form-label">Detail Alamat</label>
                                         <textarea name="detail_alamat" id="detail_alamat" rows="3" class="form-control"></textarea>
                                         <small class="text-danger errorDetailAlamat"></small>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                id="default_alamat" name="default_alamat" value="0">
+                                            <label class="form-check-label" for="default_alamat">Atur sebagai alamat
+                                                utama</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="text-end">
@@ -230,7 +239,7 @@
                                 title: 'Sukses',
                                 text: response.success,
                             }).then(function() {
-                                top.location.href = "{{ route('profile.index') }}";
+                                top.location.href = "{{ route('alamat.index') }}";
                             });
                         }
                     },

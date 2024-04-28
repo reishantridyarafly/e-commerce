@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('kode_pos');
             $table->text('jalan');
             $table->text('detail_alamat');
-            $table->boolean('default_alamat')->default(0)->comment('0 = Default, 1 = Non Default');
+            $table->boolean('default_alamat')->default(1)->comment('0 = Default, 1 = Non Default');
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
