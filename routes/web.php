@@ -40,6 +40,14 @@ Route::middleware(['auth', 'user-access:Owner,Administrator,Pelanggan'])->group(
     Route::post('/kategori', [App\Http\Controllers\Backend\CategoryController::class, 'store'])->name('kategori.store');
     Route::delete('/kategori/{id}', [App\Http\Controllers\Backend\CategoryController::class, 'destroy'])->name('kategori.destroy');
 
+    Route::get('/produk', [App\Http\Controllers\Backend\ProductController::class, 'index'])->name('produk.index');
+    Route::get('/produk/tambah', [App\Http\Controllers\Backend\ProductController::class, 'create'])->name('produk.create');
+    Route::post('/produk', [App\Http\Controllers\Backend\ProductController::class, 'store'])->name('produk.store');
+    Route::get('/produk/{id}/edit', [App\Http\Controllers\Backend\ProductController::class, 'edit'])->name('produk.edit');
+    Route::post('/produk/{id}', [App\Http\Controllers\Backend\ProductController::class, 'update'])->name('produk.update');
+    Route::delete('/produk/{id}', [App\Http\Controllers\Backend\ProductController::class, 'destroy'])->name('produk.destroy');
+
+
     Route::get('/profile', [App\Http\Controllers\Backend\ProfileController::class, 'index'])->name('profile.index');
     Route::post('/profile/change/password', [App\Http\Controllers\Backend\ProfileController::class, 'changePassword'])->name('profile.changePassword');
     Route::post('/profile/settings/', [App\Http\Controllers\Backend\ProfileController::class, 'settingsProfile'])->name('profile.settings');

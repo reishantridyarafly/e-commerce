@@ -1,7 +1,6 @@
 @extends('layouts.backend.main')
 @section('title', 'Alamat')
 @section('content')
-
     <div class="content-page">
         <div class="content">
             <div class="container-fluid">
@@ -77,8 +76,9 @@
             </div> <!-- container -->
         </div> <!-- content -->
     </div>
+@endsection
 
-
+@section('javascript')
     <script>
         $(document).ready(function() {
             $.ajaxSetup({

@@ -43,9 +43,9 @@
                     <span> Kategori </span>
                 </a>
             </li>
-            <li class="side-nav-item {{ request()->routeIs(['profile.*']) ? 'menuitem-active' : '' }}">
-                <a href="{{ route('profile.index') }}"
-                    class="side-nav-link {{ request()->routeIs(['profile.*']) ? 'active' : '' }}">
+            <li class="side-nav-item {{ request()->routeIs(['produk.*']) ? 'menuitem-active' : '' }}">
+                <a href="{{ route('produk.index') }}"
+                    class="side-nav-link {{ request()->routeIs(['produk.*']) ? 'active' : '' }}">
                     <i class="ri-box-3-line"></i>
                     <span> Produk </span>
                 </a>

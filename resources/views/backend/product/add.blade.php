@@ -1,13 +1,10 @@
 @extends('layouts.backend.main')
-@section('title', 'Tambah Alamat')
+@section('title', 'Tambah Produk')
 @section('css')
     <!-- Select2 css -->
     <link href="{{ asset('assets') }}/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 @endsection
-
 @section('content')
-    " />
-
     <div class="content-page">
         <div class="content">
             <div class="container-fluid">
@@ -17,7 +14,7 @@
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Dashboard</a></li>
-                                    <li class="breadcrumb-item"><a href="{{ route('alamat.index') }}">Alamat</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route('produk.index') }}">Produk</a></li>
                                     <li class="breadcrumb-item active">@yield('title')</li>
                                 </ol>
                             </div>
@@ -31,6 +28,13 @@
                     <div class="card-body">
                         <form id="form">
                             <div class="row">
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label for="foto" class="form-label">Foto</label>
+                                        <input type="file" name="foto" id="foto" class="form-control">
+                                        <small class="text-danger errorFoto"></small>
+                                    </div>
+                                </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Nama</label>
@@ -40,83 +44,33 @@
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="mb-3">
-                                        <label for="no_telepon" class="form-label">No Telepon</label>
+                                        <label for="no_telepon" class="form-label">Harga</label>
                                         <input type="number" id="no_telepon" name="no_telepon" class="form-control">
                                         <small class="text-danger errorNoTelepon"></small>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="mb-3">
-                                        <label for="provinsi" class="form-label">Provinsi</label>
+                                        <label for="no_telepon" class="form-label">Stok</label>
+                                        <input type="number" id="no_telepon" name="no_telepon" class="form-control">
+                                        <small class="text-danger errorNoTelepon"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="mb-3">
+                                        <label for="provinsi" class="form-label">Kategori</label>
                                         <select class="form-control select2" data-toggle="select2" name="provinsi"
                                             id="provinsi">
-                                            <option value="">-- Pilih Provinsi --</option>
-                                            @foreach ($provinces as $row)
-                                                <option value="{{ $row->id }}">{{ $row->name }}</option>
-                                            @endforeach
+                                            <option value="">-- Pilih Kategori --</option>
                                         </select>
                                         <small class="text-danger errorProvinsi"></small>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="mb-3">
-                                        <label for="kabupaten" class="form-label">Kabupaten</label>
-                                        <select name="kabupaten" id="kabupaten" class="form-control select2"
-                                            data-toggle="select2">
-                                            <option value="">-- Pilih Kabupaten --</option>
-                                        </select>
-                                        <small class="text-danger errorKabupaten"></small>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="mb-3">
-                                        <label for="kecamatan" class="form-label">Kecamatan</label>
-                                        <select name="kecamatan" id="kecamatan" class="form-control select2"
-                                            data-toggle="select2">
-                                            <option value="">-- Pilih Kecamatan --</option>
-                                        </select>
-                                        <small class="text-danger errorKecamatan"></small>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="mb-3">
-                                        <label for="desa" class="form-label">Desa</label>
-                                        <select name="desa" id="desa" class="form-control select2"
-                                            data-toggle="select2">
-                                            <option value="">-- Pilih Desa --</option>
-                                        </select>
-                                        <small class="text-danger errorDesa"></small>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="mb-3">
-                                        <label for="kode_pos" class="form-label">Kode Pos</label>
-                                        <input type="number" id="kode_pos" name="kode_pos" class="form-control">
-                                        <small class="text-danger errorKodePos"></small>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="mb-3">
-                                        <label for="jalan" class="form-label">Jalan</label>
-                                        <textarea name="jalan" id="jalan" rows="1" class="form-control"></textarea>
-                                        <small class="text-danger errorJalan"></small>
-                                    </div>
-                                </div>
                                 <div class="col-12">
                                     <div class="mb-3">
-                                        <label for="detail_alamat" class="form-label">Detail Alamat</label>
-                                        <textarea name="detail_alamat" id="detail_alamat" rows="3" class="form-control"></textarea>
-                                        <small class="text-danger errorDetailAlamat"></small>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch"
-                                                id="default_alamat" name="default_alamat" value="0">
-                                            <label class="form-check-label" for="default_alamat">Atur sebagai alamat
-                                                utama</label>
-                                        </div>
+                                        <label for="detail_produk" class="form-label">Deskripsi</label>
+                                        <textarea name="detail_produk" id="detail_produk" rows="3" class="form-control"></textarea>
+                                        <small class="text-danger errorDetailproduk"></small>
                                     </div>
                                 </div>
                                 <div class="text-end">
@@ -134,6 +88,7 @@
         </div> <!-- content -->
     </div>
 @endsection
+
 @section('javascript')
     <!--  Select2 Plugin Js -->
     <script src="{{ asset('assets') }}/vendor/select2/js/select2.min.js"></script>
@@ -151,7 +106,7 @@
                 e.preventDefault();
                 $.ajax({
                     data: $(this).serialize(),
-                    url: "{{ route('alamat.store') }}",
+                    url: "{{ route('produk.store') }}",
                     type: "POST",
                     dataType: 'json',
                     beforeSend: function() {
@@ -230,12 +185,12 @@
                                 $('.errorJalan').html('');
                             }
 
-                            if (response.errors.detail_alamat) {
-                                $('#detail_alamat').addClass('is-invalid');
-                                $('.errorDetailAlamat').html(response.errors.detail_alamat);
+                            if (response.errors.detail_produk) {
+                                $('#detail_produk').addClass('is-invalid');
+                                $('.errorDetailproduk').html(response.errors.detail_produk);
                             } else {
-                                $('#detail_alamat').removeClass('is-invalid');
-                                $('.errorDetailAlamat').html('');
+                                $('#detail_produk').removeClass('is-invalid');
+                                $('.errorDetailproduk').html('');
                             }
                         } else {
                             Swal.fire({
@@ -243,7 +198,7 @@
                                 title: 'Sukses',
                                 text: response.success,
                             }).then(function() {
-                                top.location.href = "{{ route('alamat.index') }}";
+                                top.location.href = "{{ route('produk.index') }}";
                             });
                         }
                     },
@@ -252,66 +207,6 @@
                             thrownError);
                     }
                 });
-            });
-        });
-
-        $('#provinsi').on('change', function() {
-            let id_provinsi = $('#provinsi').val();
-
-            $.ajax({
-                type: "POST",
-                url: "{{ route('alamat.get-kabupaten') }}",
-                data: {
-                    id_provinsi: id_provinsi
-                },
-                success: function(response) {
-                    $('#kabupaten').html(response);
-                    $('#kecamatan').html('');
-                    $('#desa').html('');
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.error(xhr.status + "\n" + xhr.responseText + "\n" +
-                        thrownError);
-                }
-            });
-        });
-
-        $('#kabupaten').on('change', function() {
-            let id_kabupaten = $('#kabupaten').val();
-
-            $.ajax({
-                type: "POST",
-                url: "{{ route('alamat.get-kecamatan') }}",
-                data: {
-                    id_kabupaten: id_kabupaten
-                },
-                success: function(response) {
-                    $('#kecamatan').html(response);
-                    $('#desa').html('');
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.error(xhr.status + "\n" + xhr.responseText + "\n" +
-                        thrownError);
-                }
-            });
-        });
-
-        $('#kecamatan').on('change', function() {
-            let id_kecamatan = $('#kecamatan').val();
-
-            $.ajax({
-                type: "POST",
-                url: "{{ route('alamat.get-desa') }}",
-                data: {
-                    id_kecamatan: id_kecamatan
-                },
-                success: function(response) {
-                    $('#desa').html(response);
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.error(xhr.status + "\n" + xhr.responseText + "\n" +
-                        thrownError);
-                }
             });
         });
     </script>

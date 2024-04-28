@@ -1,10 +1,11 @@
 @extends('layouts.backend.main')
 @section('title', 'Edit Alamat')
-@section('content')
+@section('css')
     <!-- Select2 css -->
     <link href="{{ asset('assets') }}/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-    <!-- App css -->
-    <link href="{{ asset('assets') }}/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+@endsection
+@section('content')
+
 
     <div class="content-page">
         <div class="content">
@@ -138,6 +139,8 @@
             </div> <!-- container -->
         </div> <!-- content -->
     </div>
+@endsection
+@section('javascript')
     <!--  Select2 Plugin Js -->
     <script src="{{ asset('assets') }}/vendor/select2/js/select2.min.js"></script>
     <script>
