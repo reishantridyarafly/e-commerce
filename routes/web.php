@@ -34,6 +34,11 @@ Route::middleware(['auth', 'user-access:Owner,Administrator,Pelanggan'])->group(
     Route::post('/alamat/{id}', [App\Http\Controllers\Backend\AddressController::class, 'update'])->name('alamat.update');
     Route::delete('/alamat/{id}', [App\Http\Controllers\Backend\AddressController::class, 'destroy'])->name('alamat.destroy');
 
+    Route::get('/kategori', [App\Http\Controllers\Backend\CategoryController::class, 'index'])->name('kategori.index');
+    Route::get('/kategori/tambah', [App\Http\Controllers\Backend\CategoryController::class, 'create'])->name('kategori.create');
+    Route::get('/kategori/{id}/edit', [App\Http\Controllers\Backend\CategoryController::class, 'edit'])->name('kategori.edit');
+    Route::post('/kategori', [App\Http\Controllers\Backend\CategoryController::class, 'store'])->name('kategori.store');
+    Route::delete('/kategori/{id}', [App\Http\Controllers\Backend\CategoryController::class, 'destroy'])->name('kategori.destroy');
 
     Route::get('/profile', [App\Http\Controllers\Backend\ProfileController::class, 'index'])->name('profile.index');
     Route::post('/profile/change/password', [App\Http\Controllers\Backend\ProfileController::class, 'changePassword'])->name('profile.changePassword');

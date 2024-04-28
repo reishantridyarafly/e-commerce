@@ -36,6 +36,20 @@
             </li>
 
             <li class="side-nav-title">Master</li>
+            <li class="side-nav-item {{ request()->routeIs(['kategori.*']) ? 'menuitem-active' : '' }}">
+                <a href="{{ route('kategori.index') }}"
+                    class="side-nav-link {{ request()->routeIs(['kategori.*']) ? 'active' : '' }}">
+                    <i class="ri-shopping-bag-2-line"></i>
+                    <span> Kategori </span>
+                </a>
+            </li>
+            <li class="side-nav-item {{ request()->routeIs(['profile.*']) ? 'menuitem-active' : '' }}">
+                <a href="{{ route('profile.index') }}"
+                    class="side-nav-link {{ request()->routeIs(['profile.*']) ? 'active' : '' }}">
+                    <i class="ri-box-3-line"></i>
+                    <span> Produk </span>
+                </a>
+            </li>
 
             <li class="side-nav-title">Pengaturan</li>
             <li class="side-nav-item {{ request()->routeIs(['profile.*']) ? 'menuitem-active' : '' }}">
