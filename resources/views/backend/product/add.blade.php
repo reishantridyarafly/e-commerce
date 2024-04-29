@@ -38,7 +38,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Nama</label>
-                                        <input type="text" id="name" name="name" class="form-control" autofocus>
+                                        <input type="text" id="name" name="name" class="form-control">
                                         <small class="text-danger errorName"></small>
                                     </div>
                                 </div>
@@ -83,15 +83,16 @@
                     </div>
                 </div>
                 <!-- end card -->
-
             </div> <!-- container -->
         </div> <!-- content -->
     </div>
 @endsection
 
 @section('javascript')
-    <!--  Select2 Plugin Js -->
     <script src="{{ asset('assets') }}/vendor/select2/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+    <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
     <script>
         $('.select2').select2();
 

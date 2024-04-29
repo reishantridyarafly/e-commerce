@@ -168,11 +168,11 @@
                     type: "POST",
                     dataType: 'json',
                     beforeSend: function() {
-                        $('#register').attr('disabled', 'disabled');
+                        $('#register').attr('disable', 'disabled');
                         $('#register').text('Proses...');
                     },
                     complete: function() {
-                        $('#register').removeAttr('disabled');
+                        $('#register').removeAttr('disable');
                         $('#register').html('Sign Up');
                     },
                     success: function(response) {

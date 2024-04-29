@@ -148,11 +148,11 @@
                     type: "POST",
                     dataType: 'json',
                     beforeSend: function() {
-                        $('#login').attr('disabled', 'disabled');
+                        $('#login').attr('disable', 'disabled');
                         $('#login').text('Proses...');
                     },
                     complete: function() {
-                        $('#login').removeAttr('disabled');
+                        $('#login').removeAttr('disable');
                         $('#login').html(
                             `<i class="ri-login-circle-fill me-1"></i><span class="fw-bold">Log In</span>`
                         );
