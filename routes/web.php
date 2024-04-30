@@ -20,8 +20,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::middleware(['auth', 'user-access:Owner,Administrator,Pelanggan'])->group(function () {
+Route::middleware(['auth', 'user-access:Pemilik,Administrator,Pelanggan'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard.index');
+
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
 
     Route::post('/alamat/kabupaten', [App\Http\Controllers\Backend\AddressController::class, 'getKabupaten'])->name('alamat.get-kabupaten');
     Route::post('/alamat/kabupaten', [App\Http\Controllers\Backend\AddressController::class, 'getKabupaten'])->name('alamat.get-kabupaten');
@@ -47,10 +49,15 @@ Route::middleware(['auth', 'user-access:Owner,Administrator,Pelanggan'])->group(
     Route::post('/produk/{id}', [App\Http\Controllers\Backend\ProductController::class, 'update'])->name('produk.update');
     Route::delete('/produk/{id}', [App\Http\Controllers\Backend\ProductController::class, 'destroy'])->name('produk.destroy');
 
-
     Route::get('/profile', [App\Http\Controllers\Backend\ProfileController::class, 'index'])->name('profile.index');
     Route::post('/profile/change/password', [App\Http\Controllers\Backend\ProfileController::class, 'changePassword'])->name('profile.changePassword');
     Route::post('/profile/settings/', [App\Http\Controllers\Backend\ProfileController::class, 'settingsProfile'])->name('profile.settings');
     Route::post('/profile/settings/delete-photo', [App\Http\Controllers\Backend\ProfileController::class, 'deletePhoto'])->name('profile.deletePhoto');
     Route::post('/profile/delete/account', [App\Http\Controllers\Backend\ProfileController::class, 'deleteAccount'])->name('profile.deleteAccount');
+
+    Route::get('/pengguna', [App\Http\Controllers\Backend\PenggunaController::class, 'index'])->name('pengguna.index');
+    Route::post('/pengguna', [App\Http\Controllers\Backend\PenggunaController::class, 'store'])->name('pengguna.store');
+    Route::post('/pengguna/updateActiveStatus', [App\Http\Controllers\Backend\PenggunaController::class, 'updateActiveStatus'])->name('pengguna.updateActiveStatus');
+    Route::get('/pengguna/{id}/edit', [App\Http\Controllers\Backend\PenggunaController::class, 'edit'])->name('pengguna.edit');
+    Route::delete('/pengguna/{id}', [App\Http\Controllers\Backend\PenggunaController::class, 'destroy'])->name('pengguna.destroy');
 });

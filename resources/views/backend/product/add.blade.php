@@ -31,46 +31,49 @@
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label for="foto" class="form-label">Foto</label>
-                                        <input type="file" name="foto" id="foto" class="form-control">
+                                        <input type="file" name="foto[]" id="foto" class="form-control" multiple>
                                         <small class="text-danger errorFoto"></small>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="mb-3">
-                                        <label for="name" class="form-label">Nama</label>
-                                        <input type="text" id="name" name="name" class="form-control">
-                                        <small class="text-danger errorName"></small>
+                                        <label for="nama" class="form-label">Nama</label>
+                                        <input type="text" id="nama" name="nama" class="form-control">
+                                        <small class="text-danger errorNama"></small>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="mb-3">
-                                        <label for="no_telepon" class="form-label">Harga</label>
-                                        <input type="number" id="no_telepon" name="no_telepon" class="form-control">
-                                        <small class="text-danger errorNoTelepon"></small>
+                                        <label for="harga" class="form-label">Harga</label>
+                                        <input type="text" id="harga" name="harga" class="form-control">
+                                        <small class="text-danger errorHarga"></small>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="mb-3">
-                                        <label for="no_telepon" class="form-label">Stok</label>
-                                        <input type="number" id="no_telepon" name="no_telepon" class="form-control">
-                                        <small class="text-danger errorNoTelepon"></small>
+                                        <label for="stok" class="form-label">Stok</label>
+                                        <input type="number" id="stok" name="stok" class="form-control">
+                                        <small class="text-danger errorStok"></small>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="mb-3">
-                                        <label for="provinsi" class="form-label">Kategori</label>
-                                        <select class="form-control select2" data-toggle="select2" name="provinsi"
-                                            id="provinsi">
+                                        <label for="kategori" class="form-label">Kategori</label>
+                                        <select class="form-control select2" data-toggle="select2" name="kategori"
+                                            id="kategori">
                                             <option value="">-- Pilih Kategori --</option>
+                                            @foreach ($category as $row)
+                                                <option value="{{ $row->id }}">{{ $row->nama }}</option>
+                                            @endforeach
                                         </select>
-                                        <small class="text-danger errorProvinsi"></small>
+                                        <small class="text-danger errorKategori"></small>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="mb-3">
-                                        <label for="detail_produk" class="form-label">Deskripsi</label>
-                                        <textarea name="detail_produk" id="detail_produk" rows="3" class="form-control"></textarea>
-                                        <small class="text-danger errorDetailproduk"></small>
+                                        <label for="deskripsi" class="form-label">Deskripsi</label>
+                                        <textarea name="deskripsi" id="deskripsi" class="form-control"></textarea>
+                                        <small class="text-danger errorDeskripsi"></small>
                                     </div>
                                 </div>
                                 <div class="text-end">
@@ -90,11 +93,198 @@
 
 @section('javascript')
     <script src="{{ asset('assets') }}/vendor/select2/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
-    <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.10.5/autoNumeric.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/super-build/ckeditor.js"></script>
     <script>
         $('.select2').select2();
+
+        new AutoNumeric('#harga', {
+            currencySymbol: 'Rp ',
+            decimalCharacter: ',',
+            digitGroupSeparator: '.',
+            decimalPlaces: 0,
+        });
+
+        CKEDITOR.ClassicEditor.create(document.getElementById("deskripsi"), {
+                // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
+                toolbar: {
+                    items: [
+                        'findAndReplace', 'selectAll', '|',
+                        'heading', '|',
+                        'bold', 'italic', 'strikethrough', 'underline',
+                        'removeFormat', '|',
+                        'bulletedList', 'numberedList', 'todoList', '|',
+                        'outdent', 'indent', '|',
+                        'undo', 'redo',
+                        '-',
+                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                        'alignment', '|',
+                        'link', 'blockQuote', 'insertTable', 'mediaEmbed',
+                        '|',
+                        'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+                // Changing the language of the interface requires loading the language file using the <script> tag.
+                // language: 'es',
+                list: {
+                    properties: {
+                        styles: true,
+                        startIndex: true,
+                        reversed: true
+                    }
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
+                heading: {
+                    options: [{
+                            model: 'paragraph',
+                            title: 'Paragraph',
+                            class: 'ck-heading_paragraph'
+                        },
+                        {
+                            model: 'heading1',
+                            view: 'h1',
+                            title: 'Heading 1',
+                            class: 'ck-heading_heading1'
+                        },
+                        {
+                            model: 'heading2',
+                            view: 'h2',
+                            title: 'Heading 2',
+                            class: 'ck-heading_heading2'
+                        },
+                        {
+                            model: 'heading3',
+                            view: 'h3',
+                            title: 'Heading 3',
+                            class: 'ck-heading_heading3'
+                        },
+                        {
+                            model: 'heading4',
+                            view: 'h4',
+                            title: 'Heading 4',
+                            class: 'ck-heading_heading4'
+                        },
+                        {
+                            model: 'heading5',
+                            view: 'h5',
+                            title: 'Heading 5',
+                            class: 'ck-heading_heading5'
+                        },
+                        {
+                            model: 'heading6',
+                            view: 'h6',
+                            title: 'Heading 6',
+                            class: 'ck-heading_heading6'
+                        }
+                    ]
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
+                placeholder: 'Silakan isi konten anda disini!',
+                // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
+                fontFamily: {
+                    options: [
+                        'default',
+                        'Arial, Helvetica, sans-serif',
+                        'Courier New, Courier, monospace',
+                        'Georgia, serif',
+                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                        'Tahoma, Geneva, sans-serif',
+                        'Times New Roman, Times, serif',
+                        'Trebuchet MS, Helvetica, sans-serif',
+                        'Verdana, Geneva, sans-serif'
+                    ],
+                    supportAllValues: true
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
+                fontSize: {
+                    options: [10, 12, 14, 'default', 18, 20, 22],
+                    supportAllValues: true
+                },
+                // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
+                // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
+                htmlSupport: {
+                    allow: [{
+                        name: /.*/,
+                        attributes: true,
+                        classes: true,
+                        styles: true
+                    }]
+                },
+                // Be careful with enabling previews
+                // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
+                htmlEmbed: {
+                    showPreviews: true
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
+                link: {
+                    decorators: {
+                        addTargetToExternalLinks: true,
+                        defaultProtocol: 'https://',
+                        toggleDownloadable: {
+                            mode: 'manual',
+                            label: 'Downloadable',
+                            attributes: {
+                                download: 'file'
+                            }
+                        }
+                    }
+                },
+                // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
+                mention: {
+                    feeds: [{
+                        marker: '@',
+                        feed: [
+                            '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes',
+                            '@chocolate', '@cookie', '@cotton', '@cream',
+                            '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread',
+                            '@gummi', '@ice', '@jelly-o',
+                            '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding',
+                            '@sesame', '@snaps', '@soufflé',
+                            '@sugar', '@sweet', '@topping', '@wafer'
+                        ],
+                        minimumCharacters: 1
+                    }]
+                },
+                // The "super-build" contains more premium features that require additional configuration, disable them below.
+                // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
+                removePlugins: [
+                    // These two are commercial, but you can try them out without registering to a trial.
+                    // 'ExportPdf',
+                    // 'ExportWord',
+                    'CKBox',
+                    'CKFinder',
+                    'EasyImage',
+                    // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
+                    // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
+                    // Storing images as Base64 is usually a very bad idea.
+                    // Replace it on production website with other solutions:
+                    // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
+                    // 'Base64UploadAdapter',
+                    'RealTimeCollaborativeComments',
+                    'RealTimeCollaborativeTrackChanges',
+                    'RealTimeCollaborativeRevisionHistory',
+                    'PresenceList',
+                    'Comments',
+                    'TrackChanges',
+                    'TrackChangesData',
+                    'RevisionHistory',
+                    'Pagination',
+                    'WProofreader',
+                    // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+                    // from a local file system (file://) - load     this site via HTTP server if you enable MathType.
+                    'MathType',
+                    // The following features are part of the Productivity Pack and require additional license.
+                    'SlashCommand',
+                    'Template',
+                    'DocumentOutline',
+                    'FormatPainter',
+                    'TableOfContents'
+                ]
+            })
+            .catch(error => {
+                console.log(error);
+            });
 
         $(document).ready(function() {
             $.ajaxSetup({
@@ -106,10 +296,13 @@
             $('#form').submit(function(e) {
                 e.preventDefault();
                 $.ajax({
-                    data: $(this).serialize(),
+                    data: new FormData(this),
                     url: "{{ route('produk.store') }}",
                     type: "POST",
                     dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
                     beforeSend: function() {
                         $('#simpan').attr('disable', 'disabled');
                         $('#simpan').text('Proses...');
@@ -121,77 +314,52 @@
                     },
                     success: function(response) {
                         if (response.errors) {
-
-                            if (response.errors.name) {
-                                $('#name').addClass('is-invalid');
-                                $('.errorName').html(response.errors.name);
+                            if (response.errors.foto) {
+                                $('#foto').addClass('is-invalid');
+                                $('.errorFoto').html(response.errors.foto);
                             } else {
-                                $('#name').removeClass('is-invalid');
-                                $('.errorName').html('');
+                                $('#foto').removeClass('is-invalid');
+                                $('.errorFoto').html('');
                             }
 
-                            if (response.errors.no_telepon) {
-                                $('#no_telepon').addClass('is-invalid');
-                                $('.errorNoTelepon').html(response.errors.no_telepon);
+                            if (response.errors.nama) {
+                                $('#nama').addClass('is-invalid');
+                                $('.errorNama').html(response.errors.nama);
                             } else {
-                                $('#no_telepon').removeClass('is-invalid');
-                                $('.errorNoTelepon').html('');
+                                $('#nama').removeClass('is-invalid');
+                                $('.errorNama').html('');
                             }
 
-                            if (response.errors.provinsi) {
-                                $('#provinsi').addClass('is-invalid');
-                                $('.errorProvinsi').html(response.errors.provinsi);
+                            if (response.errors.harga) {
+                                $('#harga').addClass('is-invalid');
+                                $('.errorHarga').html(response.errors.harga);
                             } else {
-                                $('#provinsi').removeClass('is-invalid');
-                                $('.errorProvinsi').html('');
+                                $('#harga').removeClass('is-invalid');
+                                $('.errorHarga').html('');
                             }
 
-                            if (response.errors.kabupaten) {
-                                $('#kabupaten').addClass('is-invalid');
-                                $('.errorKabupaten').html(response.errors.kabupaten);
+                            if (response.errors.stok) {
+                                $('#stok').addClass('is-invalid');
+                                $('.errorStok').html(response.errors.stok);
                             } else {
-                                $('#kabupaten').removeClass('is-invalid');
-                                $('.errorKabupaten').html('');
+                                $('#stok').removeClass('is-invalid');
+                                $('.errorStok').html('');
                             }
 
-                            if (response.errors.kecamatan) {
-                                $('#kecamatan').addClass('is-invalid');
-                                $('.errorKecamatan').html(response.errors.kecamatan);
+                            if (response.errors.kategori) {
+                                $('#kategori').addClass('is-invalid');
+                                $('.errorKategori').html(response.errors.kategori);
                             } else {
-                                $('#kecamatan').removeClass('is-invalid');
-                                $('.errorKecamatan').html('');
+                                $('#kategori').removeClass('is-invalid');
+                                $('.errorKategori').html('');
                             }
 
-                            if (response.errors.desa) {
-                                $('#desa').addClass('is-invalid');
-                                $('.errorDesa').html(response.errors.desa);
+                            if (response.errors.deskripsi) {
+                                $('#deskripsi').addClass('is-invalid');
+                                $('.errorDeskripsi').html(response.errors.deskripsi);
                             } else {
-                                $('#desa').removeClass('is-invalid');
-                                $('.errorDesa').html('');
-                            }
-
-                            if (response.errors.kode_pos) {
-                                $('#kode_pos').addClass('is-invalid');
-                                $('.errorKodePos').html(response.errors.kode_pos);
-                            } else {
-                                $('#kode_pos').removeClass('is-invalid');
-                                $('.errorKodePos').html('');
-                            }
-
-                            if (response.errors.jalan) {
-                                $('#jalan').addClass('is-invalid');
-                                $('.errorJalan').html(response.errors.jalan);
-                            } else {
-                                $('#jalan').removeClass('is-invalid');
-                                $('.errorJalan').html('');
-                            }
-
-                            if (response.errors.detail_produk) {
-                                $('#detail_produk').addClass('is-invalid');
-                                $('.errorDetailproduk').html(response.errors.detail_produk);
-                            } else {
-                                $('#detail_produk').removeClass('is-invalid');
-                                $('.errorDetailproduk').html('');
+                                $('#deskripsi').removeClass('is-invalid');
+                                $('.errorDeskripsi').html('');
                             }
                         } else {
                             Swal.fire({

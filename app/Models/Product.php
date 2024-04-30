@@ -34,4 +34,9 @@ class Product extends Model
     {
         return 'string';
     }
+
+    public function photos()
+    {
+        return $this->hasMany(ProductPhoto::class);
+    }
 }

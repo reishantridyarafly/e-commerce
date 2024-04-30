@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('avatar')->nullable();
-            $table->tinyInteger('type')->comment('0 = Owner, 1 = Admin, 2 = Pelanggan');
+            $table->tinyInteger('type')->comment('0 = Pemilik, 1 = Admin, 2 = Pelanggan');
             $table->boolean('aktif_status')->default(0)->comment('0 = Aktif, 1 = Tidak Aktif');
             $table->rememberToken();
             $table->timestamps();

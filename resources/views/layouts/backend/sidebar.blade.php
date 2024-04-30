@@ -50,6 +50,20 @@
                     <span> Produk </span>
                 </a>
             </li>
+            <li class="side-nav-item {{ request()->routeIs(['produk.*']) ? 'menuitem-active' : '' }}">
+                <a href="{{ route('produk.index') }}"
+                    class="side-nav-link {{ request()->routeIs(['produk.*']) ? 'active' : '' }}">
+                    <i class="ri-user-line"></i>
+                    <span> Pelanggan </span>
+                </a>
+            </li>
+            <li class="side-nav-item {{ request()->routeIs(['pengguna.*']) ? 'menuitem-active' : '' }}">
+                <a href="{{ route('pengguna.index') }}"
+                    class="side-nav-link {{ request()->routeIs(['pengguna.*']) ? 'active' : '' }}">
+                    <i class="ri-user-2-line"></i>
+                    <span> Pengguna </span>
+                </a>
+            </li>
 
             <li class="side-nav-title">Pengaturan</li>
             <li class="side-nav-item {{ request()->routeIs(['profile.*']) ? 'menuitem-active' : '' }}">

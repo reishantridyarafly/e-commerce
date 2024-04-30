@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('foto');
             $table->uuid('kategori_id');
             $table->foreign('kategori_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->boolean('status')->default(0)->comment('0 = Aktif, 1 = Tidak Aktif');
             $table->timestamps();
         });
     }

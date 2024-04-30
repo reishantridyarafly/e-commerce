@@ -38,7 +38,6 @@ class AddressController extends Controller
             $request->all(),
             [
                 'name' => 'required|string',
-                'name' => 'required|string',
                 'no_telepon' => 'required|string|min:11',
                 'provinsi' => 'required|string',
                 'kabupaten' => 'required|string',
