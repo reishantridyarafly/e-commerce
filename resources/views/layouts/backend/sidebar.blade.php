@@ -50,9 +50,9 @@
                     <span> Produk </span>
                 </a>
             </li>
-            <li class="side-nav-item {{ request()->routeIs(['produk.*']) ? 'menuitem-active' : '' }}">
-                <a href="{{ route('produk.index') }}"
-                    class="side-nav-link {{ request()->routeIs(['produk.*']) ? 'active' : '' }}">
+            <li class="side-nav-item {{ request()->routeIs(['pelanggan.*']) ? 'menuitem-active' : '' }}">
+                <a href="{{ route('pelanggan.index') }}"
+                    class="side-nav-link {{ request()->routeIs(['pelanggan.*']) ? 'active' : '' }}">
                     <i class="ri-user-line"></i>
                     <span> Pelanggan </span>
                 </a>

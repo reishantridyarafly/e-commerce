@@ -60,4 +60,10 @@ Route::middleware(['auth', 'user-access:Pemilik,Administrator,Pelanggan'])->grou
     Route::post('/pengguna/updateActiveStatus', [App\Http\Controllers\Backend\UsersController::class, 'updateActiveStatus'])->name('pengguna.updateActiveStatus');
     Route::get('/pengguna/{id}/edit', [App\Http\Controllers\Backend\UsersController::class, 'edit'])->name('pengguna.edit');
     Route::delete('/pengguna/{id}', [App\Http\Controllers\Backend\UsersController::class, 'destroy'])->name('pengguna.destroy');
+
+    Route::get('/pelanggan', [App\Http\Controllers\Backend\CustomersController::class, 'index'])->name('pelanggan.index');
+    Route::post('/pelanggan', [App\Http\Controllers\Backend\CustomersController::class, 'store'])->name('pelanggan.store');
+    Route::post('/pelanggan/updateActiveStatus', [App\Http\Controllers\Backend\CustomersController::class, 'updateActiveStatus'])->name('pelanggan.updateActiveStatus');
+    Route::get('/pelanggan/{id}/edit', [App\Http\Controllers\Backend\CustomersController::class, 'edit'])->name('pelanggan.edit');
+    Route::delete('/pelanggan/{id}', [App\Http\Controllers\Backend\CustomersController::class, 'destroy'])->name('pelanggan.destroy');
 });

@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
-class UsersController extends Controller
+class CustomersController extends Controller
 {
     public function index()
     {
         if (request()->ajax()) {
-            $users = User::where('id', '!=', auth()->user()->id)->where('type', '!=', '2')->orderBy('first_name', 'asc')->get();
+            $users = User::where('id', '!=', auth()->user()->id)->where('type', '=', '2')->orderBy('first_name', 'asc')->get();
             return DataTables::of($users)
                 ->addIndexColumn()
                 ->addColumn('name', function ($data) {
@@ -42,7 +42,7 @@ class UsersController extends Controller
                 ->rawColumns(['name', 'aktif_status', 'aksi'])
                 ->make(true);
         }
-        return view('backend.users.index');
+        return view('backend.customers.index');
     }
 
     public function store(Request $request)
@@ -54,7 +54,6 @@ class UsersController extends Controller
                 'first_name' => 'required',
                 'email' => 'required|unique:users,email,' . $id,
                 'no_telepon' => 'required|min:11|max:13|unique:users,no_telepon,' . $id,
-                'type' => 'required',
             ],
             [
                 'first_name.required' => 'Silakan isi nama depan terlebih dahulu',
@@ -64,7 +63,6 @@ class UsersController extends Controller
                 'no_telepon.min' => 'No telepon :min karakter',
                 'no_telepon.max' => 'No telepon :max karakter',
                 'no_telepon.unique' => 'No telepon sudah digunakan',
-                'type.required' => 'Silakan pilih type terlebih dahulu'
             ]
         );
 
@@ -76,7 +74,7 @@ class UsersController extends Controller
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 'no_telepon' => $request->no_telepon,
-                'type' => $request->type,
+                'type' => 2,
             ];
 
             if (!$id) {
