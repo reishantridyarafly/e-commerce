@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
-class PenggunaController extends Controller
+class UsersController extends Controller
 {
     public function index()
     {
@@ -42,7 +42,7 @@ class PenggunaController extends Controller
                 ->rawColumns(['name', 'aktif_status', 'aksi'])
                 ->make(true);
         }
-        return view('backend.pengguna.index');
+        return view('backend.users.index');
     }
 
     public function store(Request $request)
@@ -71,16 +71,20 @@ class PenggunaController extends Controller
         if ($validated->fails()) {
             return response()->json(['errors' => $validated->errors()]);
         } else {
-            $user = User::updateOrCreate([
-                'id' => $id
-            ], [
+            $userData = [
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 'no_telepon' => $request->no_telepon,
-                'password' => Hash::make(12345),
                 'type' => $request->type,
-            ]);
+            ];
+
+            if (!$id) {
+                $userData['password'] = Hash::make('12345');
+            }
+
+            $user = User::updateOrCreate(['id' => $id], $userData);
+
             return response()->json($user);
         }
     }

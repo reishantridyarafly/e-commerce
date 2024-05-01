@@ -55,9 +55,9 @@ Route::middleware(['auth', 'user-access:Pemilik,Administrator,Pelanggan'])->grou
     Route::post('/profile/settings/delete-photo', [App\Http\Controllers\Backend\ProfileController::class, 'deletePhoto'])->name('profile.deletePhoto');
     Route::post('/profile/delete/account', [App\Http\Controllers\Backend\ProfileController::class, 'deleteAccount'])->name('profile.deleteAccount');
 
-    Route::get('/pengguna', [App\Http\Controllers\Backend\PenggunaController::class, 'index'])->name('pengguna.index');
-    Route::post('/pengguna', [App\Http\Controllers\Backend\PenggunaController::class, 'store'])->name('pengguna.store');
-    Route::post('/pengguna/updateActiveStatus', [App\Http\Controllers\Backend\PenggunaController::class, 'updateActiveStatus'])->name('pengguna.updateActiveStatus');
-    Route::get('/pengguna/{id}/edit', [App\Http\Controllers\Backend\PenggunaController::class, 'edit'])->name('pengguna.edit');
-    Route::delete('/pengguna/{id}', [App\Http\Controllers\Backend\PenggunaController::class, 'destroy'])->name('pengguna.destroy');
+    Route::get('/pengguna', [App\Http\Controllers\Backend\UsersController::class, 'index'])->name('pengguna.index');
+    Route::post('/pengguna', [App\Http\Controllers\Backend\UsersController::class, 'store'])->name('pengguna.store');
+    Route::post('/pengguna/updateActiveStatus', [App\Http\Controllers\Backend\UsersController::class, 'updateActiveStatus'])->name('pengguna.updateActiveStatus');
+    Route::get('/pengguna/{id}/edit', [App\Http\Controllers\Backend\UsersController::class, 'edit'])->name('pengguna.edit');
+    Route::delete('/pengguna/{id}', [App\Http\Controllers\Backend\UsersController::class, 'destroy'])->name('pengguna.destroy');
 });
