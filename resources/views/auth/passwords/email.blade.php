@@ -29,10 +29,10 @@
                 <div class="col-xxl-8 col-lg-10">
                     <div class="card overflow-hidden">
                         <div class="row g-0">
-                            <div class="col-lg-6 d-none d-lg-block p-2">
+                            {{-- <div class="col-lg-6 d-none d-lg-block p-2">
                                 <img src="{{ asset('assets') }}/images/auth-img.jpg" alt=""
                                     class="img-fluid rounded h-100">
-                            </div>
+                            </div> --}}
                             <div class="col-lg-6">
                                 <div class="d-flex flex-column h-100">
                                     <div class="auth-brand p-4">

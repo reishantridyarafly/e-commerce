@@ -9,11 +9,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
 {
     public function index()
     {
+        if (request()->ajax()) {
+            $category = Category::orderBy('nama', 'asc')->get();
+            return DataTables::of($category)
+                ->addIndexColumn()
+                ->addColumn('aksi', function ($data) {
+                    $btn = '<button type="button" class="btn btn-warning btn-sm me-1" data-id="' . $data->id . '" id="btnEdit"><i class="ri-pencil-line"></i></button>';
+                    $btn = $btn . '<button type="button" class="btn btn-danger btn-sm" data-id="' . $data->id . '" id="btnDelete"><i class="ri-delete-bin-line"></i></button>';
+                    return $btn;
+                })
+                ->rawColumns(['aksi'])
+                ->make(true);
+        }
+        return view('backend.category.index');
     }
 
     public function create()
