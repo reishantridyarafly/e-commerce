@@ -25,10 +25,10 @@ class UsersController extends Controller
                 ->addColumn('aktif_status', function ($data) {
                     $status = $data->aktif_status == 0 ? '<div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="aktif_status" name="aktif_status" data-id="' . $data->id . '" checked>
-                <label class="form-check-label" for="aktif_status"></label>
+                <label class="form-check-label" for="aktif_status">Aktif</label>
                 </div>' : '<div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="aktif_status" data-id="' . $data->id . '" name="aktif_status">
-                <label class="form-check-label" for="aktif_status"></label>
+                <label class="form-check-label" for="aktif_status">Tidak Aktif</label>
                 </div>';
                     return $status;
                 })

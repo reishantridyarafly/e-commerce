@@ -45,6 +45,7 @@ Route::middleware(['auth', 'user-access:Pemilik,Administrator,Pelanggan'])->grou
     Route::get('/produk', [App\Http\Controllers\Backend\ProductController::class, 'index'])->name('produk.index');
     Route::get('/produk/tambah', [App\Http\Controllers\Backend\ProductController::class, 'create'])->name('produk.create');
     Route::post('/produk', [App\Http\Controllers\Backend\ProductController::class, 'store'])->name('produk.store');
+    Route::post('/produk/updateActiveStatus', [App\Http\Controllers\Backend\ProductController::class, 'updateActiveStatus'])->name('produk.updateActiveStatus');
     Route::get('/produk/{id}/edit', [App\Http\Controllers\Backend\ProductController::class, 'edit'])->name('produk.edit');
     Route::post('/produk/{id}', [App\Http\Controllers\Backend\ProductController::class, 'update'])->name('produk.update');
     Route::delete('/produk/{id}', [App\Http\Controllers\Backend\ProductController::class, 'destroy'])->name('produk.destroy');
