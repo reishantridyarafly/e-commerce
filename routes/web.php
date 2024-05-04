@@ -14,16 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\Frontend\BerandaController::class, 'index'])->name('beranda.index');
+Route::get('/tentang', [App\Http\Controllers\Frontend\AboutController::class, 'index'])->name('tentang.index');
+Route::get('/barang', [App\Http\Controllers\Frontend\ShopController::class, 'index'])->name('barang.index');
+Route::get('/kontak', [App\Http\Controllers\Frontend\ContactController::class, 'index'])->name('kontak.index');
+
 
 Auth::routes();
 
 Route::middleware(['auth', 'user-access:Pemilik,Administrator,Pelanggan'])->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard.index');
-
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
+    Route::get('/dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::post('/alamat/kabupaten', [App\Http\Controllers\Backend\AddressController::class, 'getKabupaten'])->name('alamat.get-kabupaten');
     Route::post('/alamat/kabupaten', [App\Http\Controllers\Backend\AddressController::class, 'getKabupaten'])->name('alamat.get-kabupaten');
