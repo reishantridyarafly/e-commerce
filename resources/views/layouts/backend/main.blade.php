@@ -8,18 +8,18 @@
     <meta content="{{ csrf_token() }}" name="csrf-token">
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets') }}/images/favicon.ico">
+    <link rel="shortcut icon" href="{{ asset('backend/assets') }}/images/favicon.ico">
 
     @yield('css')
 
     <!-- Theme Config Js -->
-    <script src="{{ asset('assets') }}/js/config.js"></script>
+    <script src="{{ asset('backend/assets') }}/js/config.js"></script>
 
     <!-- App css -->
-    <link href="{{ asset('assets') }}/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+    <link href="{{ asset('backend/assets') }}/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
     <!-- Icons css -->
-    <link href="{{ asset('assets') }}/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/assets') }}/css/icons.min.css" rel="stylesheet" type="text/css" />
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -83,7 +83,7 @@
                                 <input class="form-check-input" type="checkbox" name="data-bs-theme"
                                     id="layout-color-light" value="light">
                                 <label class="form-check-label" for="layout-color-light">
-                                    <img src="{{ asset('assets') }}/images/layouts/light.png" alt=""
+                                    <img src="{{ asset('backend/assets') }}/images/layouts/light.png" alt=""
                                         class="img-fluid">
                                 </label>
                             </div>
@@ -95,7 +95,7 @@
                                 <input class="form-check-input" type="checkbox" name="data-bs-theme"
                                     id="layout-color-dark" value="dark">
                                 <label class="form-check-label" for="layout-color-dark">
-                                    <img src="{{ asset('assets') }}/images/layouts/dark.png" alt=""
+                                    <img src="{{ asset('backend/assets') }}/images/layouts/dark.png" alt=""
                                         class="img-fluid">
                                 </label>
                             </div>
@@ -112,7 +112,7 @@
                                     <input class="form-check-input" type="checkbox" name="data-layout-mode"
                                         id="layout-mode-fluid" value="fluid">
                                     <label class="form-check-label" for="layout-mode-fluid">
-                                        <img src="{{ asset('assets') }}/images/layouts/light.png" alt=""
+                                        <img src="{{ asset('backend/assets') }}/images/layouts/light.png" alt=""
                                             class="img-fluid">
                                     </label>
                                 </div>
@@ -125,7 +125,7 @@
                                         <input class="form-check-input" type="checkbox" name="data-layout-mode"
                                             id="layout-mode-boxed" value="boxed">
                                         <label class="form-check-label" for="layout-mode-boxed">
-                                            <img src="{{ asset('assets') }}/images/layouts/boxed.png" alt=""
+                                            <img src="{{ asset('backend/assets') }}/images/layouts/boxed.png" alt=""
                                                 class="img-fluid">
                                         </label>
                                     </div>
@@ -143,7 +143,7 @@
                                 <input class="form-check-input" type="checkbox" name="data-topbar-color"
                                     id="topbar-color-light" value="light">
                                 <label class="form-check-label" for="topbar-color-light">
-                                    <img src="{{ asset('assets') }}/images/layouts/light.png" alt=""
+                                    <img src="{{ asset('backend/assets') }}/images/layouts/light.png" alt=""
                                         class="img-fluid">
                                 </label>
                             </div>
@@ -155,7 +155,7 @@
                                 <input class="form-check-input" type="checkbox" name="data-topbar-color"
                                     id="topbar-color-dark" value="dark">
                                 <label class="form-check-label" for="topbar-color-dark">
-                                    <img src="{{ asset('assets') }}/images/layouts/topbar-dark.png" alt=""
+                                    <img src="{{ asset('backend/assets') }}/images/layouts/topbar-dark.png" alt=""
                                         class="img-fluid">
                                 </label>
                             </div>
@@ -172,7 +172,7 @@
                                     <input class="form-check-input" type="checkbox" name="data-menu-color"
                                         id="leftbar-color-light" value="light">
                                     <label class="form-check-label" for="leftbar-color-light">
-                                        <img src="{{ asset('assets') }}/images/layouts/sidebar-light.png"
+                                        <img src="{{ asset('backend/assets') }}/images/layouts/sidebar-light.png"
                                             alt="" class="img-fluid">
                                     </label>
                                 </div>
@@ -184,7 +184,7 @@
                                     <input class="form-check-input" type="checkbox" name="data-menu-color"
                                         id="leftbar-color-dark" value="dark">
                                     <label class="form-check-label" for="leftbar-color-dark">
-                                        <img src="{{ asset('assets') }}/images/layouts/light.png" alt=""
+                                        <img src="{{ asset('backend/assets') }}/images/layouts/light.png" alt=""
                                             class="img-fluid">
                                     </label>
                                 </div>
@@ -202,7 +202,7 @@
                                     <input class="form-check-input" type="checkbox" name="data-sidenav-size"
                                         id="leftbar-size-default" value="default">
                                     <label class="form-check-label" for="leftbar-size-default">
-                                        <img src="{{ asset('assets') }}/images/layouts/light.png" alt=""
+                                        <img src="{{ asset('backend/assets') }}/images/layouts/light.png" alt=""
                                             class="img-fluid">
                                     </label>
                                 </div>
@@ -214,7 +214,7 @@
                                     <input class="form-check-input" type="checkbox" name="data-sidenav-size"
                                         id="leftbar-size-compact" value="compact">
                                     <label class="form-check-label" for="leftbar-size-compact">
-                                        <img src="{{ asset('assets') }}/images/layouts/compact.png" alt=""
+                                        <img src="{{ asset('backend/assets') }}/images/layouts/compact.png" alt=""
                                             class="img-fluid">
                                     </label>
                                 </div>
@@ -226,7 +226,7 @@
                                     <input class="form-check-input" type="checkbox" name="data-sidenav-size"
                                         id="leftbar-size-small" value="condensed">
                                     <label class="form-check-label" for="leftbar-size-small">
-                                        <img src="{{ asset('assets') }}/images/layouts/sm.png" alt=""
+                                        <img src="{{ asset('backend/assets') }}/images/layouts/sm.png" alt=""
                                             class="img-fluid">
                                     </label>
                                 </div>
@@ -239,7 +239,7 @@
                                     <input class="form-check-input" type="checkbox" name="data-sidenav-size"
                                         id="leftbar-size-full" value="full">
                                     <label class="form-check-label" for="leftbar-size-full">
-                                        <img src="{{ asset('assets') }}/images/layouts/full.png" alt=""
+                                        <img src="{{ asset('backend/assets') }}/images/layouts/full.png" alt=""
                                             class="img-fluid">
                                     </label>
                                 </div>
@@ -274,12 +274,12 @@
         </div>
     </div>
     <!-- Vendor js -->
-    <script src="{{ asset('assets') }}/js/vendor.min.js"></script>
+    <script src="{{ asset('backend/assets') }}/js/vendor.min.js"></script>
 
     @yield('javascript')
 
     <!-- App js -->
-    <script src="{{ asset('assets') }}/js/app.min.js"></script>
+    <script src="{{ asset('backend/assets') }}/js/app.min.js"></script>
 
 </body>
 

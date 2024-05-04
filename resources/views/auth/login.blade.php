@@ -1,26 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <title>Log In | E-Commerce</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta content="{{ csrf_token() }}" name="csrf-token">
-
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets') }}/images/favicon.ico" />
-
-    <!-- Theme Config Js -->
-    <script src="{{ asset('assets') }}/js/config.js"></script>
-
-    <!-- App css -->
-    <link href="{{ asset('assets') }}/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
-
-    <!-- Icons css -->
-    <link href="{{ asset('assets') }}/css/icons.min.css" rel="stylesheet" type="text/css" />
-</head>
-
-<body class="authentication-bg position-relative">
+@extends('layouts.auth.main')
+@section('title', 'Log In')
+@section('content')
     <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
         <div class="container">
             <div class="row justify-content-center">
@@ -28,18 +8,18 @@
                     <div class="card overflow-hidden">
                         <div class="row g-0">
                             {{-- <div class="col-lg-6 d-none d-lg-block p-2">
-                                <img src="{{ asset('assets') }}/images/auth-img.jpg" alt=""
-                                    class="img-fluid rounded h-100" />
-                            </div> --}}
+                            <img src="{{ asset('backend/assets') }}/images/auth-img.jpg" alt=""
+                                class="img-fluid rounded h-100" />
+                        </div> --}}
                             <div class="col-lg-12">
                                 <div class="d-flex flex-column h-100">
                                     <div class="auth-brand p-4">
                                         <a href="index.html" class="logo-light">
-                                            <img src="{{ asset('assets') }}/images/logo.png" alt="logo"
+                                            <img src="{{ asset('backend/assets') }}/images/logo.png" alt="logo"
                                                 height="22" />
                                         </a>
                                         <a href="index.html" class="logo-dark">
-                                            <img src="{{ asset('assets') }}/images/logo-dark.png" alt="dark logo"
+                                            <img src="{{ asset('backend/assets') }}/images/logo-dark.png" alt="dark logo"
                                                 height="22" />
                                         </a>
                                     </div>
@@ -53,8 +33,8 @@
                                         <form id="form">
                                             <div class="mb-3">
                                                 <label for="username" class="form-label">Email / No Telepon</label>
-                                                <input class="form-control" type="text" id="username"
-                                                    name="username" autocomplete="username" autofocus
+                                                <input class="form-control" type="text" id="username" name="username"
+                                                    autocomplete="username" autofocus
                                                     placeholder="Masukan email / no telepon" />
                                                 <small class="text-danger errorUsername mt-2"></small>
                                             </div>
@@ -82,8 +62,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-0 text-start">
-                                                <button class="btn btn-soft-primary w-100" type="submit"
-                                                    id="login">
+                                                <button class="btn btn-soft-primary w-100" type="submit" id="login">
                                                     <i class="ri-login-circle-fill me-1"></i>
                                                     <span class="fw-bold">Log In</span>
                                                 </button>
@@ -114,24 +93,9 @@
         <!-- end container -->
     </div>
     <!-- end page -->
+@endsection
 
-    <footer class="footer footer-alt fw-medium">
-        <span class="text-dark">
-            <script>
-                document.write(new Date().getFullYear())
-            </script> © {{ config('app.name') }} - by <b>Rio Akbar Turmuzi </b>
-        </span>
-    </footer>
-    <!-- Vendor js -->
-    <script src="{{ asset('assets') }}/js/vendor.min.js"></script>
-
-    <!-- App js -->
-    <script src="{{ asset('assets') }}/js/app.min.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+@section('javascript')
     <script>
         $(document).ready(function() {
             $.ajaxSetup({
@@ -201,6 +165,4 @@
             });
         })
     </script>
-</body>
-
-</html>
+@endsection

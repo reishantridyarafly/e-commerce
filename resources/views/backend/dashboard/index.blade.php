@@ -211,7 +211,7 @@
                                             <ul class="conversation-list">
                                                 <li class="clearfix">
                                                     <div class="chat-avatar">
-                                                        <img src="{{ asset('assets') }}/images/users/avatar-5.jpg"
+                                                        <img src="{{ asset('backend/assets') }}/images/users/avatar-5.jpg"
                                                             alt="male">
                                                         <i>10:00</i>
                                                     </div>
@@ -226,7 +226,7 @@
                                                 </li>
                                                 <li class="clearfix odd">
                                                     <div class="chat-avatar">
-                                                        <img src="{{ asset('assets') }}/images/users/avatar-1.jpg"
+                                                        <img src="{{ asset('backend/assets') }}/images/users/avatar-1.jpg"
                                                             alt="Female">
                                                         <i>10:01</i>
                                                     </div>
@@ -241,7 +241,7 @@
                                                 </li>
                                                 <li class="clearfix">
                                                     <div class="chat-avatar">
-                                                        <img src="{{ asset('assets') }}/images/users/avatar-5.jpg"
+                                                        <img src="{{ asset('backend/assets') }}/images/users/avatar-5.jpg"
                                                             alt="male">
                                                         <i>10:01</i>
                                                     </div>
@@ -256,7 +256,7 @@
                                                 </li>
                                                 <li class="clearfix odd">
                                                     <div class="chat-avatar">
-                                                        <img src="{{ asset('assets') }}/images/users/avatar-1.jpg"
+                                                        <img src="{{ asset('backend/assets') }}/images/users/avatar-1.jpg"
                                                             alt="male">
                                                         <i>10:02</i>
                                                     </div>

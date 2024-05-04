@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="profile-bg-picture"
-                            style="background-image:url('{{ asset('assets') }}/images/bg-profile.jpg')">
+                            style="background-image:url('{{ asset('backend/assets') }}/images/bg-profile.jpg')">
                             <span class="picture-bg-overlay"></span>
                             <!-- overlay -->
                         </div>

@@ -2,7 +2,7 @@
 @section('title', 'Tambah Alamat')
 @section('css')
     <!-- Select2 css -->
-    <link href="{{ asset('assets') }}/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/assets') }}/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -136,7 +136,7 @@
 @endsection
 @section('javascript')
     <!--  Select2 Plugin Js -->
-    <script src="{{ asset('assets') }}/vendor/select2/js/select2.min.js"></script>
+    <script src="{{ asset('backend/assets') }}/vendor/select2/js/select2.min.js"></script>
     <script>
         $('.select2').select2();
 
