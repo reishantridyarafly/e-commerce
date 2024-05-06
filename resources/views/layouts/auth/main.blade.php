@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>@yield('title') | E-Commerce</title>
+    <title>@yield('title') | {{ config('app.name') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta content="{{ csrf_token() }}" name="csrf-token">
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('backend/assets') }}/images/favicon.ico" />
+    <link rel="shortcut icon" href="{{ asset('backend/assets') }}/images/favicon.png" />
 
     <!-- Theme Config Js -->
     <script src="{{ asset('backend/assets') }}/js/config.js"></script>

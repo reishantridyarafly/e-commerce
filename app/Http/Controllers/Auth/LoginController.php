@@ -80,8 +80,8 @@ class LoginController extends Controller
                     return response()->json(['redirect' => route('dashboard.index')]);
                 } elseif ($user->type == 'Administrator') {
                     return response()->json(['redirect' => route('dashboard.index')]);
-                } elseif ($user->type == 'User') {
-                    return response()->json(['redirect' => route('dashboard.index')]);
+                } elseif ($user->type == 'Pelanggan') {
+                    return response()->json(['redirect' => route('beranda.index')]);
                 }
             } else {
                 return response()->json(['WrongPassword' => ['message' => 'Password salah.']]);

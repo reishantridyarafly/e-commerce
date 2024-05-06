@@ -35,7 +35,7 @@
         <div class="header__middle ul_li_between">
             <div class="header__logo">
                 <a href="index.html">
-                    <img src="{{ asset('frontend/assets') }}/img/logo/logo.svg" alt="">
+                    <img src="{{ asset('frontend/assets') }}/img/logo.png" style="height: 100px">
                 </a>
             </div>
         </div>
@@ -45,7 +45,7 @@
             <div class="header__main ul_li">
                 <div class="header__logo">
                     <a href="index.html">
-                        <img src="{{ asset('frontend/assets') }}/img/logo/logo.svg" alt="">
+                        <img src="{{ asset('frontend/assets') }}/img/logo.png" alt=""  style="height: 40px">
                     </a>
                 </div>
                 <div class="header__category pos-rel">
@@ -57,8 +57,15 @@
                         </button>
                         <div class="vertical-menu-list category-nav">
                             <ul class="category-nav__list list-unstyled">
-                                <li><a href="#">Bluetooth
-                                        speaker</a></li>
+                                @forelse ($category_header as $row)
+                                    <li>
+                                        <a href="{{ $row->slug }}">{{ $row->nama }}</a>
+                                    </li>
+                                @empty
+                                    <li>
+                                        <a href="#">Data tidak tersedia</a>
+                                    </li>
+                                @endforelse
                             </ul>
                         </div>
 
@@ -79,8 +86,8 @@
                                     href="{{ route('beranda.index') }}">Beranda</a></li>
                             <li class="{{ request()->routeIs(['tentang.*']) ? 'active' : '' }}"><a
                                     href="{{ route('tentang.index') }}">Tentang</a></li>
-                            <li class="{{ request()->routeIs(['barang.*']) ? 'active' : '' }}"><a
-                                    href="{{ route('barang.index') }}">Barang</a></li>
+                            <li class="{{ request()->routeIs(['belanja.*']) ? 'active' : '' }}"><a
+                                    href="{{ route('belanja.index') }}">Barang</a></li>
                             <li class="{{ request()->routeIs(['kontak.*']) ? 'active' : '' }}"><a
                                     href="{{ route('kontak.index') }}">Kontak</a></li>
                         </ul>
@@ -91,32 +98,30 @@
                         <input type="text" placeholder="Search........">
                         <button><i class="far fa-search"></i></button>
                     </form>
-                    <div class="header__icons ul_li mr-15">
-                        <div class="icon">
-                            <a href="#!"><img src="{{ asset('frontend/assets') }}/img/icon/user.svg"
-                                    alt=""></a>
+                    @auth
+                        <div class="header__icons ul_li mr-15">
+                            <div class="icon wishlist-icon">
+                                <a href="#!">
+                                    <img src="{{ asset('frontend/assets') }}/img/icon/shopping_bag.svg" alt="">
+                                    <span class="count">0</span>
+                                </a>
+                            </div>
+                            <div class="icon">
+                                <a href="#!"><img src="{{ asset('frontend/assets') }}/img/icon/user.svg"
+                                        alt=""></a>
+                            </div>
                         </div>
-                        <div class="icon wishlist-icon">
-                            <a href="#!">
-                                <img src="{{ asset('frontend/assets') }}/img/icon/heart.svg" alt="">
-                                <span class="count">0</span>
+                    @endauth
+                    @guest
+                        <div class="login-sign-btn">
+                            <a class="thm-btn thm-btn__2 text-black" href="{{ route('login') }}">
+                                <span class="btn-wrap">
+                                    <span>Login / Sign Up</span>
+                                    <span>Login / Sign Up</span>
+                                </span>
                             </a>
                         </div>
-                        <div class="icon">
-                            <a href="#!">
-                                <img src="{{ asset('frontend/assets') }}/img/icon/bookmark.svg" alt="">
-                                <span class="count">0</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="login-sign-btn">
-                        <a class="thm-btn thm-btn__2 text-black" href="account.html">
-                            <span class="btn-wrap">
-                                <span>Login / Sign Up</span>
-                                <span>Login / Sign Up</span>
-                            </span>
-                        </a>
-                    </div>
+                    @endguest
                 </div>
             </div>
         </div>

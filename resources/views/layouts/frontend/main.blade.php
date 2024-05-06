@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>@yield('title') - E-Commerce</title>
+    <title>@yield('title') - {{ config('app.name') }}</title>
 
     <link rel="shortcut icon" href="{{ asset('frontend/assets') }}/img/favicon.png" type="images/x-icon" />
 

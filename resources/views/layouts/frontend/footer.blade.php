@@ -5,7 +5,7 @@
              <div class="row mt-none-40">
                  <div class="footer__widget col-lg-3 col-md-6 mt-40">
                      <div class="footer__logo mb-20">
-                         <a href="index.html"><img src="{{ asset('frontend/assets') }}/img/logo/logo-2.svg"
+                         <a href="index.html"><img src="{{ asset('frontend/assets') }}/img/logo.png" style="height: 80px"
                                  alt=""></a>
                      </div>
                      <p>4517 Washington Ave. Manchester, Kentucky 39495 ashington Ave. Manchester,</p>
@@ -55,7 +55,9 @@
          </div>
          <div class="footer__bottom ul_li_center">
              <div class="footer__copyright mt-15">
-                 &copy; 2022 <a href="#!">Themexriver</a> . All Rights Reserved.
+                 <script>
+                     document.write(new Date().getFullYear())
+                 </script> © {{ config('app.name') }} - by <b>Rio Akbar Turmuzi </b>
              </div>
              <div class="footer__social mt-15">
                  <a href="#!"><i class="fab fa-facebook-f"></i></a>

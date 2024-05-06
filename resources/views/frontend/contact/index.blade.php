@@ -7,10 +7,10 @@
             <div class="radios-breadcrumb breadcrumbs">
                 <ul class="list-unstyled d-flex align-items-center">
                     <li class="radiosbcrumb-item radiosbcrumb-begin">
-                        <a href="index.html"><span>Home</span></a>
+                        <a href="{{ route('beranda.index') }}"><span>Beranda</span></a>
                     </li>
                     <li class="radiosbcrumb-item radiosbcrumb-end">
-                        <span>Contact</span>
+                        <span>Kontak</span>
                     </li>
                 </ul>
             </div>
@@ -22,7 +22,7 @@
     <section class="contact-info">
         <div class="container">
             <div class="row justify-content-center mt-none-30">
-                <div class="col-xl-3 col-lg-4 col-md-6 mt-30">
+                <div class="col-xl-4 col-lg-4 col-md-6 mt-30">
                     <div class="contact-info__item d-flex">
                         <span class="icon"><img src="{{ asset('frontend/assets') }}/img/icon/mail.svg" alt=""></span>
                         <div class="content">
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 mt-30">
+                <div class="col-xl-4 col-lg-4 col-md-6 mt-30">
                     <div class="contact-info__item active d-flex">
                         <span class="icon"><img src="{{ asset('frontend/assets') }}/img/icon/location.svg" alt=""></span>
                         <div class="content">
@@ -41,23 +41,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 mt-30">
+                <div class="col-xl-4 col-lg-4 col-md-6 mt-30">
                     <div class="contact-info__item d-flex">
                         <span class="icon"><img src="{{ asset('frontend/assets') }}/img/icon/call-2.svg" alt=""></span>
                         <div class="content">
                             <h3>Phone Number</h3>
                             <a href="tel:404555012834">+405 - 555 - 0128 - 34</a>
                             <a href="tel:404555012863">+405 - 555 - 0128 - 63</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 mt-30">
-                    <div class="contact-info__item d-flex">
-                        <span class="icon"><img src="{{ asset('frontend/assets') }}/img/icon/c_us.svg" alt=""></span>
-                        <div class="content">
-                            <h3>Connect Us</h3>
-                            <a href="mailto:radios.info@gmail.com">radios.info@gmail.com</a>
-                            <a href="mailto:radios.support@gmail.com">radios.support@gmail.com</a>
                         </div>
                     </div>
                 </div>

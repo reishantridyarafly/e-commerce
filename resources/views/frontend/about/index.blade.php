@@ -7,10 +7,10 @@
             <div class="radios-breadcrumb breadcrumbs">
                 <ul class="list-unstyled d-flex align-items-center">
                     <li class="radiosbcrumb-item radiosbcrumb-begin">
-                        <a href="index.html"><span>Home</span></a>
+                        <a href="{{ route('beranda.index') }}"><span>Beranda</span></a>
                     </li>
                     <li class="radiosbcrumb-item radiosbcrumb-end">
-                        <span>About us</span>
+                        <span>Tentang</span>
                     </li>
                 </ul>
             </div>

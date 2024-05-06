@@ -63,7 +63,7 @@
                              alt="user-image" width="32" class="rounded-circle">
                      </span>
                      <span class="d-lg-block d-none">
-                         <h5 class="my-0 fw-normal">{{ auth()->user()->first_name }} <i
+                         <h5 class="my-0 fw-normal">Hai, <strong>{{ auth()->user()->first_name }}</strong> <i
                                  class="ri-arrow-down-s-line d-none d-sm-inline-block align-middle"></i></h5>
                      </span>
                  </a>

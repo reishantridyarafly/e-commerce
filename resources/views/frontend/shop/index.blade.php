@@ -96,7 +96,8 @@
                                 <ul class="products three-column clearfix">
                                     <li class="product">
                                         <div class="product-holder">
-                                            <a href="shop-single.html"><img src="{{ asset('frontend/assets') }}/img/product/img_165.png"
+                                            <a href="shop-single.html"><img
+                                                    src="{{ asset('frontend/assets') }}/img/product/img_165.png"
                                                     alt=""></a>
                                             <ul class="product__action">
                                                 <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
@@ -135,7 +136,8 @@
                                     </li>
                                     <li class="product">
                                         <div class="product-holder">
-                                            <a href="shop-single.html"><img src="{{ asset('frontend/assets') }}/img/product/img_166.png"
+                                            <a href="shop-single.html"><img
+                                                    src="{{ asset('frontend/assets') }}/img/product/img_166.png"
                                                     alt=""></a>
                                             <ul class="product__action">
                                                 <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
@@ -175,7 +177,8 @@
                                     </li>
                                     <li class="product">
                                         <div class="product-holder">
-                                            <a href="shop-single.html"><img src="{{ asset('frontend/assets') }}/img/product/img_167.png"
+                                            <a href="shop-single.html"><img
+                                                    src="{{ asset('frontend/assets') }}/img/product/img_167.png"
                                                     alt=""></a>
                                             <ul class="product__action">
                                                 <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
@@ -214,7 +217,8 @@
                                     </li>
                                     <li class="product">
                                         <div class="product-holder">
-                                            <a href="shop-single.html"><img src="{{ asset('frontend/assets') }}/img/product/img_168.png"
+                                            <a href="shop-single.html"><img
+                                                    src="{{ asset('frontend/assets') }}/img/product/img_168.png"
                                                     alt=""></a>
                                             <ul class="product__action">
                                                 <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
@@ -253,7 +257,8 @@
                                     </li>
                                     <li class="product">
                                         <div class="product-holder">
-                                            <a href="shop-single.html"><img src="{{ asset('frontend/assets') }}/img/product/img_169.png"
+                                            <a href="shop-single.html"><img
+                                                    src="{{ asset('frontend/assets') }}/img/product/img_169.png"
                                                     alt=""></a>
                                             <ul class="product__action">
                                                 <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
@@ -292,7 +297,8 @@
                                     </li>
                                     <li class="product">
                                         <div class="product-holder">
-                                            <a href="shop-single.html"><img src="{{ asset('frontend/assets') }}/img/product/img_170.png"
+                                            <a href="shop-single.html"><img
+                                                    src="{{ asset('frontend/assets') }}/img/product/img_170.png"
                                                     alt=""></a>
                                             <ul class="product__action">
                                                 <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
@@ -332,7 +338,8 @@
                                     </li>
                                     <li class="product">
                                         <div class="product-holder">
-                                            <a href="shop-single.html"><img src="{{ asset('frontend/assets') }}/img/product/img_171.png"
+                                            <a href="shop-single.html"><img
+                                                    src="{{ asset('frontend/assets') }}/img/product/img_171.png"
                                                     alt=""></a>
                                             <ul class="product__action">
                                                 <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
@@ -372,7 +379,8 @@
                                     </li>
                                     <li class="product">
                                         <div class="product-holder">
-                                            <a href="shop-single.html"><img src="{{ asset('frontend/assets') }}/img/product/img_172.png"
+                                            <a href="shop-single.html"><img
+                                                    src="{{ asset('frontend/assets') }}/img/product/img_172.png"
                                                     alt=""></a>
                                             <ul class="product__action">
                                                 <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
@@ -411,7 +419,8 @@
                                     </li>
                                     <li class="product">
                                         <div class="product-holder">
-                                            <a href="shop-single.html"><img src="{{ asset('frontend/assets') }}/img/product/img_173.png"
+                                            <a href="shop-single.html"><img
+                                                    src="{{ asset('frontend/assets') }}/img/product/img_173.png"
                                                     alt=""></a>
                                             <ul class="product__action">
                                                 <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
@@ -450,7 +459,8 @@
                                     </li>
                                     <li class="product">
                                         <div class="product-holder">
-                                            <a href="shop-single.html"><img src="{{ asset('frontend/assets') }}/img/product/img_174.png"
+                                            <a href="shop-single.html"><img
+                                                    src="{{ asset('frontend/assets') }}/img/product/img_174.png"
                                                     alt=""></a>
                                             <ul class="product__action">
                                                 <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
@@ -489,7 +499,8 @@
                                     </li>
                                     <li class="product">
                                         <div class="product-holder">
-                                            <a href="shop-single.html"><img src="{{ asset('frontend/assets') }}/img/product/img_175.png"
+                                            <a href="shop-single.html"><img
+                                                    src="{{ asset('frontend/assets') }}/img/product/img_175.png"
                                                     alt=""></a>
                                             <ul class="product__action">
                                                 <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
@@ -529,7 +540,8 @@
                                     </li>
                                     <li class="product">
                                         <div class="product-holder">
-                                            <a href="shop-single.html"><img src="{{ asset('frontend/assets') }}/img/product/img_176.png"
+                                            <a href="shop-single.html"><img
+                                                    src="{{ asset('frontend/assets') }}/img/product/img_176.png"
                                                     alt=""></a>
                                             <ul class="product__action">
                                                 <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
@@ -581,41 +593,25 @@
                         <div class="shop-sidebar">
                             <div class="widget">
                                 <h2 class="widget__title">
-                                    <span>Search</span>
+                                    <span>Pencarian</span>
                                 </h2>
                                 <form class="widget__search" action="#">
-                                    <input type="text" placeholder="Search...">
+                                    <input type="text" placeholder="Cari...">
                                     <button><i class="far fa-search"></i></button>
                                 </form>
                             </div>
-                            <div class="widget widget_price_filter">
-                                <h2 class="widget__title">
-                                    <span>Price Filtering</span>
-                                </h2>
-                                <div class="filter-price">
-                                    <form>
-                                        <div id="slider-range"></div>
-                                        <p>Price : <input type="text" id="amount"></p>
-                                        <button>filter</button>
-                                    </form>
-                                </div>
-                            </div>
-                           
                             <div class="widget">
                                 <h2 class="widget__title">
-                                    <span>Category</span>
+                                    <span>Kategori</span>
                                 </h2>
                                 <ul class="widget__category">
-                                    <li><a href="#!">Motorbike parts<i class="far fa-chevron-right"></i></a>
-                                    </li>
-                                    <li><a href="#!">Car parts Name<i class="far fa-chevron-right"></i></a></li>
-                                    <li><a href="#!">Bicycle Parts<i class="far fa-chevron-right"></i></a></li>
-                                    <li><a href="#!">Taxi bike parts<i class="far fa-chevron-right"></i></a>
-                                    </li>
-                                    <li><a href="#!">Double decker bus<i class="far fa-chevron-right"></i></a>
-                                    </li>
-                                    <li><a href="#!">Tractor parts<i class="far fa-chevron-right"></i></a></li>
-                                    <li><a href="#!">Bull Dozer<i class="far fa-chevron-right"></i></a></li>
+                                    @forelse ($category_header as $row)
+                                        <li><a href="#!">{{ $row->nama }}<i class="far fa-chevron-right"></i></a>
+                                        </li>
+                                    @empty
+                                        <li><a href="#!">Data tidak tersedia<i class="far fa-chevron-right"></i></a>
+                                        </li>
+                                    @endforelse
                                 </ul>
                             </div>
                             <div class="widget">
@@ -631,8 +627,10 @@
                                         </a>
                                     </div>
                                     <div class="image">
-                                        <img class="add_img" src="{{ asset('frontend/assets') }}/img/product/img_177.png" alt="">
-                                        <img class="add_shape" src="{{ asset('frontend/assets') }}/img/shape/add_shape.png" alt="">
+                                        <img class="add_img" src="{{ asset('frontend/assets') }}/img/product/img_177.png"
+                                            alt="">
+                                        <img class="add_shape"
+                                            src="{{ asset('frontend/assets') }}/img/shape/add_shape.png" alt="">
                                     </div>
                                 </div>
                             </div>

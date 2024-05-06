@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\Frontend\BerandaController::class, 'index'])->name('beranda.index');
 Route::get('/tentang', [App\Http\Controllers\Frontend\AboutController::class, 'index'])->name('tentang.index');
-Route::get('/barang', [App\Http\Controllers\Frontend\ShopController::class, 'index'])->name('barang.index');
+Route::get('/belanja', [App\Http\Controllers\Frontend\ShopController::class, 'index'])->name('belanja.index');
 Route::get('/kontak', [App\Http\Controllers\Frontend\ContactController::class, 'index'])->name('kontak.index');
 
 

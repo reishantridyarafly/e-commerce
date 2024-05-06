@@ -13,14 +13,14 @@
                         </div> --}}
                             <div class="col-lg-12">
                                 <div class="d-flex flex-column h-100">
-                                    <div class="auth-brand p-4">
-                                        <a href="index.html" class="logo-light">
+                                    <div class="auth-brand pt-4 text-center">
+                                        <a href="{{ route('login') }}" class="logo-light">
                                             <img src="{{ asset('backend/assets') }}/images/logo.png" alt="logo"
-                                                height="22">
+                                                height="90" />
                                         </a>
-                                        <a href="index.html" class="logo-dark">
-                                            <img src="{{ asset('backend/assets') }}/images/logo-dark.png" alt="dark logo"
-                                                height="22">
+                                        <a href="{{ route('login') }}" class="logo-dark">
+                                            <img src="{{ asset('backend/assets') }}/images/logo.png" alt="dark logo"
+                                                height="90" />
                                         </a>
                                     </div>
                                     <div class="p-4 my-auto">
