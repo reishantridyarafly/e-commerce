@@ -16,61 +16,52 @@
 <!-- back to top end -->
 
 <!-- header start -->
-<header class="header header__style-two">
-    <div class="header__top-wrap">
-        <div class="container mxw_1530">
+<header class="header header__style-three">
+    <div class="header__top">
+        <div class="container mxw_1360">
             <div class="header__top-info ul_li_between mt-none-10">
                 <ul class="header__top-left ul_li mt-10">
-                    <li>(555) 172-244-7888</li>
-                    <li>adminpath@gmail.com</li>
+                    <li><a href="#!">Call us</a> free 24/7 : (555) 172-244-7888</li>
+                    <li><i class="fas fa-envelope"></i> adminpath@gmail.com</li>
                 </ul>
                 <ul class="header__top-right ul_li mt-10">
-                    <li><i class="far fa-city"></i>Kuningan</li>
-                    <li><a href="#!"><i class="far fa-check-circle"></i>Cheakout</a></li>
+                    <li><i class="far fa-city"></i>new yourk</li>
+                    <li><a href="#!"><i class="far fa-check-circle"></i>Checkout</a></li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="container mxw_1530">
+    <div class="container mxw_1360">
         <div class="header__middle ul_li_between">
             <div class="header__logo">
                 <a href="index.html">
-                    <img src="{{ asset('frontend/assets') }}/img/logo.png" style="height: 100px">
+                    <img src="{{ asset('frontend/assets') }}/img/logo.png" alt="" style="height: 90px;">
                 </a>
+            </div>
+            <div class="d-none d-lg-block">
+                <div class="ul_li">
+                    <div class="header__social">
+                        <a href="#!"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#!"><i class="fab fa-twitter"></i></a>
+                        <a href="#!"><i class="fab fa-instagram"></i></a>
+                        <a href="#!"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div class="header__wrap" data-uk-sticky="top: 250; animation: uk-animation-slide-top;">
-        <div class="container mxw_1530">
+        <div class="container mxw_1360">
             <div class="header__main ul_li">
                 <div class="header__logo">
                     <a href="index.html">
-                        <img src="{{ asset('frontend/assets') }}/img/logo.png" alt=""  style="height: 40px">
+                        <img src="{{ asset('frontend/assets') }}/img/logo.png" alt="" style="height: 50px;">
                     </a>
                 </div>
-                <div class="header__category pos-rel">
-                    <div class="vertical-menu">
-                        <button class="header__category-nav">
-                            <img class="bar" src="{{ asset('frontend/assets') }}/img/icon/bar.svg" alt="">
-                            Jelajahi Kategori
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="vertical-menu-list category-nav">
-                            <ul class="category-nav__list list-unstyled">
-                                @forelse ($category_header as $row)
-                                    <li>
-                                        <a href="{{ $row->slug }}">{{ $row->nama }}</a>
-                                    </li>
-                                @empty
-                                    <li>
-                                        <a href="#">Data tidak tersedia</a>
-                                    </li>
-                                @endforelse
-                            </ul>
-                        </div>
-
-                    </div>
-
+                <div class="header__category">
+                    <a class="header__category-nav" href="#!"><img class="bar"
+                            src="{{ asset('frontend/assets') }}/img/icon/bar.svg" alt="">Cari Kategori<i
+                            class="fas fa-chevron-down"></i></a>
                 </div>
                 <div class="hamburger_menu d-lg-none">
                     <a href="javascript:void(0);" class="active">
@@ -87,17 +78,13 @@
                             <li class="{{ request()->routeIs(['tentang.*']) ? 'active' : '' }}"><a
                                     href="{{ route('tentang.index') }}">Tentang</a></li>
                             <li class="{{ request()->routeIs(['belanja.*']) ? 'active' : '' }}"><a
-                                    href="{{ route('belanja.index') }}">Barang</a></li>
+                                    href="{{ route('belanja.index') }}">Belanja</a></li>
                             <li class="{{ request()->routeIs(['kontak.*']) ? 'active' : '' }}"><a
                                     href="{{ route('kontak.index') }}">Kontak</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="header__main-right ul_li">
-                    <form class="header__search mr-30" action="#!">
-                        <input type="text" placeholder="Search........">
-                        <button><i class="far fa-search"></i></button>
-                    </form>
                     @auth
                         <div class="header__icons ul_li mr-15">
                             <div class="icon wishlist-icon">
@@ -260,3 +247,48 @@
 </aside>
 <div class="body-overlay"></div>
 <!-- slide-bar end -->
+
+{{-- <div class="main-menu navbar navbar-expand-lg">
+    <nav class="main-menu__nav collapse navbar-collapse">
+        <ul>
+            <li class="{{ request()->routeIs(['beranda.*']) ? 'active' : '' }}"><a
+                    href="{{ route('beranda.index') }}">Beranda</a></li>
+            <li class="{{ request()->routeIs(['tentang.*']) ? 'active' : '' }}"><a
+                    href="{{ route('tentang.index') }}">Tentang</a></li>
+            <li class="{{ request()->routeIs(['belanja.*']) ? 'active' : '' }}"><a
+                    href="{{ route('belanja.index') }}">Belanja</a></li>
+            <li class="{{ request()->routeIs(['kontak.*']) ? 'active' : '' }}"><a
+                    href="{{ route('kontak.index') }}">Kontak</a></li>
+        </ul>
+    </nav>
+</div>
+<div class="header__main-right ul_li">
+    <form class="header__search mr-30" action="#!">
+        <input type="text" placeholder="Search........">
+        <button><i class="far fa-search"></i></button>
+    </form>
+    @auth
+        <div class="header__icons ul_li mr-15">
+            <div class="icon wishlist-icon">
+                <a href="#!">
+                    <img src="{{ asset('frontend/assets') }}/img/icon/shopping_bag.svg" alt="">
+                    <span class="count">0</span>
+                </a>
+            </div>
+            <div class="icon">
+                <a href="#!"><img src="{{ asset('frontend/assets') }}/img/icon/user.svg"
+                        alt=""></a>
+            </div>
+        </div>
+    @endauth
+    @guest
+        <div class="login-sign-btn">
+            <a class="thm-btn thm-btn__2 text-black" href="{{ route('login') }}">
+                <span class="btn-wrap">
+                    <span>Login / Sign Up</span>
+                    <span>Login / Sign Up</span>
+                </span>
+            </a>
+        </div>
+    @endguest
+</div> --}}

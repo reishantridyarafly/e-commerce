@@ -53,6 +53,7 @@
                                             <th>#</th>
                                             <th>Nama</th>
                                             <th>Harga</th>
+                                            <th>Harga Jual</th>
                                             <th>Stok</th>
                                             <th>Status</th>
                                             <th width="10">Aksi</th>
@@ -116,6 +117,10 @@
                     {
                         data: 'harga',
                         name: 'harga'
+                    },
+                    {
+                        data: 'harga_jual',
+                        name: 'harga_jual'
                     },
                     {
                         data: 'stok',

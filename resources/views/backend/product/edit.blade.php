@@ -36,7 +36,7 @@
                                         <small class="text-danger errorFoto"></small>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-12">
+                                <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label for="nama" class="form-label">Nama</label>
                                         <input type="text" id="nama" name="nama" class="form-control"
@@ -50,6 +50,14 @@
                                         <input type="text" id="harga" name="harga" class="form-control"
                                             value="{{ $product->harga }}">
                                         <small class="text-danger errorHarga"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="mb-3">
+                                        <label for="harga_jual" class="form-label">Harga Jual</label>
+                                        <input type="text" id="harga_jual" name="harga_jual" class="form-control"
+                                            value="{{ $product->harga_jual }}">
+                                        <small class="text-danger errorHargaJual"></small>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
@@ -82,6 +90,13 @@
                                         <small class="text-danger errorDeskripsi"></small>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label for="deskripsi_singkat" class="form-label">Deskripsi</label>
+                                        <textarea name="deskripsi_singkat" id="deskripsi_singkat" rows="3" class="form-control">{{ $product->deskripsi_singkat }}</textarea>
+                                        <small class="text-danger errorDeskripsi"></small>
+                                    </div>
+                                </div>
                                 <div class="text-end">
                                     <button class="btn btn-primary" type="submit" id="simpan"><i
                                             class="ri-save-line me-1 fs-16 lh-1"></i>
@@ -105,6 +120,13 @@
         $('.select2').select2();
 
         new AutoNumeric('#harga', {
+            currencySymbol: 'Rp ',
+            decimalCharacter: ',',
+            digitGroupSeparator: '.',
+            decimalPlaces: 0,
+        });
+
+        new AutoNumeric('#harga_jual', {
             currencySymbol: 'Rp ',
             decimalCharacter: ',',
             digitGroupSeparator: '.',
@@ -343,6 +365,14 @@
                                 $('#harga').removeClass('is-invalid');
                                 $('.errorHarga').html('');
                             }
+                            
+                            if (response.errors.harga_jual) {
+                                $('#harga_jual').addClass('is-invalid');
+                                $('.errorHargaJual').html(response.errors.harga_jual);
+                            } else {
+                                $('#harga_jual').removeClass('is-invalid');
+                                $('.errorHargaJual').html('');
+                            }
 
                             if (response.errors.stok) {
                                 $('#stok').addClass('is-invalid');
@@ -366,6 +396,14 @@
                             } else {
                                 $('#deskripsi').removeClass('is-invalid');
                                 $('.errorDeskripsi').html('');
+                            }
+
+                            if (response.errors.deskripsi_singkat) {
+                                $('#deskripsi_singkat').addClass('is-invalid');
+                                $('.errorDeskripsiSingkat').html(response.errors.deskripsi_singkat);
+                            } else {
+                                $('#deskripsi_singkat').removeClass('is-invalid');
+                                $('.errorDeskripsiSingkat').html('');
                             }
                         } else {
                             Swal.fire({
