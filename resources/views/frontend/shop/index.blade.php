@@ -97,7 +97,7 @@
                                     @forelse ($product as $row)
                                         <li class="product">
                                             <div class="product-holder">
-                                                <a href="{{ route('belanja.detail') }}"><img
+                                                <a href="{{ route('belanja.detail', $row->id) }}"><img
                                                         src="{{ asset('storage/uploads/products/' . $row->featured_photo->photo_name) }}"
                                                         alt=""></a>
                                                 <ul class="product__action">
@@ -117,7 +117,8 @@
                                                     <span>(126) Review</span>
                                                 </div>
                                                 <h2 class="product__title"><a
-                                                        href="{{ route('belanja.detail') }}">{{ $row->nama }}</a></h2>
+                                                        href="{{ route('belanja.detail', $row->id) }}">{{ $row->nama }}</a>
+                                                </h2>
                                                 <div class="product__progress progress color-primary">
                                                     <div class="progress-bar" role="progressbar" style="width: 100%">
                                                     </div>

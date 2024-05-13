@@ -19,4 +19,10 @@ class ShopController extends Controller
         }
         return view('frontend.shop.index', compact(['category', 'product']));
     }
+
+    public function detail($id)
+    {
+        $product = Product::with('category', 'photos')->find($id);
+        return view('frontend.shop.detail', compact(['product']));
+    }
 }

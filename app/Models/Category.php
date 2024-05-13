@@ -34,4 +34,9 @@ class Category extends Model
     {
         return 'string';
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'kategori_id');
+    }
 }
