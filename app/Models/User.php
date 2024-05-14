@@ -82,4 +82,9 @@ class User extends Authenticatable
             get: fn ($value) =>  ["Pemilik", "Administrator", "Pelanggan"][$value],
         );
     }
+
+    public function carts()
+    {
+        return $this->hasMany(Carts::class);
+    }
 }
