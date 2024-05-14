@@ -10,7 +10,7 @@ class CartItem extends Model
 {
     use HasFactory;
 
-    protected $table = 'cart_item';
+    protected $table = 'cart_items';
     protected $guarded = [];
 
     public $incrementing = false;
@@ -37,7 +37,7 @@ class CartItem extends Model
 
     public function cart()
     {
-        return $this->belongsTo(Carts::class);
+        return $this->belongsTo(Carts::class, 'cart_id');
     }
 
     public function product()

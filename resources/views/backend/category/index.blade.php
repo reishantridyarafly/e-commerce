@@ -243,7 +243,7 @@
                         } else {
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Success',
+                                title: 'Sukses',
                                 text: 'Data berhasil disimpan',
                             })
                             $('#modal').modal('hide');

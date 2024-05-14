@@ -25,8 +25,9 @@
                     <li><i class="fas fa-envelope"></i> adminpath@gmail.com</li>
                 </ul>
                 <ul class="header__top-right ul_li mt-10">
-                    <li><i class="far fa-city"></i>new yourk</li>
-                    <li><a href="#!"><i class="far fa-check-circle"></i>Checkout</a></li>
+                    <li><i class="far fa-city"></i>Kuningan</li>
+                    <li><a href="javascript:void(0);" id="logout-link"><i class="fas fa-sign-out-alt"></i>Keluar</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -88,9 +89,9 @@
                     @auth
                         <div class="header__icons ul_li mr-15">
                             <div class="icon wishlist-icon">
-                                <a href="#!">
+                                <a href="{{ route('keranjang.index') }}">
                                     <img src="{{ asset('frontend/assets') }}/img/icon/shopping_bag.svg" alt="">
-                                    <span class="count">0</span>
+                                    <span class="count" id="cart-count"></span>
                                 </a>
                             </div>
                             <div class="icon">
@@ -248,47 +249,44 @@
 <div class="body-overlay"></div>
 <!-- slide-bar end -->
 
-{{-- <div class="main-menu navbar navbar-expand-lg">
-    <nav class="main-menu__nav collapse navbar-collapse">
-        <ul>
-            <li class="{{ request()->routeIs(['beranda.*']) ? 'active' : '' }}"><a
-                    href="{{ route('beranda.index') }}">Beranda</a></li>
-            <li class="{{ request()->routeIs(['tentang.*']) ? 'active' : '' }}"><a
-                    href="{{ route('tentang.index') }}">Tentang</a></li>
-            <li class="{{ request()->routeIs(['belanja.*']) ? 'active' : '' }}"><a
-                    href="{{ route('belanja.index') }}">Belanja</a></li>
-            <li class="{{ request()->routeIs(['kontak.*']) ? 'active' : '' }}"><a
-                    href="{{ route('kontak.index') }}">Kontak</a></li>
-        </ul>
-    </nav>
-</div>
-<div class="header__main-right ul_li">
-    <form class="header__search mr-30" action="#!">
-        <input type="text" placeholder="Search........">
-        <button><i class="far fa-search"></i></button>
-    </form>
-    @auth
-        <div class="header__icons ul_li mr-15">
-            <div class="icon wishlist-icon">
-                <a href="#!">
-                    <img src="{{ asset('frontend/assets') }}/img/icon/shopping_bag.svg" alt="">
-                    <span class="count">0</span>
-                </a>
-            </div>
-            <div class="icon">
-                <a href="#!"><img src="{{ asset('frontend/assets') }}/img/icon/user.svg"
-                        alt=""></a>
-            </div>
-        </div>
-    @endauth
-    @guest
-        <div class="login-sign-btn">
-            <a class="thm-btn thm-btn__2 text-black" href="{{ route('login') }}">
-                <span class="btn-wrap">
-                    <span>Login / Sign Up</span>
-                    <span>Login / Sign Up</span>
-                </span>
-            </a>
-        </div>
-    @endguest
-</div> --}}
+<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+    @csrf
+</form>
+
+@section('javascript')
+    <script>
+        $(document).ready(function() {
+            $('body').on('click', '#logout-link', function() {
+                Swal.fire({
+                    title: 'Keluar',
+                    text: "Apakah kamu yakin?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, keluar!',
+                    cancelButtonText: 'Batal',
+                }).then((willLogout) => {
+                    if (willLogout.isConfirmed) {
+                        logoutUser();
+                    }
+                });
+            })
+
+            function logoutUser() {
+                $.ajax({
+                    url: "{{ route('logout') }}",
+                    type: 'POST',
+                    data: $('#logout-form').serialize(),
+                    success: function(response) {
+                        window.location.href = "{{ route('login') }}";
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status + "\n" + xhr.responseText + "\n" +
+                            thrownError);
+                    }
+                });
+            }
+        });
+    </script>
+@endsection

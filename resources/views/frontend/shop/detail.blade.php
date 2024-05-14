@@ -98,6 +98,12 @@
                                     <div class="add-to-cart-btn">
                                         <button class="thm-btn thm-btn__2 no-icon" type="submit">
                                             <span class="btn-wrap">
+                                                <span>Keranjang</span>
+                                                <span>Keranjang</span>
+                                            </span>
+                                        </button>
+                                        <button class="thm-btn thm-btn__2 no-icon" type="submit">
+                                            <span class="btn-wrap">
                                                 <span>Beli Sekarang</span>
                                                 <span>Beli Sekarang</span>
                                             </span>
@@ -119,7 +125,7 @@
                         <div class="tablist">
                             <ul class="nav nav-tabs" id="pills-tab" role="tablist">
                                 <li><button class="active" id="pills-home-tab" data-bs-toggle="pill"
-                                        data-bs-target="#tb-01">Detail Product</button></li>
+                                        data-bs-target="#tb-01">Detail Produk</button></li>
                                 <li><button id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#tb-03">Ulasan
                                         (09)</button></li>
                             </ul>

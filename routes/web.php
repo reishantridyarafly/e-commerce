@@ -19,9 +19,14 @@ Route::get('/tentang', [App\Http\Controllers\Frontend\AboutController::class, 'i
 Route::get('/belanja', [App\Http\Controllers\Frontend\ShopController::class, 'index'])->name('belanja.index');
 Route::get('/belanja/detail/{id}', [App\Http\Controllers\Frontend\ShopController::class, 'detail'])->name('belanja.detail');
 Route::get('/kontak', [App\Http\Controllers\Frontend\ContactController::class, 'index'])->name('kontak.index');
-Route::get('/keranjang', [App\Http\Controllers\Frontend\CartController::class, 'index'])->name('keranjang.index');
+
 
 Auth::routes();
+Route::middleware('auth')->group(function () {
+    Route::get('/keranjang', [App\Http\Controllers\Frontend\CartController::class, 'index'])->name('keranjang.index');
+    Route::post('/keranjang/tambah/{id}', [App\Http\Controllers\Frontend\CartController::class, 'addCart'])->name('keranjang.addCart');
+    Route::get('/keranjang/jumlah', [App\Http\Controllers\Frontend\CartController::class, 'getCartItemCount'])->name('keranjang.jumlah');
+});
 
 Route::middleware(['auth', 'user-access:Pemilik,Administrator,Pelanggan'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');

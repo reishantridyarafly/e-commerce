@@ -101,8 +101,9 @@
                                                         src="{{ asset('storage/uploads/products/' . $row->featured_photo->photo_name) }}"
                                                         alt=""></a>
                                                 <ul class="product__action">
-                                                    <li><a href="#!"><i class="far fa-shopping-basket"></i></a></li>
-                                                    <li><a href="#!"><i class="far fa-heart"></i></a></li>
+                                                    <li><a href="javascript:void(0)" id="addCart"
+                                                            data-id="{{ $row->id }}"><i
+                                                                class="far fa-shopping-basket"></i></a></li>
                                                 </ul>
                                             </div>
                                             <div class="product-info">
@@ -197,4 +198,57 @@
         </div> <!-- end container -->
     </section>
     <!-- end shop-section -->
+@endsection
+
+@section('javascript')
+    <script>
+        $(document).ready(function() {
+            function updateCartCount() {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('keranjang.jumlah') }}",
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#cart-count').text(response.count);
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.error(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                    }
+                });
+            }
+
+            updateCartCount();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('body').on('click', '#addCart', function() {
+                let id = $(this).data('id');
+                $.ajax({
+                    type: "POST",
+                    url: "/keranjang/tambah/" + id,
+                    data: {
+                        id: id
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Sukses',
+                            text: response.message,
+                        })
+                        updateCartCount();
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.error(xhr.status + "\n" + xhr.responseText + "\n" +
+                            thrownError);
+                    }
+                });
+            });
+        });
+    </script>
+
 @endsection

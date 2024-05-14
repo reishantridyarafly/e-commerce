@@ -98,7 +98,7 @@
      $(document).ready(function() {
          $('body').on('click', '#logout-link', function() {
              Swal.fire({
-                 title: 'Logout',
+                 title: 'Keluar',
                  text: "Apakah kamu yakin?",
                  icon: 'warning',
                  showCancelButton: true,

@@ -8,6 +8,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="{{ csrf_token() }}" name="csrf-token">
 
     <title>@yield('title') - {{ config('app.name') }}</title>
 
@@ -23,6 +24,10 @@
     <link rel="stylesheet" href="{{ asset('frontend/assets') }}/css/slick.css">
     <link rel="stylesheet" href="{{ asset('frontend/assets') }}/css/magnific-popup.css">
     <link rel="stylesheet" href="{{ asset('frontend/assets') }}/css/main.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @yield('css')
 </head>
 
 <body>
@@ -53,6 +58,8 @@
     <script src="{{ asset('frontend/assets') }}/js/jquery.magnific-popup.min.js"></script>
     <script src="{{ asset('frontend/assets') }}/js/metisMenu.min.js"></script>
     <script src="{{ asset('frontend/assets') }}/js/main.js"></script>
+
+    @yield('javascript')
 </body>
 
 </html>

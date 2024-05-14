@@ -142,16 +142,6 @@
                                                     class="woocommerce-Price-currencySymbol">&pound;</span>330.00</span>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td colspan="6" class="actions">
-                                            {{-- <button class="thm-btn thm-btn__2 br-0 no-icon" type="submit">
-                                                <span class="btn-wrap">
-                                                    <span>Update Cart</span>
-                                                    <span>Update Cart</span>
-                                                </span>
-                                            </button> --}}
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </form>
