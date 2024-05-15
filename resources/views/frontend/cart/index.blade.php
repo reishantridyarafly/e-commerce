@@ -51,11 +51,11 @@
                                                     <img width="57" height="70"
                                                         src="{{ asset('storage/uploads/products/' . $row->product->photos->first()->photo_name) }}"
                                                         class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
-                                                        alt="{{ route('belanja.detail', $row->product->id) }}" />
+                                                        alt="{{ route('belanja.detail', $row->product->slug) }}" />
                                                 </a>
                                             </td>
                                             <td class="product-name" data-title="Product">
-                                                <a href="{{ route('belanja.detail', $row->product->id) }}">{{ $row->product->nama }}</a>
+                                                <a href="{{ route('belanja.detail', $row->product->slug) }}">{{ $row->product->nama }}</a>
                                             </td>
                                             <td class="product-price" data-title="Price">
                                                 <span class="woocommerce-Price-amount amount">{{ 'Rp ' . number_format($row->product->harga_jual, 0, ',', '.') }}</span>

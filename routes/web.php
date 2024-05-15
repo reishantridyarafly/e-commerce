@@ -16,8 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\Frontend\BerandaController::class, 'index'])->name('beranda.index');
 Route::get('/tentang', [App\Http\Controllers\Frontend\AboutController::class, 'index'])->name('tentang.index');
+
 Route::get('/belanja', [App\Http\Controllers\Frontend\ShopController::class, 'index'])->name('belanja.index');
-Route::get('/belanja/detail/{id}', [App\Http\Controllers\Frontend\ShopController::class, 'detail'])->name('belanja.detail');
+Route::get('/belanja/pencarian/', [App\Http\Controllers\Frontend\ShopController::class, 'search'])->name('belanja.search');
+Route::get('/belanja/kategori/{slug}', [App\Http\Controllers\Frontend\ShopController::class, 'category'])->name('belanja.category');
+Route::get('/belanja/detail/{slug}', [App\Http\Controllers\Frontend\ShopController::class, 'detail'])->name('belanja.detail');
+
 Route::get('/kontak', [App\Http\Controllers\Frontend\ContactController::class, 'index'])->name('kontak.index');
 
 
@@ -28,6 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/keranjang/tambah/{id}', [App\Http\Controllers\Frontend\CartController::class, 'addCart'])->name('keranjang.addCart');
     Route::post('/keranjang/edit/{id}', [App\Http\Controllers\Frontend\CartController::class, 'updateCartItem'])->name('keranjang.updateCartItem');
     Route::delete('/keranjang/hapus/{id}', [App\Http\Controllers\Frontend\CartController::class, 'deleteCartItem'])->name('keranjang.deleteCartItem');
+
+    Route::get('/pembayaran', [App\Http\Controllers\Frontend\CheckoutController::class, 'index'])->name('pembayaran.index');
 });
 
 Route::middleware(['auth', 'user-access:Pemilik,Administrator,Pelanggan'])->group(function () {

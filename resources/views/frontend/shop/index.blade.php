@@ -97,7 +97,7 @@
                                     @forelse ($product as $row)
                                         <li class="product">
                                             <div class="product-holder">
-                                                <a href="{{ route('belanja.detail', $row->id) }}"><img
+                                                <a href="{{ route('belanja.detail', $row->slug) }}"><img
                                                         src="{{ asset('storage/uploads/products/' . $row->featured_photo->photo_name) }}"
                                                         alt=""></a>
                                                 <ul class="product__action">
@@ -118,7 +118,7 @@
                                                     <span>(126) Review</span>
                                                 </div>
                                                 <h2 class="product__title"><a
-                                                        href="{{ route('belanja.detail', $row->id) }}">{{ $row->nama }}</a>
+                                                        href="{{ route('belanja.detail', $row->slug) }}">{{ $row->nama }}</a>
                                                 </h2>
                                                 <div class="product__progress progress color-primary">
                                                     <div class="progress-bar" role="progressbar" style="width: 100%">
@@ -137,7 +137,7 @@
                                     @endforelse
                                 </ul>
                             </div>
-                            <div class="pagination_wrap pt-20">
+                            {{-- <div class="pagination_wrap pt-20">
                                 <ul>
                                     <li><a href="#!"><i class="far fa-angle-double-left"></i></a></li>
                                     <li><a class="current_page" href="#!">1</a></li>
@@ -145,6 +145,12 @@
                                     <li><a href="#!">3</a></li>
                                     <li><a href="#!"><i class="far fa-angle-double-right"></i></a></li>
                                 </ul>
+                            </div> --}}
+
+                            <div class="pagination_wrap pt-20">
+                                <div class="pagination_wrap pt-20">
+                                    {{ $product->links('layouts.frontend.partials.pagination') }}
+                                </div>
                             </div>
                         </div>
                         <div class="shop-sidebar">
@@ -152,10 +158,11 @@
                                 <h2 class="widget__title">
                                     <span>Pencarian</span>
                                 </h2>
-                                <form class="widget__search" action="#">
-                                    <input type="text" placeholder="Cari...">
-                                    <button><i class="far fa-search"></i></button>
+                                <form class="widget__search" action="{{ route('belanja.search') }}">
+                                    <input type="text" id="search" name="search" placeholder="Cari...">
+                                    <button type="submit" id="search-button"><i class="far fa-search"></i></button>
                                 </form>
+                                <div id="search-results"></div>
                             </div>
                             <div class="widget">
                                 <h2 class="widget__title">
@@ -163,7 +170,8 @@
                                 </h2>
                                 <ul class="widget__category">
                                     @forelse ($category as $row)
-                                        <li><a href="#!">{{ $row->nama }}<i class="far fa-chevron-right"></i></a>
+                                        <li><a href="{{ route('belanja.category', $row->slug) }}">{{ $row->nama }}<i
+                                                    class="far fa-chevron-right"></i></a>
                                         </li>
                                     @empty
                                         <li><a href="#!">Data tidak tersedia<i class="far fa-chevron-right"></i></a>
@@ -208,6 +216,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
 
             $('body').on('click', '#addCart', function() {
                 let id = $(this).data('id');
