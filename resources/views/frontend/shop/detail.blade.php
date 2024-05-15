@@ -73,9 +73,8 @@
                             <span>(2 Customer review)</span>
                         </div>
                         <div class="price">
-                            <span
-                                class="current">{{ 'Rp ' . number_format((float) $product->harga_jual, 0, ',', '.') }}</span>
-                            <span class="old">{{ 'Rp ' . number_format((float) $product->harga, 0, ',', '.') }}</span>
+                            <span class="current">{{ 'Rp ' . number_format($product->harga_jual, 0, ',', '.') }}</span>
+                            <span class="old">{{ 'Rp ' . number_format($product->harga, 0, ',', '.') }}</span>
                         </div>
                         <p>{{ $product->deskripsi_singkat }}</p>
 
@@ -96,7 +95,8 @@
                                         <input class="product-count" type="text" value="1" name="product-count">
                                     </div>
                                     <div class="add-to-cart-btn">
-                                        <button class="thm-btn thm-btn__2 no-icon" type="submit">
+                                        <button class="thm-btn thm-btn__2 no-icon" type="button" id="addCart"
+                                            data-id="{{ $product->id }}">
                                             <span class="btn-wrap">
                                                 <span>Keranjang</span>
                                                 <span>Keranjang</span>
@@ -429,4 +429,64 @@
         </div> <!-- end of container -->
     </section>
     <!-- end of shop-single-section -->
+@endsection
+
+@section('javascript')
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('body').on('click', '#addCart', function() {
+                let id = $(this).data('id');
+                $.ajax({
+                    type: "POST",
+                    url: "/keranjang/tambah/" + id,
+                    data: {
+                        id: id
+                    },
+                    dataType: 'json',
+                    beforeSend: function() {
+                        $('#addCart').attr('disable', 'disabled');
+                        $('#addCart').html(` <span class="btn-wrap">
+                                                <span>Proses...</span>
+                                                <span>Proses...</span>
+                                            </span>`);
+                    },
+                    complete: function() {
+                        $('#addCart').removeAttr('disable');
+                        $('#addCart').html(` <span class="btn-wrap">
+                                                <span>Keranjang</span>
+                                                <span>Keranjang</span>
+                                            </span>`);
+                    },
+                    success: function(response) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response.message
+                        });
+                        updateCartCount();
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.error(xhr.status + "\n" + xhr.responseText + "\n" +
+                            thrownError);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

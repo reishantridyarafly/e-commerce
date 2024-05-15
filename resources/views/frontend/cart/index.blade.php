@@ -9,6 +9,9 @@
                     <li class="radiosbcrumb-item radiosbcrumb-begin">
                         <a href="{{ route('beranda.index') }}"><span>Beranda</span></a>
                     </li>
+                    <li class="radiosbcrumb-item radiosbcrumb-begin">
+                        <a href="{{ route('belanja.index') }}"><span>Belanja</span></a>
+                    </li>
                     <li class="radiosbcrumb-item radiosbcrumb-end">
                         <span>@yield('title')</span>
                     </li>
@@ -37,129 +40,54 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="cart_single">
-                                        <td class="product-remove">
-                                            <a href="#!" class="remove" title="Remove this item" data-product_id="8"
-                                                data-product_sku="my name is">&times;</a>
-                                        </td>
-                                        <td class="product-thumbnail">
-                                            <a href="#!">
-                                                <img width="57" height="70"
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_178.png"
-                                                    class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
-                                                    alt="#!" />
-                                            </a>
-                                        </td>
-                                        <td class="product-name" data-title="Product">
-                                            <a href="#!">Checked Hoodies Woo</a>
-                                        </td>
-
-                                        <td class="product-price" data-title="Price">
-                                            <span class="woocommerce-Price-amount amount"><span
-                                                    class="woocommerce-Price-currencySymbol">&pound;</span>165.00</span>
-                                        </td>
-                                        <td class="product-quantity" data-title="Quantity">
-                                            <div class="quantity">
-                                                <input type="number" step="1" min="0"
-                                                    name="cart[c9f0f895fb98ab9159f51fd0297e236d][qty]" value="2"
-                                                    title="Qty"
-                                                    class="product-count input-text qty text product-count form-control" />
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal" data-title="Total">
-                                            <span class="woocommerce-Price-amount amount"><span
-                                                    class="woocommerce-Price-currencySymbol">&pound;</span>330.00</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="cart_single">
-                                        <td class="product-remove">
-                                            <a href="#!" class="remove" title="Remove this item" data-product_id="21"
-                                                data-product_sku="">&times;</a>
-                                        </td>
-
-                                        <td class="product-thumbnail">
-                                            <a href="">
-                                                <img width="57" height="70"
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_179.png"
-                                                    class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
-                                                    alt="#!" />
-                                            </a>
-                                        </td>
-
-                                        <td class="product-name" data-title="Product">
-                                            <a href="#!">product2</a>
-                                        </td>
-
-                                        <td class="product-price" data-title="Price">
-                                            <span class="woocommerce-Price-amount amount"><span
-                                                    class="woocommerce-Price-currencySymbol">&pound;</span>100.00</span>
-                                        </td>
-
-                                        <td class="product-quantity" data-title="Quantity">
-                                            <div class="quantity">
-                                                <input type="number" step="1" min="0"
-                                                    name="cart[1FjMjtzom8sQqT4RxQCTwt8xSZ8N4UKdE5][qty]" value="1"
-                                                    title="Qty" class="product-count input-text qty text" />
-                                            </div>
-                                        </td>
-
-                                        <td class="product-subtotal" data-title="Total">
-                                            <span class="woocommerce-Price-amount amount"><span
-                                                    class="woocommerce-Price-currencySymbol">&pound;</span>100.00</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="cart_single">
-                                        <td class="product-remove">
-                                            <a href="#!" class="remove" title="Remove this item" data-product_id="8"
-                                                data-product_sku="my name is">&times;</a>
-                                        </td>
-                                        <td class="product-thumbnail">
-                                            <a href="#!">
-                                                <img width="57" height="70"
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_180.png"
-                                                    class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
-                                                    alt="#!" />
-                                            </a>
-                                        </td>
-                                        <td class="product-name" data-title="Product">
-                                            <a href="#!">Checked Hoodies Woo</a>
-                                        </td>
-
-                                        <td class="product-price" data-title="Price">
-                                            <span class="woocommerce-Price-amount amount"><span
-                                                    class="woocommerce-Price-currencySymbol">&pound;</span>165.00</span>
-                                        </td>
-                                        <td class="product-quantity" data-title="Quantity">
-                                            <div class="quantity">
-                                                <input type="number" step="1" min="0"
-                                                    name="cart[c9f0f895fb98ab9159f51fd0297e236d][qty]" value="2"
-                                                    title="Qty"
-                                                    class="product-count input-text qty text product-count form-control" />
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal" data-title="Total">
-                                            <span class="woocommerce-Price-amount amount"><span
-                                                    class="woocommerce-Price-currencySymbol">&pound;</span>330.00</span>
-                                        </td>
-                                    </tr>
+                                    @forelse ($items as $row)
+                                        <tr class="cart_single" data-id="{{ $row->id }}">
+                                            <td class="product-remove">
+                                                <a href="#!" class="remove" title="Remove this item"
+                                                    data-id="{{ $row->id }}">&times;</a>
+                                            </td>
+                                            <td class="product-thumbnail">
+                                                <a href="#!">
+                                                    <img width="57" height="70"
+                                                        src="{{ asset('storage/uploads/products/' . $row->product->photos->first()->photo_name) }}"
+                                                        class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
+                                                        alt="{{ route('belanja.detail', $row->product->id) }}" />
+                                                </a>
+                                            </td>
+                                            <td class="product-name" data-title="Product">
+                                                <a href="{{ route('belanja.detail', $row->product->id) }}">{{ $row->product->nama }}</a>
+                                            </td>
+                                            <td class="product-price" data-title="Price">
+                                                <span class="woocommerce-Price-amount amount">{{ 'Rp ' . number_format($row->product->harga_jual, 0, ',', '.') }}</span>
+                                            </td>
+                                            <td class="product-quantity" data-title="Quantity">
+                                                <div class="quantity">
+                                                    <input type="number" step="1" min="0"
+                                                        value="{{ $row->quantity }}" title="Qty" id="qty"
+                                                        data-id="{{ $row->id }}"
+                                                        data-price="{{ $row->product->harga_jual }}"
+                                                        class="product-count input-text qty text product-count form-control" />
+                                                </div>
+                                            </td>
+                                            <td class="product-subtotal" data-title="Total">
+                                                <span class="woocommerce-Price-amount amount"
+                                                    id="subtotal_product">{{ 'Rp ' . number_format($row->quantity * $row->product->harga_jual, 0, ',', '.') }}</span>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <h1>Data tidak tersedia</h1>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </form>
 
                         <div class="cart-collaterals">
                             <div class="cart_totals calculated_shipping">
-                                <h2>Total Keranjang</h2>
                                 <table class="shop_table shop_table_responsive">
-                                    <tr class="cart-subtotal">
-                                        <th>Subtotal</th>
-                                        <td data-title="Subtotal"><span class="woocommerce-Price-amount amount">
-                                                <span class="woocommerce-Price-currencySymbol">&pound;</span>430.00</span>
-                                        </td>
-                                    </tr>
                                     <tr class="order-total">
                                         <th>Total</th>
-                                        <td data-title="Total"><strong><span class="woocommerce-Price-amount amount"><span
-                                                        class="woocommerce-Price-currencySymbol">&pound;</span>430.00</span></strong>
+                                        <td data-title="Total"><strong><span class="woocommerce-Price-amount amount"
+                                                    id="cart_total"></span></strong>
                                         </td>
                                     </tr>
                                 </table>
@@ -181,4 +109,98 @@
         </div>
     </section>
     <!-- end cart-section -->
+@endsection
+
+@section('javascript')
+    <script>
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.toString().replace(/[^0-9.-]+/g, ""),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? prefix + rupiah : '');
+        }
+
+        function updateCartTotals() {
+            var subtotal = 0;
+            $('.cart_single').each(function() {
+                var quantity = $(this).find('#qty').val();
+                var price = $(this).find('#qty').data('price');
+                var itemSubtotal = quantity * price;
+                subtotal += itemSubtotal;
+            });
+
+            var formattedSubtotal = formatRupiah(subtotal, 'Rp ');
+            $('#cart_total').text(formattedSubtotal);
+        }
+
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('body').on('change', '#qty', function() {
+                var $this = $(this);
+                var id = $this.data('id');
+                var newQuantity = $this.val();
+                var productPrice = $this.data('price');
+
+                var subtotal = newQuantity * productPrice;
+                var formattedSubtotal = formatRupiah(subtotal, 'Rp ');
+
+                $this.closest('tr').find('.product-subtotal .woocommerce-Price-amount').text(
+                    formattedSubtotal);
+
+                updateCartTotals();
+
+                $.ajax({
+                    url: '/keranjang/edit/' + id,
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        quantity: newQuantity
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.error(xhr.status + "\n" + xhr.responseText + "\n" +
+                        thrownError);
+                    }
+                });
+            });
+
+            $('body').on('click', '.remove', function(e) {
+                e.preventDefault();
+                var $this = $(this);
+                var id = $this.data('id');
+
+                $.ajax({
+                    url: '/keranjang/hapus/' + id,
+                    type: 'DELETE',
+                    success: function(response) {
+                        $this.closest('tr').remove();
+                        updateCartTotals();
+                        console.log(response.message);
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.error(xhr.status + "\n" + xhr.responseText + "\n" +
+                        thrownError);
+                    }
+                });
+            });
+
+            updateCartTotals();
+        });
+    </script>
 @endsection

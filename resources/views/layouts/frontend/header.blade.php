@@ -89,9 +89,9 @@
                     @auth
                         <div class="header__icons ul_li mr-15">
                             <div class="icon wishlist-icon">
-                                <a href="{{ route('keranjang.index') }}">
+                                <a href="{{ route('keranjang.index', auth()->user()->id) }}">
                                     <img src="{{ asset('frontend/assets') }}/img/icon/shopping_bag.svg" alt="">
-                                    <span class="count" id="cart-count"></span>
+                                    <span class="count" id="cart-count">0</span>
                                 </a>
                             </div>
                             <div class="icon">

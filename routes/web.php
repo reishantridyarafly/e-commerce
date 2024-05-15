@@ -23,9 +23,11 @@ Route::get('/kontak', [App\Http\Controllers\Frontend\ContactController::class, '
 
 Auth::routes();
 Route::middleware('auth')->group(function () {
-    Route::get('/keranjang', [App\Http\Controllers\Frontend\CartController::class, 'index'])->name('keranjang.index');
-    Route::post('/keranjang/tambah/{id}', [App\Http\Controllers\Frontend\CartController::class, 'addCart'])->name('keranjang.addCart');
     Route::get('/keranjang/jumlah', [App\Http\Controllers\Frontend\CartController::class, 'getCartItemCount'])->name('keranjang.jumlah');
+    Route::get('/keranjang/{id}', [App\Http\Controllers\Frontend\CartController::class, 'index'])->name('keranjang.index');
+    Route::post('/keranjang/tambah/{id}', [App\Http\Controllers\Frontend\CartController::class, 'addCart'])->name('keranjang.addCart');
+    Route::post('/keranjang/edit/{id}', [App\Http\Controllers\Frontend\CartController::class, 'updateCartItem'])->name('keranjang.updateCartItem');
+    Route::delete('/keranjang/hapus/{id}', [App\Http\Controllers\Frontend\CartController::class, 'deleteCartItem'])->name('keranjang.deleteCartItem');
 });
 
 Route::middleware(['auth', 'user-access:Pemilik,Administrator,Pelanggan'])->group(function () {

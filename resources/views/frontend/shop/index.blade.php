@@ -125,9 +125,9 @@
                                                     </div>
                                                 </div>
                                                 <h4 class="product__price"><span
-                                                        class="new">{{ 'Rp ' . number_format((float) $row->harga_jual, 0, ',', '.') }}
+                                                        class="new">{{ 'Rp ' . number_format($row->harga_jual, 0, ',', '.') }}
                                                     </span><span
-                                                        class="old">{{ 'Rp ' . number_format((float) $row->harga, 0, ',', '.') }}
+                                                        class="old">{{ 'Rp ' . number_format($row->harga, 0, ',', '.') }}
                                                     </span></h4>
                                                 <p class="product-description">{{ $row->deskripsi_singkat }}</p>
                                             </div>
@@ -203,22 +203,6 @@
 @section('javascript')
     <script>
         $(document).ready(function() {
-            function updateCartCount() {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ route('keranjang.jumlah') }}",
-                    dataType: 'json',
-                    success: function(response) {
-                        $('#cart-count').text(response.count);
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        console.error(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-                    }
-                });
-            }
-
-            updateCartCount();
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -235,11 +219,21 @@
                     },
                     dataType: 'json',
                     success: function(response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Sukses',
-                            text: response.message,
-                        })
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response.message
+                        });
                         updateCartCount();
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
@@ -250,5 +244,4 @@
             });
         });
     </script>
-
 @endsection

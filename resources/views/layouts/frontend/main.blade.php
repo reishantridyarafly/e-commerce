@@ -58,6 +58,23 @@
     <script src="{{ asset('frontend/assets') }}/js/jquery.magnific-popup.min.js"></script>
     <script src="{{ asset('frontend/assets') }}/js/metisMenu.min.js"></script>
     <script src="{{ asset('frontend/assets') }}/js/main.js"></script>
+    <script>
+        function updateCartCount() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('keranjang.jumlah') }}",
+                dataType: 'json',
+                success: function(response) {
+                    $('#cart-count').text(response.count);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.error(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                }
+            });
+        }
+
+        updateCartCount();
+    </script>
 
     @yield('javascript')
 </body>
