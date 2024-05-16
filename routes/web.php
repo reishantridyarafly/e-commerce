@@ -34,6 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/keranjang/hapus/{id}', [App\Http\Controllers\Frontend\CartController::class, 'deleteCartItem'])->name('keranjang.deleteCartItem');
 
     Route::get('/pembayaran', [App\Http\Controllers\Frontend\CheckoutController::class, 'index'])->name('pembayaran.index');
+    Route::get('/provinces', [App\Http\Controllers\Frontend\CheckoutController::class, 'province'])->name('pembayaran.provinces');
+    Route::post('/kota', [App\Http\Controllers\Frontend\CheckoutController::class, 'city'])->name('pembayaran.kota');
+    Route::post('/check-ongkir', [App\Http\Controllers\Frontend\CheckoutController::class, 'checkOngkir'])->name('pembayaran.check-ongkir');
 });
 
 Route::middleware(['auth', 'user-access:Pemilik,Administrator,Pelanggan'])->group(function () {

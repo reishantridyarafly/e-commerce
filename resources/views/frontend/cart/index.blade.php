@@ -96,8 +96,8 @@
                                     <a href="#!"
                                         class="checkout-button thm-btn thm-btn__2 no-icon br-0 alt wc-forward">
                                         <span class="btn-wrap">
-                                            <span>Proceed to Checkout</span>
-                                            <span>Proceed to Checkout</span>
+                                            <span>Pembayaran</span>
+                                            <span>Pembayaran</span>
                                         </span>
                                     </a>
                                 </div>
