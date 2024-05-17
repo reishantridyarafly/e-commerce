@@ -33,11 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/keranjang/edit/{id}', [App\Http\Controllers\Frontend\CartController::class, 'updateCartItem'])->name('keranjang.updateCartItem');
     Route::delete('/keranjang/hapus/{id}', [App\Http\Controllers\Frontend\CartController::class, 'deleteCartItem'])->name('keranjang.deleteCartItem');
 
-    Route::get('/pembayaran', [App\Http\Controllers\Frontend\CheckoutController::class, 'index'])->name('pembayaran.index');
-    Route::get('/pembayaran/provinces', [App\Http\Controllers\Frontend\CheckoutController::class, 'province'])->name('pembayaran.provinces');
-    Route::post('/pembayaran/kota', [App\Http\Controllers\Frontend\CheckoutController::class, 'city'])->name('pembayaran.kota');
+    Route::post('/pembayaran', [App\Http\Controllers\Frontend\CheckoutController::class, 'directCheckout'])->name('pembayaran.directCheckout');
+    Route::post('/pembayaran/get-address-details/{id}', [App\Http\Controllers\Frontend\CheckoutController::class, 'getAddressDetails'])->name('pembayaran.get-address-details');
     Route::post('/pembayaran/check-ongkir', [App\Http\Controllers\Frontend\CheckoutController::class, 'checkOngkir'])->name('pembayaran.check-ongkir');
-    Route::get('/pembayaran/checkout-direct', [App\Http\Controllers\Frontend\CheckoutController::class, 'checkoutDirect'])->name('pembayaran.checkoutDirect');
 
     Route::get('/profile', [App\Http\Controllers\Backend\ProfileController::class, 'index'])->name('profile.index');
     Route::post('/profile/change/password', [App\Http\Controllers\Backend\ProfileController::class, 'changePassword'])->name('profile.changePassword');
@@ -62,6 +60,12 @@ Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
     Route::get('/kategori/{id}/edit', [App\Http\Controllers\Backend\CategoryController::class, 'edit'])->name('kategori.edit');
     Route::post('/kategori', [App\Http\Controllers\Backend\CategoryController::class, 'store'])->name('kategori.store');
     Route::delete('/kategori/{id}', [App\Http\Controllers\Backend\CategoryController::class, 'destroy'])->name('kategori.destroy');
+
+    Route::get('/rekening', [App\Http\Controllers\Backend\RekeningController::class, 'index'])->name('rekening.index');
+    Route::get('/rekening/tambah', [App\Http\Controllers\Backend\RekeningController::class, 'create'])->name('rekening.create');
+    Route::get('/rekening/{id}/edit', [App\Http\Controllers\Backend\RekeningController::class, 'edit'])->name('rekening.edit');
+    Route::post('/rekening', [App\Http\Controllers\Backend\RekeningController::class, 'store'])->name('rekening.store');
+    Route::delete('/rekening/{id}', [App\Http\Controllers\Backend\RekeningController::class, 'destroy'])->name('rekening.destroy');
 
     Route::get('/produk', [App\Http\Controllers\Backend\ProductController::class, 'index'])->name('produk.index');
     Route::get('/produk/tambah', [App\Http\Controllers\Backend\ProductController::class, 'create'])->name('produk.create');

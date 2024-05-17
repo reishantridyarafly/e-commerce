@@ -36,75 +36,40 @@
 
                                         <h3>Detail Pembayaran</h3>
 
-                                        <p class="form-row form-row form-row-first validate-required"
-                                            id="billing_first_name_field">
-                                            <label for="billing_first_name" class="">First Name <abbr class="required"
-                                                    title="required">*</abbr></label>
-                                            <input type="text" class="input-text " name="billing_first_name"
-                                                id="billing_first_name" placeholder="" autocomplete="given-name"
-                                                value="" />
-                                        </p>
-
-                                        <p class="form-row form-row form-row-last validate-required"
-                                            id="billing_last_name_field">
-                                            <label for="billing_last_name" class="">Last Name <abbr class="required"
-                                                    title="required">*</abbr></label>
-                                            <input type="text" class="input-text " name="billing_last_name"
-                                                id="billing_last_name" placeholder="" autocomplete="family-name"
-                                                value="" />
-                                        </p>
-                                        <div class="clear"></div>
-
                                         <p class="form-row form-row form-row-wide" id="billing_company_field">
-                                            <label for="billing_company" class="">Company Name</label>
-                                            <input type="text" class="input-text " name="billing_company"
-                                                id="billing_company" placeholder="" autocomplete="organization"
-                                                value="" />
+                                            <label for="billing_conamempany" class="">Nama Lengkap</label>
+                                            <input type="text" class="input-text " name="name" id="name"
+                                                value="{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}"
+                                                disabled />
                                         </p>
 
                                         <p class="form-row form-row form-row-first validate-required validate-email"
                                             id="billing_email_field">
-                                            <label for="billing_email" class="">Email Address <abbr class="required"
+                                            <label for="email" class="">Email <abbr class="required"
                                                     title="required">*</abbr></label>
-                                            <input type="email" class="input-text " name="billing_email"
-                                                id="billing_email" placeholder="" autocomplete="email" value="" />
+                                            <input type="email" class="input-text " name="email" id="email"
+                                                value="{{ auth()->user()->email }}" disabled />
                                         </p>
 
                                         <p class="form-row form-row form-row-last validate-required validate-phone"
                                             id="billing_phone_field">
-                                            <label for="billing_phone" class="">Phone <abbr class="required"
+                                            <label for="no_telepon" class="">Phone <abbr class="required"
                                                     title="required">*</abbr></label>
-                                            <input type="tel" class="input-text" name="billing_phone" id="billing_phone"
-                                                placeholder="" autocomplete="tel" value="" />
+                                            <input type="text" class="input-text" name="no_telepon" id="no_telepon"
+                                                value="{{ auth()->user()->no_telepon }}" disabled />
                                         </p>
                                         <div class="clear"></div>
 
                                         <p class="form-row form-row form-row-wide address-field validate-required"
                                             id="billing_address_1_field">
-                                            <label for="billing_address_1" class="">Address <abbr class="required"
+                                            <label for="alamat" class="">Alamat <abbr class="required"
                                                     title="required">*</abbr></label>
-                                            <input type="text" class="input-text " name="billing_address_1"
-                                                id="billing_address_1" placeholder="Street address"
-                                                autocomplete="address-line1" value="" />
-                                        </p>
-
-                                        <p class="form-row form-row form-row-wide address-field"
-                                            id="billing_address_2_field">
-                                            <input type="text" class="input-text " name="billing_address_2"
-                                                id="billing_address_2"
-                                                placeholder="Apartment, suite, unit etc. (optional)"
-                                                autocomplete="address-line2" value="" />
-                                        </p>
-
-                                        <p class="form-row form-row address-field validate-postcode validate-required form-row-first  woocommerce-invalid-required-field"
-                                            id="billing_city_field">
-                                            <label for="provinsi" class="">Provinsi <abbr class="required"
-                                                    title="required">*</abbr></label>
-                                            <select name="provinsi" id="provinsi"
-                                                class="country_to_state country_select ">
-                                                <option value="">Pilih Provinsi&hellip;</option>
-                                                @forelse ($provinces as $row)
-                                                    <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                            <select name="alamat" id="alamat" class="country_to_state country_select ">
+                                                <option value="">Pilih Alamat&hellip;</option>
+                                                @forelse ($address as $row)
+                                                    <option value="{{ $row->id }}"
+                                                        {{ $row->default_alamat == 0 ? 'selected' : '' }}>
+                                                        {{ $row->detail_alamat }}</option>
                                                 @empty
                                                     <option value="">Data tidak tersedia</option>
                                                 @endforelse
@@ -113,12 +78,20 @@
 
                                         <p class="form-row form-row address-field validate-postcode validate-required form-row-first  woocommerce-invalid-required-field"
                                             id="billing_city_field">
+                                            <label for="provinsi" class="">Provinsi <abbr class="required"
+                                                    title="required">*</abbr></label>
+                                            <input type="text" class="input-text" name="provinsi" id="provinsi"
+                                                disabled />
+                                        </p>
+
+                                        <p class="form-row form-row address-field validate-postcode validate-required form-row-first  woocommerce-invalid-required-field"
+                                            id="billing_city_field">
                                             <label for="kota" class="">Kota <abbr class="required"
                                                     title="required">*</abbr></label>
-                                            <select name="kota" id="kota"
-                                                class="country_to_state country_select ">
-                                                <option value="">Pilih Kota&hellip;</option>
-                                            </select>
+                                            <input type="hidden" class="input-text" name="kota_id" id="kota_id"
+                                                value="" disabled />
+                                            <input type="text" class="input-text" name="kota" id="kota"
+                                                value="" disabled />
                                         </p>
 
                                         <p class="form-row form-row form-row-wide address-field update_totals_on_change validate-required"
@@ -151,44 +124,41 @@
                                 <table class="shop_table woocommerce-checkout-review-order-table">
                                     <thead>
                                         <tr>
-                                            <th class="product-name">Product</th>
-                                            <th class="product-total">Total</th>
+                                            <th class="product-name"><small>Product</small></th>
+                                            <th class="product-total"><small>Total</small></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr class="cart_single">
                                             <td class="product-name">
-                                                Checked Hoodies Woo&nbsp; <strong class="product-quantity">&times;
-                                                    1</strong> </td>
+                                                <small> {{ $product->nama }}&nbsp; <strong class="product-quantity">&times;
+                                                        {{ $qty }}</strong> </small>
+                                            </td>
                                             <td class="product-total">
-                                                <span class="woocommerce-Price-amount amount"><span
-                                                        class="woocommerce-Price-currencySymbol">&pound;</span>165.00</span>
+                                                <small
+                                                    class="woocommerce-Price-amount amount">{{ 'Rp ' . number_format($product->harga_jual, 0, ',', '.') }}</small>
                                             </td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr class="cart-subtotal">
-                                            <th>Subtotal</th>
-                                            <td><span class="woocommerce-Price-amount amount"><span
-                                                        class="woocommerce-Price-currencySymbol">&pound;</span>165.00</span>
+                                            <th><small>Subtotal</small></th>
+                                            <td><small
+                                                    class="woocommerce-Price-amount amount">{{ 'Rp ' . number_format($product->harga_jual * $qty, 0, ',', '.') }}</small>
                                             </td>
                                         </tr>
 
                                         <tr class="shipping">
-                                            <th>Shipping</th>
-                                            <td data-title="Shipping">
-                                                Free Shipping
-                                                <input type="hidden" name="shipping_method[0]" data-index="0"
-                                                    id="shipping_method_0" value="free_shipping:1"
-                                                    class="shipping_method" />
-
+                                            <th><small>Ongkos Kirim</small></th>
+                                            <td>
+                                                <small id="pembayaran_ongkir"></small>
                                             </td>
                                         </tr>
 
                                         <tr class="order-total">
-                                            <th>Total</th>
-                                            <td><strong><span class="woocommerce-Price-amount amount"><span
-                                                            class="woocommerce-Price-currencySymbol">&pound;</span>165.00</span></strong>
+                                            <th><Small>Total</Small></th>
+                                            <td><strong><small id="total"
+                                                        class="woocommerce-Price-amount amount"></small></strong>
                                             </td>
                                         </tr>
 
@@ -248,6 +218,12 @@
 
 @section('javascript')
     <script>
+        function formatCurrency(amount) {
+            return 'Rp ' + parseFloat(amount).toLocaleString('id-ID', {
+                minimumFractionDigits: 0
+            });
+        }
+
         $(document).ready(function() {
             $.ajaxSetup({
                 headers: {
@@ -255,47 +231,55 @@
                 }
             });
 
-            $('#provinsi').on('change', function() {
-                let id_provinsi = $('#provinsi').val();
-
+            var addressId = $('#alamat').val();
+            if (addressId) {
                 $.ajax({
-                    type: "POST",
-                    url: "{{ route('pembayaran.kota') }}",
+                    url: "{{ url('/pembayaran/get-address-details/"+addressId+"') }}",
+                    type: 'POST',
                     data: {
-                        id_provinsi: id_provinsi
+                        id: addressId
                     },
+                    dataType: 'json',
                     success: function(response) {
-                        $('#kota').html(response);
-                        $('#kurir').empty().append(`
-                            <option value="">Pilih Ekspedisi&hellip;</option>
-                            <option value="jne">JNE</option>
-                            <option value="pos">POS</option>
-                            <option value="tiki">TIKI</option>
-                        `);
-                        $('#ongkir').empty().append(
-                            '<option value="">Pilih Ongkos Kirim&hellip;</option>');
+                        $('#provinsi').val(response.province_name);
+                        $('#kota_id').val(response.city_id);
+                        $('#kota').val(response.city_name);
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         console.error(xhr.status + "\n" + xhr.responseText + "\n" +
                             thrownError);
                     }
                 });
-            });
+            }
 
-            $('#kota').on('change', function() {
-                $('#kurir').empty().append(`
-                    <option value="">Pilih Ekspedisi&hellip;</option>
-                    <option value="jne">JNE</option>
-                    <option value="pos">POS</option>
-                    <option value="tiki">TIKI</option>
-                `);
-                $('#ongkir').empty().append('<option value="">Pilih Ongkos Kirim&hellip;</option>');
+            $('#alamat').on('change', function() {
+                var addressId = $(this).val();
+                if (addressId) {
+                    $.ajax({
+                        url: "{{ url('/pembayaran/get-address-details/"+addressId+"') }}",
+                        type: 'POST',
+                        data: {
+                            id: addressId
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            $('#provinsi').val(response.province_name);
+                            $('#kota_id').val(response.city_id);
+                            $('#kota').val(response.city_name);
+                        },
+                        error: function() {
+                            alert('Terjadi kesalahan saat mengambil data alamat.');
+                        }
+                    });
+                } else {
+                    $('#provinsi').val('');
+                    $('#kota').val('');
+                }
             });
 
             $('#kurir').on('change', function() {
-                let kota = $('#kota').val();
+                let kota = $('#kota_id').val();
                 let kurir = $('#kurir').val();
-
                 $('#ongkir').empty();
 
                 $.ajax({
@@ -306,24 +290,22 @@
                         kurir: kurir
                     },
                     success: function(response) {
-                        $.each(response, function(i, val) {
-                            let cost = val.cost[0].value;
-                            let formattedCost = cost.toLocaleString('id-ID', {
-                                style: 'currency',
-                                currency: 'IDR',
-                                minimumFractionDigits: 0
-                            });
-                            $('#ongkir').append(
-                                `<option value="${val.cost[0].value}">${val.service} | ${val.description} | ${formattedCost} | ${val.cost[0].etd}</option> `
-                            );
-                        });
-
+                        $('#ongkir').html(response.ongkir);
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         console.error(xhr.status + "\n" + xhr.responseText + "\n" +
                             thrownError);
                     }
                 });
+            });
+
+            $('#ongkir').on('change', function() {
+                let ongkir = parseFloat($(this).val());
+                let subtotal = parseFloat('{{ $product->harga_jual * $qty }}');
+                let total = subtotal + ongkir;
+
+                $('#pembayaran_ongkir').text(formatCurrency(ongkir));
+                $('#total').text(formatCurrency(total));
             });
         });
     </script>

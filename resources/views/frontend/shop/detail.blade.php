@@ -89,10 +89,12 @@
                         </div>
 
                         <div class="product-option">
-                            <form class="form">
+                            <form class="form" method="POST" action="{{ route('pembayaran.directCheckout') }}">
+                                @csrf
+                                <input type="hidden" name="id" id="id" value="{{ $product->id }}">
                                 <div class="product-row">
                                     <div>
-                                        <input class="product-count" type="text" value="1" name="product-count">
+                                        <input class="product-count" type="text" value="1" name="qty">
                                     </div>
                                     <div class="add-to-cart-btn">
                                         <button class="thm-btn thm-btn__2 no-icon" type="button" id="addCart"
@@ -102,8 +104,7 @@
                                                 <span>Keranjang</span>
                                             </span>
                                         </button>
-                                        <button class="thm-btn thm-btn__2 no-icon" type="button" id="addCheckout"
-                                            data-id="{{ $product->id }}">
+                                        <button class="thm-btn thm-btn__2 no-icon" type="submit">
                                             <span class="btn-wrap">
                                                 <span>Beli Sekarang</span>
                                                 <span>Beli Sekarang</span>

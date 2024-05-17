@@ -69,7 +69,9 @@ class AddressController extends Controller
             $address->kota_id = $request->kota;
             $address->jalan = $request->jalan;
             $address->detail_alamat = $request->detail_alamat;
-            $existingDefaultAddress = Address::where('default_alamat', 0)->first();
+            $address->user_id = auth()->user()->id;
+
+            $existingDefaultAddress = Address::where('default_alamat', 0)->where('user_id', auth()->user()->id)->first();
 
             if ($request->default_alamat == '0') {
                 $address->default_alamat = 0;
@@ -80,10 +82,9 @@ class AddressController extends Controller
             } else {
                 $address->default_alamat = 1;
             }
-
             $address->user_id = auth()->user()->id;
-            $address->save();
 
+            $address->save();
             return response()->json(['success' => 'Data berhasil disimpan']);
         }
     }
@@ -97,6 +98,7 @@ class AddressController extends Controller
 
     public function update(Request $request)
     {
+
         $validated = Validator::make(
             $request->all(),
             [
@@ -136,7 +138,7 @@ class AddressController extends Controller
             $address->kota_id = $request->kota;
             $address->jalan = $request->jalan;
             $address->detail_alamat = $request->detail_alamat;
-            $existingDefaultAddress = Address::where('default_alamat', 0)->first();
+            $existingDefaultAddress = Address::where('default_alamat', 0)->where('user_id', auth()->user()->id)->first();
 
             if ($request->default_alamat == '0') {
                 $address->default_alamat = 0;
@@ -147,8 +149,8 @@ class AddressController extends Controller
             } else {
                 $address->default_alamat = 1;
             }
-
             $address->user_id = auth()->user()->id;
+
             $address->save();
 
             return response()->json(['success' => 'Data berhasil disimpan']);

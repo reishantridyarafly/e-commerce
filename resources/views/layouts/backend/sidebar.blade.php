@@ -24,7 +24,7 @@
         <!--- Sidemenu -->
         <ul class="side-nav">
             <li class="side-nav-title">Main</li>
-            @if (auth()->user()->type == "Pelanggan")
+            @if (auth()->user()->type == 'Pelanggan')
                 <li class="side-nav-item {{ request()->routeIs(['beranda.index']) ? 'menuitem-active' : '' }}">
                     <a href="{{ route('beranda.index') }}"
                         class="side-nav-link {{ request()->routeIs(['beranda.index']) ? 'active' : '' }}">
@@ -33,7 +33,7 @@
                     </a>
                 </li>
             @endif
-            @if (auth()->user()->type == "Administrator")
+            @if (auth()->user()->type == 'Administrator')
                 <li class="side-nav-item {{ request()->routeIs(['dashboard.index']) ? 'menuitem-active' : '' }}">
                     <a href="{{ route('dashboard.index') }}"
                         class="side-nav-link {{ request()->routeIs(['dashboard.index']) ? 'active' : '' }}">
@@ -48,6 +48,13 @@
                         class="side-nav-link {{ request()->routeIs(['kategori.*']) ? 'active' : '' }}">
                         <i class="ri-shopping-bag-2-line"></i>
                         <span> Kategori </span>
+                    </a>
+                </li>
+                <li class="side-nav-item {{ request()->routeIs(['rekening.*']) ? 'menuitem-active' : '' }}">
+                    <a href="{{ route('rekening.index') }}"
+                        class="side-nav-link {{ request()->routeIs(['rekening.*']) ? 'active' : '' }}">
+                        <i class="ri-wallet-2-line"></i>
+                        <span> Rekening </span>
                     </a>
                 </li>
                 <li class="side-nav-item {{ request()->routeIs(['produk.*']) ? 'menuitem-active' : '' }}">
