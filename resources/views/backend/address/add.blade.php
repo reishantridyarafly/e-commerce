@@ -60,45 +60,18 @@
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="mb-3">
-                                        <label for="kabupaten" class="form-label">Kabupaten</label>
-                                        <select name="kabupaten" id="kabupaten" class="form-control select2"
+                                        <label for="kota" class="form-label">Kota</label>
+                                        <select name="kota" id="kota" class="form-control select2"
                                             data-toggle="select2">
-                                            <option value="">-- Pilih Kabupaten --</option>
+                                            <option value="">-- Pilih Kota --</option>
                                         </select>
-                                        <small class="text-danger errorKabupaten"></small>
+                                        <small class="text-danger errorKota"></small>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="mb-3">
-                                        <label for="kecamatan" class="form-label">Kecamatan</label>
-                                        <select name="kecamatan" id="kecamatan" class="form-control select2"
-                                            data-toggle="select2">
-                                            <option value="">-- Pilih Kecamatan --</option>
-                                        </select>
-                                        <small class="text-danger errorKecamatan"></small>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="mb-3">
-                                        <label for="desa" class="form-label">Desa</label>
-                                        <select name="desa" id="desa" class="form-control select2"
-                                            data-toggle="select2">
-                                            <option value="">-- Pilih Desa --</option>
-                                        </select>
-                                        <small class="text-danger errorDesa"></small>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="mb-3">
-                                        <label for="kode_pos" class="form-label">Kode Pos</label>
-                                        <input type="number" id="kode_pos" name="kode_pos" class="form-control">
-                                        <small class="text-danger errorKodePos"></small>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
+                                <div class="col-12">
                                     <div class="mb-3">
                                         <label for="jalan" class="form-label">Jalan</label>
-                                        <textarea name="jalan" id="jalan" rows="1" class="form-control"></textarea>
+                                        <input type="text" name="jalan" id="jalan" class="form-control">
                                         <small class="text-danger errorJalan"></small>
                                     </div>
                                 </div>
@@ -190,36 +163,12 @@
                                 $('.errorProvinsi').html('');
                             }
 
-                            if (response.errors.kabupaten) {
-                                $('#kabupaten').addClass('is-invalid');
-                                $('.errorKabupaten').html(response.errors.kabupaten);
+                            if (response.errors.kota) {
+                                $('#kota').addClass('is-invalid');
+                                $('.errorKota').html(response.errors.kota);
                             } else {
-                                $('#kabupaten').removeClass('is-invalid');
-                                $('.errorKabupaten').html('');
-                            }
-
-                            if (response.errors.kecamatan) {
-                                $('#kecamatan').addClass('is-invalid');
-                                $('.errorKecamatan').html(response.errors.kecamatan);
-                            } else {
-                                $('#kecamatan').removeClass('is-invalid');
-                                $('.errorKecamatan').html('');
-                            }
-
-                            if (response.errors.desa) {
-                                $('#desa').addClass('is-invalid');
-                                $('.errorDesa').html(response.errors.desa);
-                            } else {
-                                $('#desa').removeClass('is-invalid');
-                                $('.errorDesa').html('');
-                            }
-
-                            if (response.errors.kode_pos) {
-                                $('#kode_pos').addClass('is-invalid');
-                                $('.errorKodePos').html(response.errors.kode_pos);
-                            } else {
-                                $('#kode_pos').removeClass('is-invalid');
-                                $('.errorKodePos').html('');
+                                $('#kota').removeClass('is-invalid');
+                                $('.errorKota').html('');
                             }
 
                             if (response.errors.jalan) {
@@ -260,53 +209,12 @@
 
             $.ajax({
                 type: "POST",
-                url: "{{ route('alamat.get-kabupaten') }}",
+                url: "{{ route('alamat.get-kota') }}",
                 data: {
                     id_provinsi: id_provinsi
                 },
                 success: function(response) {
-                    $('#kabupaten').html(response);
-                    $('#kecamatan').html('');
-                    $('#desa').html('');
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.error(xhr.status + "\n" + xhr.responseText + "\n" +
-                        thrownError);
-                }
-            });
-        });
-
-        $('#kabupaten').on('change', function() {
-            let id_kabupaten = $('#kabupaten').val();
-
-            $.ajax({
-                type: "POST",
-                url: "{{ route('alamat.get-kecamatan') }}",
-                data: {
-                    id_kabupaten: id_kabupaten
-                },
-                success: function(response) {
-                    $('#kecamatan').html(response);
-                    $('#desa').html('');
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.error(xhr.status + "\n" + xhr.responseText + "\n" +
-                        thrownError);
-                }
-            });
-        });
-
-        $('#kecamatan').on('change', function() {
-            let id_kecamatan = $('#kecamatan').val();
-
-            $.ajax({
-                type: "POST",
-                url: "{{ route('alamat.get-desa') }}",
-                data: {
-                    id_kecamatan: id_kecamatan
-                },
-                success: function(response) {
-                    $('#desa').html(response);
+                    $('#kota').html(response);
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     console.error(xhr.status + "\n" + xhr.responseText + "\n" +

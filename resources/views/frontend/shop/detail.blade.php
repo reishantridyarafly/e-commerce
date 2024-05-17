@@ -102,7 +102,8 @@
                                                 <span>Keranjang</span>
                                             </span>
                                         </button>
-                                        <button class="thm-btn thm-btn__2 no-icon" type="submit">
+                                        <button class="thm-btn thm-btn__2 no-icon" type="button" id="addCheckout"
+                                            data-id="{{ $product->id }}">
                                             <span class="btn-wrap">
                                                 <span>Beli Sekarang</span>
                                                 <span>Beli Sekarang</span>
@@ -451,14 +452,14 @@
                     dataType: 'json',
                     beforeSend: function() {
                         $('#addCart').attr('disable', 'disabled');
-                        $('#addCart').html(` <span class="btn-wrap">
+                        $('#addCart').html(`<span class="btn-wrap">
                                                 <span>Proses...</span>
                                                 <span>Proses...</span>
                                             </span>`);
                     },
                     complete: function() {
                         $('#addCart').removeAttr('disable');
-                        $('#addCart').html(` <span class="btn-wrap">
+                        $('#addCart').html(`<span class="btn-wrap">
                                                 <span>Keranjang</span>
                                                 <span>Keranjang</span>
                                             </span>`);

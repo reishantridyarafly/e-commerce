@@ -34,25 +34,28 @@ Route::middleware('auth')->group(function () {
     Route::delete('/keranjang/hapus/{id}', [App\Http\Controllers\Frontend\CartController::class, 'deleteCartItem'])->name('keranjang.deleteCartItem');
 
     Route::get('/pembayaran', [App\Http\Controllers\Frontend\CheckoutController::class, 'index'])->name('pembayaran.index');
-    Route::get('/provinces', [App\Http\Controllers\Frontend\CheckoutController::class, 'province'])->name('pembayaran.provinces');
-    Route::post('/kota', [App\Http\Controllers\Frontend\CheckoutController::class, 'city'])->name('pembayaran.kota');
-    Route::post('/check-ongkir', [App\Http\Controllers\Frontend\CheckoutController::class, 'checkOngkir'])->name('pembayaran.check-ongkir');
-});
+    Route::get('/pembayaran/provinces', [App\Http\Controllers\Frontend\CheckoutController::class, 'province'])->name('pembayaran.provinces');
+    Route::post('/pembayaran/kota', [App\Http\Controllers\Frontend\CheckoutController::class, 'city'])->name('pembayaran.kota');
+    Route::post('/pembayaran/check-ongkir', [App\Http\Controllers\Frontend\CheckoutController::class, 'checkOngkir'])->name('pembayaran.check-ongkir');
+    Route::get('/pembayaran/checkout-direct', [App\Http\Controllers\Frontend\CheckoutController::class, 'checkoutDirect'])->name('pembayaran.checkoutDirect');
 
-Route::middleware(['auth', 'user-access:Pemilik,Administrator,Pelanggan'])->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
-    Route::get('/dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/profile', [App\Http\Controllers\Backend\ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/profile/change/password', [App\Http\Controllers\Backend\ProfileController::class, 'changePassword'])->name('profile.changePassword');
+    Route::post('/profile/settings/', [App\Http\Controllers\Backend\ProfileController::class, 'settingsProfile'])->name('profile.settings');
+    Route::post('/profile/settings/delete-photo', [App\Http\Controllers\Backend\ProfileController::class, 'deletePhoto'])->name('profile.deletePhoto');
+    Route::post('/profile/delete/account', [App\Http\Controllers\Backend\ProfileController::class, 'deleteAccount'])->name('profile.deleteAccount');
 
-    Route::post('/alamat/kabupaten', [App\Http\Controllers\Backend\AddressController::class, 'getKabupaten'])->name('alamat.get-kabupaten');
-    Route::post('/alamat/kabupaten', [App\Http\Controllers\Backend\AddressController::class, 'getKabupaten'])->name('alamat.get-kabupaten');
-    Route::post('/alamat/kecamatan', [App\Http\Controllers\Backend\AddressController::class, 'getKecamatan'])->name('alamat.get-kecamatan');
-    Route::post('/alamat/desa', [App\Http\Controllers\Backend\AddressController::class, 'getDesa'])->name('alamat.get-desa');
+    Route::post('/alamat/kota', [App\Http\Controllers\Backend\AddressController::class, 'getKota'])->name('alamat.get-kota');
     Route::get('/alamat', [App\Http\Controllers\Backend\AddressController::class, 'index'])->name('alamat.index');
     Route::get('/alamat/tambah', [App\Http\Controllers\Backend\AddressController::class, 'create'])->name('alamat.create');
     Route::post('/alamat', [App\Http\Controllers\Backend\AddressController::class, 'store'])->name('alamat.store');
     Route::get('/alamat/{id}/edit', [App\Http\Controllers\Backend\AddressController::class, 'edit'])->name('alamat.edit');
     Route::post('/alamat/{id}', [App\Http\Controllers\Backend\AddressController::class, 'update'])->name('alamat.update');
     Route::delete('/alamat/{id}', [App\Http\Controllers\Backend\AddressController::class, 'destroy'])->name('alamat.destroy');
+});
+
+Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::get('/kategori', [App\Http\Controllers\Backend\CategoryController::class, 'index'])->name('kategori.index');
     Route::get('/kategori/tambah', [App\Http\Controllers\Backend\CategoryController::class, 'create'])->name('kategori.create');
@@ -67,12 +70,6 @@ Route::middleware(['auth', 'user-access:Pemilik,Administrator,Pelanggan'])->grou
     Route::get('/produk/{id}/edit', [App\Http\Controllers\Backend\ProductController::class, 'edit'])->name('produk.edit');
     Route::post('/produk/{id}', [App\Http\Controllers\Backend\ProductController::class, 'update'])->name('produk.update');
     Route::delete('/produk/{id}', [App\Http\Controllers\Backend\ProductController::class, 'destroy'])->name('produk.destroy');
-
-    Route::get('/profile', [App\Http\Controllers\Backend\ProfileController::class, 'index'])->name('profile.index');
-    Route::post('/profile/change/password', [App\Http\Controllers\Backend\ProfileController::class, 'changePassword'])->name('profile.changePassword');
-    Route::post('/profile/settings/', [App\Http\Controllers\Backend\ProfileController::class, 'settingsProfile'])->name('profile.settings');
-    Route::post('/profile/settings/delete-photo', [App\Http\Controllers\Backend\ProfileController::class, 'deletePhoto'])->name('profile.deletePhoto');
-    Route::post('/profile/delete/account', [App\Http\Controllers\Backend\ProfileController::class, 'deleteAccount'])->name('profile.deleteAccount');
 
     Route::get('/pengguna', [App\Http\Controllers\Backend\UsersController::class, 'index'])->name('pengguna.index');
     Route::post('/pengguna', [App\Http\Controllers\Backend\UsersController::class, 'store'])->name('pengguna.store');

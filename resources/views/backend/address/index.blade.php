@@ -34,8 +34,8 @@
                                             <h5 class="card-title text-primary">{{ $row->nama }} | {{ $row->no_telepon }}
                                             </h5>
                                             <p class="card-text">{{ $row->detail_alamat }}</p>
-                                            <p class="card-text">{{ $row->village_name }}, {{ $row->district_name }},
-                                                {{ $row->regency_name }}, {{ $row->province_name }}, {{ $row->kode_pos }}
+                                            <p class="card-text">
+                                                {{ $row->city_name }}, {{ $row->province_name }}, {{ $row->kode_pos }}
                                             </p>
                                             <hr>
                                             <div class="row align-items-center">

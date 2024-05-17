@@ -16,10 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('no_telepon');
             $table->char('provinsi_id', '10');
-            $table->char('kabupaten_id', '10');
-            $table->char('kecamatan_id', '10');
-            $table->char('desa_id', '10');
-            $table->string('kode_pos');
+            $table->char('kota_id', '10');
             $table->text('jalan');
             $table->text('detail_alamat');
             $table->boolean('default_alamat')->default(1)->comment('0 = Default, 1 = Non Default');

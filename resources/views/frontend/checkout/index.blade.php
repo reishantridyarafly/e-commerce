@@ -266,6 +266,14 @@
                     },
                     success: function(response) {
                         $('#kota').html(response);
+                        $('#kurir').empty().append(`
+                            <option value="">Pilih Ekspedisi&hellip;</option>
+                            <option value="jne">JNE</option>
+                            <option value="pos">POS</option>
+                            <option value="tiki">TIKI</option>
+                        `);
+                        $('#ongkir').empty().append(
+                            '<option value="">Pilih Ongkos Kirim&hellip;</option>');
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         console.error(xhr.status + "\n" + xhr.responseText + "\n" +

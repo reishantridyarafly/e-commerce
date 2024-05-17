@@ -34,4 +34,14 @@ class Address extends Model
     {
         return 'string';
     }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'provinsi_id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'kota_id');
+    }
 }

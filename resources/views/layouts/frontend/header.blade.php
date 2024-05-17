@@ -95,8 +95,8 @@
                                 </a>
                             </div>
                             <div class="icon">
-                                <a href="#!"><img src="{{ asset('frontend/assets') }}/img/icon/user.svg"
-                                        alt=""></a>
+                                <a href="{{ route('profile.index') }}"><img
+                                        src="{{ asset('frontend/assets') }}/img/icon/user.svg" alt=""></a>
                             </div>
                         </div>
                     @endauth

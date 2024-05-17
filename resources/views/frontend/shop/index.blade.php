@@ -26,7 +26,6 @@
                     <div class="shop-area clearfix">
                         <div class="woocommerce-content-wrap">
                             <div class="woocommerce-toolbar-top">
-                                <p class="woocommerce-result-count">Showing 1–12 of 70 results</p>
                                 <div class="products-sizes">
                                     <a href="#!" class="grid-4">
                                         <div class="grid-draw">
@@ -137,15 +136,6 @@
                                     @endforelse
                                 </ul>
                             </div>
-                            {{-- <div class="pagination_wrap pt-20">
-                                <ul>
-                                    <li><a href="#!"><i class="far fa-angle-double-left"></i></a></li>
-                                    <li><a class="current_page" href="#!">1</a></li>
-                                    <li><a href="#!">2</a></li>
-                                    <li><a href="#!">3</a></li>
-                                    <li><a href="#!"><i class="far fa-angle-double-right"></i></a></li>
-                                </ul>
-                            </div> --}}
 
                             <div class="pagination_wrap pt-20">
                                 <div class="pagination_wrap pt-20">
@@ -178,26 +168,6 @@
                                         </li>
                                     @endforelse
                                 </ul>
-                            </div>
-                            <div class="widget">
-                                <div class="widget__add">
-                                    <div class="content">
-                                        <span>Trending</span>
-                                        <h3>2021 <span>Laptop</span> <br> Collection</h3>
-                                        <a class="thm-btn no-icon" href="#!">
-                                            <span class="btn-wrap">
-                                                <span>Buy Now</span>
-                                                <span>Buy Now</span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <div class="image">
-                                        <img class="add_img" src="{{ asset('frontend/assets') }}/img/product/img_177.png"
-                                            alt="">
-                                        <img class="add_shape"
-                                            src="{{ asset('frontend/assets') }}/img/shape/add_shape.png" alt="">
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

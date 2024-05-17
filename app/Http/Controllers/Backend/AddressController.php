@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\City;
 use App\Models\Province;
-use App\Models\District;
-use App\Models\Regency;
-use App\Models\Village;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -16,13 +14,13 @@ class AddressController extends Controller
 {
     public function index()
     {
-        $address =  DB::table('address')
-            ->select('address.*', 'villages.name as village_name', 'districts.name as district_name', 'regencies.name as regency_name', 'provinces.name as province_name')
-            ->leftJoin('villages', 'address.desa_id', '=', 'villages.id')
-            ->leftJoin('districts', 'villages.district_id', '=', 'districts.id')
-            ->leftJoin('regencies', 'districts.regency_id', '=', 'regencies.id')
-            ->leftJoin('provinces', 'regencies.province_id', '=', 'provinces.id')
+        $address = DB::table('address')
+            ->join('provinces', 'address.provinsi_id', '=', 'provinces.id')
+            ->join('cities', 'address.kota_id', '=', 'cities.id')
+            ->select('address.*', 'provinces.name as province_name', 'cities.name as city_name', 'cities.postal_code as kode_pos')
+            ->where('user_id', auth()->user()->id)
             ->get();
+
         return view('backend.address.index', compact('address'));
     }
 
@@ -40,10 +38,7 @@ class AddressController extends Controller
                 'name' => 'required|string',
                 'no_telepon' => 'required|string|min:11',
                 'provinsi' => 'required|string',
-                'kabupaten' => 'required|string',
-                'kecamatan' => 'required|string',
-                'desa' => 'required|string',
-                'kode_pos' => 'required|numeric',
+                'kota' => 'required',
                 'jalan' => 'required|string',
                 'detail_alamat' => 'required|string',
             ],
@@ -55,14 +50,7 @@ class AddressController extends Controller
                 'no_telepon.min' => 'Nomor telepon harus memiliki minimal :min karakter.',
                 'provinsi.required' => 'Silakan pilih provinsi terlebih dahulu.',
                 'provinsi.string' => 'Provinsi harus berupa teks.',
-                'kabupaten.required' => 'Silakan pilih kabupaten terlebih dahulu.',
-                'kabupaten.string' => 'Kabupaten harus berupa teks.',
-                'kecamatan.required' => 'Silakan pilih kecamatan terlebih dahulu.',
-                'kecamatan.string' => 'Kecamatan harus berupa teks.',
-                'desa.required' => 'Silakan pilih desa terlebih dahulu.',
-                'desa.string' => 'Desa harus berupa teks.',
-                'kode_pos.required' => 'Silakan isi kode pos terlebih dahulu.',
-                'kode_pos.numeric' => 'Kode pos harus berupa angka.',
+                'kota.required' => 'Silakan pilih kota terlebih dahulu.',
                 'jalan.required' => 'Silakan isi jalan terlebih dahulu.',
                 'jalan.string' => 'Jalan harus berupa teks.',
                 'detail_alamat.required' => 'Silakan isi detail alamat terlebih dahulu.',
@@ -78,13 +66,9 @@ class AddressController extends Controller
             $address->nama = $request->name;
             $address->no_telepon = $request->no_telepon;
             $address->provinsi_id = $request->provinsi;
-            $address->kabupaten_id = $request->kabupaten;
-            $address->kecamatan_id = $request->kecamatan;
-            $address->desa_id = $request->desa;
-            $address->kode_pos = $request->kode_pos;
+            $address->kota_id = $request->kota;
             $address->jalan = $request->jalan;
             $address->detail_alamat = $request->detail_alamat;
-            // Periksa apakah sudah ada alamat utama
             $existingDefaultAddress = Address::where('default_alamat', 0)->first();
 
             if ($request->default_alamat == '0') {
@@ -120,10 +104,7 @@ class AddressController extends Controller
                 'name' => 'required|string',
                 'no_telepon' => 'required|string|min:11',
                 'provinsi' => 'required|string',
-                'kabupaten' => 'required|string',
-                'kecamatan' => 'required|string',
-                'desa' => 'required|string',
-                'kode_pos' => 'required|numeric',
+                'kota' => 'required|string',
                 'jalan' => 'required|string',
                 'detail_alamat' => 'required|string',
             ],
@@ -135,14 +116,8 @@ class AddressController extends Controller
                 'no_telepon.min' => 'Nomor telepon harus memiliki minimal :min karakter.',
                 'provinsi.required' => 'Silakan pilih provinsi terlebih dahulu.',
                 'provinsi.string' => 'Provinsi harus berupa teks.',
-                'kabupaten.required' => 'Silakan pilih kabupaten terlebih dahulu.',
-                'kabupaten.string' => 'Kabupaten harus berupa teks.',
-                'kecamatan.required' => 'Silakan pilih kecamatan terlebih dahulu.',
-                'kecamatan.string' => 'Kecamatan harus berupa teks.',
-                'desa.required' => 'Silakan pilih desa terlebih dahulu.',
-                'desa.string' => 'Desa harus berupa teks.',
-                'kode_pos.required' => 'Silakan isi kode pos terlebih dahulu.',
-                'kode_pos.numeric' => 'Kode pos harus berupa angka.',
+                'kota.required' => 'Silakan pilih kota terlebih dahulu.',
+                'kota.string' => 'Kota harus berupa teks.',
                 'jalan.required' => 'Silakan isi jalan terlebih dahulu.',
                 'jalan.string' => 'Jalan harus berupa teks.',
                 'detail_alamat.required' => 'Silakan isi detail alamat terlebih dahulu.',
@@ -158,13 +133,9 @@ class AddressController extends Controller
             $address->nama = $request->name;
             $address->no_telepon = $request->no_telepon;
             $address->provinsi_id = $request->provinsi;
-            $address->kabupaten_id = $request->kabupaten;
-            $address->kecamatan_id = $request->kecamatan;
-            $address->desa_id = $request->desa;
-            $address->kode_pos = $request->kode_pos;
+            $address->kota_id = $request->kota;
             $address->jalan = $request->jalan;
             $address->detail_alamat = $request->detail_alamat;
-            // Periksa apakah sudah ada alamat utama
             $existingDefaultAddress = Address::where('default_alamat', 0)->first();
 
             if ($request->default_alamat == '0') {
@@ -191,32 +162,12 @@ class AddressController extends Controller
         return Response()->json(['address' => $address, 'success' => 'Data berhasil dihapus!']);
     }
 
-    public function getKabupaten(Request $request)
+    public function getKota(Request $request)
     {
         $id_provinsi = $request->id_provinsi;
-        $kabupaten = Regency::where('province_id', $id_provinsi)->get();
-        echo "<option value=''>-- Pilih Kabupaten --</option>";
-        foreach ($kabupaten as $row) {
-            echo "<option value='" . $row->id . "'>" . $row->name . "</option>";
-        }
-    }
-
-    public function getKecamatan(Request $request)
-    {
-        $id_kabupaten = $request->id_kabupaten;
-        $kecamatan = District::where('regency_id', $id_kabupaten)->get();
-        echo "<option value=''>-- Pilih Kecamatan --</option>";
-        foreach ($kecamatan as $row) {
-            echo "<option value='" . $row->id . "'>" . $row->name . "</option>";
-        }
-    }
-
-    public function getDesa(Request $request)
-    {
-        $id_kecamatan = $request->id_kecamatan;
-        $desa = Village::where('district_id', $id_kecamatan)->get();
-        echo "<option value=''>-- Pilih Desa --</option>";
-        foreach ($desa as $row) {
+        $kota = City::where('province_id', $id_provinsi)->get();
+        echo "<option value=''>-- Pilih Kota --</option>";
+        foreach ($kota as $row) {
             echo "<option value='" . $row->id . "'>" . $row->name . "</option>";
         }
     }
