@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col col-xs-12">
                     <div class="woocommerce">
-                        <form action="/" method="post">
+                        <form>
                             <table class="shop_table shop_table_responsive cart">
                                 <thead>
                                     <tr>

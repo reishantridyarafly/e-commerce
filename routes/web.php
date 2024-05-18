@@ -19,7 +19,7 @@ Route::get('/tentang', [App\Http\Controllers\Frontend\AboutController::class, 'i
 
 Route::get('/belanja', [App\Http\Controllers\Frontend\ShopController::class, 'index'])->name('belanja.index');
 Route::get('/belanja/pencarian/', [App\Http\Controllers\Frontend\ShopController::class, 'search'])->name('belanja.search');
-Route::get('/belanja/kategori/{slug}', [App\Http\Controllers\Frontend\ShopController::class, 'category'])->name('belanja.category');
+Route::get('/belanja/katalog/{slug}', [App\Http\Controllers\Frontend\ShopController::class, 'category'])->name('belanja.category');
 Route::get('/belanja/detail/{slug}', [App\Http\Controllers\Frontend\ShopController::class, 'detail'])->name('belanja.detail');
 
 Route::get('/kontak', [App\Http\Controllers\Frontend\ContactController::class, 'index'])->name('kontak.index');
@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/pembayaran', [App\Http\Controllers\Frontend\CheckoutController::class, 'directCheckout'])->name('pembayaran.directCheckout');
     Route::post('/pembayaran/get-address-details/{id}', [App\Http\Controllers\Frontend\CheckoutController::class, 'getAddressDetails'])->name('pembayaran.get-address-details');
     Route::post('/pembayaran/check-ongkir', [App\Http\Controllers\Frontend\CheckoutController::class, 'checkOngkir'])->name('pembayaran.check-ongkir');
+    Route::post('/pembayaran/store', [App\Http\Controllers\Frontend\CheckoutController::class, 'store'])->name('pembayaran.store');
 
     Route::get('/profile', [App\Http\Controllers\Backend\ProfileController::class, 'index'])->name('profile.index');
     Route::post('/profile/change/password', [App\Http\Controllers\Backend\ProfileController::class, 'changePassword'])->name('profile.changePassword');
@@ -55,11 +56,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard.index');
 
-    Route::get('/kategori', [App\Http\Controllers\Backend\CategoryController::class, 'index'])->name('kategori.index');
-    Route::get('/kategori/tambah', [App\Http\Controllers\Backend\CategoryController::class, 'create'])->name('kategori.create');
-    Route::get('/kategori/{id}/edit', [App\Http\Controllers\Backend\CategoryController::class, 'edit'])->name('kategori.edit');
-    Route::post('/kategori', [App\Http\Controllers\Backend\CategoryController::class, 'store'])->name('kategori.store');
-    Route::delete('/kategori/{id}', [App\Http\Controllers\Backend\CategoryController::class, 'destroy'])->name('kategori.destroy');
+    Route::get('/katalog', [App\Http\Controllers\Backend\CategoryController::class, 'index'])->name('katalog.index');
+    Route::get('/katalog/tambah', [App\Http\Controllers\Backend\CategoryController::class, 'create'])->name('katalog.create');
+    Route::get('/katalog/{id}/edit', [App\Http\Controllers\Backend\CategoryController::class, 'edit'])->name('katalog.edit');
+    Route::post('/katalog', [App\Http\Controllers\Backend\CategoryController::class, 'store'])->name('katalog.store');
+    Route::delete('/katalog/{id}', [App\Http\Controllers\Backend\CategoryController::class, 'destroy'])->name('katalog.destroy');
 
     Route::get('/rekening', [App\Http\Controllers\Backend\RekeningController::class, 'index'])->name('rekening.index');
     Route::get('/rekening/tambah', [App\Http\Controllers\Backend\RekeningController::class, 'create'])->name('rekening.create');

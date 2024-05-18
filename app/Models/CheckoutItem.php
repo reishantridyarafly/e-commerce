@@ -10,7 +10,7 @@ class CheckoutItem extends Model
 {
     use HasFactory;
 
-    protected $table = 'checkout_item';
+    protected $table = 'checkout_items';
     protected $guarded = [];
 
     public $incrementing = false;
@@ -35,4 +35,8 @@ class CheckoutItem extends Model
         return 'string';
     }
 
+    public function checkout()
+    {
+        return $this->belongsTo(Checkouts::class, 'checkout_id');
+    }
 }

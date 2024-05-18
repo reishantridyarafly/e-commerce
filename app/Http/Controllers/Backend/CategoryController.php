@@ -37,8 +37,8 @@ class CategoryController extends Controller
                 'nama' => 'required|unique:categories,nama,' . $id,
             ],
             [
-                'nama.required' => 'Silakan isi nama kategori terlebih dahulu.',
-                'nama.unique' => 'Nama kategori sudah tersedia.'
+                'nama.required' => 'Silakan isi nama katalog terlebih dahulu.',
+                'nama.unique' => 'Nama katalog sudah tersedia.'
             ]
         );
 

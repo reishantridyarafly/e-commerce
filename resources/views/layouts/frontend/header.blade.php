@@ -60,8 +60,8 @@
                     </a>
                 </div>
                 <div class="header__category">
-                    <a class="header__category-nav" href="#!"><img class="bar"
-                            src="{{ asset('frontend/assets') }}/img/icon/bar.svg" alt="">Cari Kategori<i
+                    <a class="header__category-nav" href="{{ route('beranda.index') }}"><img class="bar"
+                            src="{{ asset('frontend/assets') }}/img/icon/bar.svg" alt="">Cari Katalog<i
                             class="fas fa-chevron-down"></i></a>
                 </div>
                 <div class="hamburger_menu d-lg-none">
@@ -252,4 +252,3 @@
 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
     @csrf
 </form>
-
