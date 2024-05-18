@@ -34,4 +34,9 @@ class Checkouts extends Model
     {
         return 'string';
     }
+
+    public function items()
+    {
+        return $this->hasMany(CheckoutItem::class, 'checkout_id');
+    }
 }

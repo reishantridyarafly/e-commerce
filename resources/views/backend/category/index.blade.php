@@ -1,5 +1,5 @@
 @extends('layouts.backend.main')
-@section('title', 'Kategori')
+@section('title', 'Katalog')
 @section('css')
     <!-- Datatables css -->
     <link href="{{ asset('backend/assets') }}/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet"
@@ -42,7 +42,7 @@
                             <div class="card-header">
                                 <div class="text-end">
                                     <button type="button" class="btn btn-primary btn-sm ms-md-1" id="btnAdd">
-                                        <i class="mdi mdi-plus"></i> Tambah Kategori
+                                        <i class="mdi mdi-plus"></i> Tambah @yield('title')
                                     </button>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <input type="hidden" name="id" id="id">
-                            <label for="nama" class="form-label">Nama Kategori</label>
+                            <label for="nama" class="form-label">Nama Katalog</label>
                             <input type="text" id="nama" name="nama" class="form-control" autofocus>
                             <small class="text-danger errorNama"></small>
                         </div>
@@ -125,7 +125,7 @@
             $('#datatable').DataTable({
                 processing: true,
                 serverside: true,
-                ajax: "{{ route('kategori.index') }}",
+                ajax: "{{ route('katalog.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -161,11 +161,11 @@
                 let id = $(this).data('id');
                 $.ajax({
                     type: "GET",
-                    url: "kategori/" + id + "/edit",
+                    url: "katalog/" + id + "/edit",
                     dataType: "json",
                     success: function(response) {
                         $('#modalLabel').html("Edit Data");
-                        $('#simpan').val("edit-kategori");
+                        $('#simpan').val("edit-katalog");
                         $('#modal').modal('show');
 
                         $('#nama').removeClass('is-invalid');
@@ -192,7 +192,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "DELETE",
-                            url: "{{ url('kategori/"+id+"') }}",
+                            url: "{{ url('katalog/"+id+"') }}",
                             data: {
                                 id: id
                             },
@@ -220,7 +220,7 @@
                 e.preventDefault();
                 $.ajax({
                     data: $(this).serialize(),
-                    url: "{{ route('kategori.store') }}",
+                    url: "{{ route('katalog.store') }}",
                     type: "POST",
                     dataType: 'json',
                     beforeSend: function() {

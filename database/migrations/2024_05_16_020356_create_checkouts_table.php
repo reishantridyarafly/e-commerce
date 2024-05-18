@@ -16,7 +16,7 @@ return new class extends Migration
             $table->uuid('user_id')->nullable();
             $table->uuid('address_id')->nullable();
             $table->decimal('total_biaya', 15, 2);
-            $table->string('status')->default('pending')->comment('pending, completed, failed');
+            $table->string('status')->default('pending')->comment('pending, process, completed, failed');
             $table->string('bukti_pembayaran')->nullable();
             $table->timestamp('tanggal_pembayaran');
             $table->timestamps();
