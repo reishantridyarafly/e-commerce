@@ -94,7 +94,7 @@
                                 <input type="hidden" name="id" id="id" value="{{ $product->id }}">
                                 <div class="product-row">
                                     <div>
-                                        <input class="product-count" type="text" value="1" name="qty">
+                                        <input class="product-count" type="text" value="1" name="qty" id="qty">
                                     </div>
                                     <div class="add-to-cart-btn">
                                         <button class="thm-btn thm-btn__2 no-icon" type="button" id="addCart"
@@ -444,11 +444,13 @@
 
             $('body').on('click', '#addCart', function() {
                 let id = $(this).data('id');
+                let qty = $('#qty').val();
                 $.ajax({
                     type: "POST",
                     url: "/keranjang/tambah/" + id,
                     data: {
-                        id: id
+                        id: id,
+                        qty: qty,
                     },
                     dataType: 'json',
                     beforeSend: function() {

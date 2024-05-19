@@ -24,7 +24,7 @@ class CartController extends Controller
         return view('frontend.cart.index', compact(['items']));
     }
 
-    public function addCart($id)
+    public function addCart($id, Request $request)
     {
         $product = Product::findOrFail($id);
         $userId = auth()->id();
@@ -33,12 +33,12 @@ class CartController extends Controller
         $cartItem = $cart->items()->where('product_id', $product->id)->first();
 
         if ($cartItem) {
-            $cartItem->quantity += 1;
+            $cartItem->quantity += $request->qty;
             $cartItem->save();
         } else {
             $cart->items()->create([
                 'product_id' => $product->id,
-                'quantity' => 1,
+                'quantity' => $request->qty,
                 'price' => $product->harga_jual
             ]);
         }
