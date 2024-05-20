@@ -127,12 +127,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <input type="hidden" name="product_id" id="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="product_id" id="product_id"
+                                            value="{{ $product->id }}">
                                         <input type="hidden" name="qty" id="qty" value="{{ $qty }}">
-                                        <input type="hidden" name="harga" id="harga" value="{{ $product->harga_jual }}">
+                                        <input type="hidden" name="harga" id="harga"
+                                            value="{{ $product->harga_jual }}">
                                         <tr class="cart_single">
                                             <td class="product-name">
-                                                <small> {{ $product->nama }}&nbsp; <strong class="product-quantity">&times;
+                                                <small> {{ $product->nama }}&nbsp; <strong
+                                                        class="product-quantity">&times;
                                                         {{ $qty }}</strong> </small>
                                             </td>
                                             <td class="product-total">
@@ -153,6 +156,7 @@
                                             <th><small>Ongkos Kirim</small></th>
                                             <td>
                                                 <small id="pembayaran_ongkir"></small>
+                                                <input type="hidden" name="total_ongkir" id="total_ongkir">
                                             </td>
                                         </tr>
 
@@ -304,6 +308,7 @@
                 let subtotal = parseFloat('{{ $product->harga_jual * $qty }}');
                 let total = subtotal + ongkir;
 
+                $('#total_ongkir').val(ongkir);
                 $('#pembayaran_ongkir').text(formatCurrency(ongkir));
                 $('#total').text(formatCurrency(total));
                 $('#total_pembayaran').val(total);

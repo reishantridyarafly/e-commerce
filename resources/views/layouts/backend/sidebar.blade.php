@@ -23,17 +23,8 @@
     <div class="h-100" id="leftside-menu-container" data-simplebar>
         <!--- Sidemenu -->
         <ul class="side-nav">
-            <li class="side-nav-title">Main</li>
-            @if (auth()->user()->type == 'Administrator' || auth()->user()->type == 'Pelanggan')
-                <li class="side-nav-item {{ request()->routeIs(['beranda.index']) ? 'menuitem-active' : '' }}">
-                    <a href="{{ route('beranda.index') }}"
-                        class="side-nav-link {{ request()->routeIs(['beranda.index']) ? 'active' : '' }}">
-                        <i class="ri-time-line"></i>
-                        <span> Riwayat Transaksi </span>
-                    </a>
-                </li>
-            @endif
             @if (auth()->user()->type == 'Administrator')
+                <li class="side-nav-title">Main</li>
                 <li class="side-nav-item {{ request()->routeIs(['dashboard.index']) ? 'menuitem-active' : '' }}">
                     <a href="{{ route('dashboard.index') }}"
                         class="side-nav-link {{ request()->routeIs(['dashboard.index']) ? 'active' : '' }}">
@@ -41,8 +32,14 @@
                         <span> Dashboard </span>
                     </a>
                 </li>
-
                 <li class="side-nav-title">Master</li>
+                <li class="side-nav-item {{ request()->routeIs(['transaksi.*']) ? 'menuitem-active' : '' }}">
+                    <a href="{{ route('transaksi.index') }}"
+                        class="side-nav-link {{ request()->routeIs(['transaksi.*']) ? 'active' : '' }}">
+                        <i class="ri-time-line"></i>
+                        <span> Transaksi </span>
+                    </a>
+                </li>
                 <li class="side-nav-item {{ request()->routeIs(['katalog.*']) ? 'menuitem-active' : '' }}">
                     <a href="{{ route('katalog.index') }}"
                         class="side-nav-link {{ request()->routeIs(['katalog.*']) ? 'active' : '' }}">
@@ -81,7 +78,7 @@
                 </li>
             @endif
 
-            <li class="side-nav-title">Pengaturan</li>
+            <li class="side-nav-title">Informasi</li>
             <li class="side-nav-item {{ request()->routeIs(['profile.*']) ? 'menuitem-active' : '' }}">
                 <a href="{{ route('profile.index') }}"
                     class="side-nav-link {{ request()->routeIs(['profile.*']) ? 'active' : '' }}">
@@ -89,6 +86,15 @@
                     <span> Profile </span>
                 </a>
             </li>
+            @if (auth()->user()->type == 'Pelanggan')
+                <li class="side-nav-item {{ request()->routeIs(['transaksi.*']) ? 'menuitem-active' : '' }}">
+                    <a href="{{ route('transaksi.index') }}"
+                        class="side-nav-link {{ request()->routeIs(['transaksi.*']) ? 'active' : '' }}">
+                        <i class="ri-time-line"></i>
+                        <span> Transaksi </span>
+                    </a>
+                </li>
+            @endif
             <li class="side-nav-item {{ request()->routeIs(['alamat.*']) ? 'menuitem-active' : '' }}">
                 <a href="{{ route('alamat.index') }}"
                     class="side-nav-link {{ request()->routeIs(['alamat.*']) ? 'active' : '' }}">

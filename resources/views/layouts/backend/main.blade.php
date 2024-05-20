@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-menu-color="light" data-bs-theme="light" data-layout-mode="fluid" data-topbar-color="light"
+    data-layout-position="fixed" data-sidenav-size="default" class="menuitem-active">
 
 <head>
     <meta charset="utf-8" />
@@ -26,7 +27,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body>
+<body class="show" style="">
     <!-- Begin page -->
     <div class="wrapper">
         <!-- ========== Topbar Start ========== -->

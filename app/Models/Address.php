@@ -44,4 +44,9 @@ class Address extends Model
     {
         return $this->belongsTo(City::class, 'kota_id');
     }
+
+    public function checkouts()
+    {
+        return $this->hasMany(Checkouts::class, 'address_id');
+    }
 }

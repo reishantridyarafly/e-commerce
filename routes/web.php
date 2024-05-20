@@ -64,6 +64,16 @@ Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
     Route::post('/katalog', [App\Http\Controllers\Backend\CategoryController::class, 'store'])->name('katalog.store');
     Route::delete('/katalog/{id}', [App\Http\Controllers\Backend\CategoryController::class, 'destroy'])->name('katalog.destroy');
 
+    Route::get('/transaksi', [App\Http\Controllers\Backend\CheckoutController::class, 'index'])->name('transaksi.index');
+    Route::get('/transaksi/{id}/detail', [App\Http\Controllers\Backend\CheckoutController::class, 'detail'])->name('transaksi.detail');
+    Route::get('/transaksi/{id}/edit', [App\Http\Controllers\Backend\CheckoutController::class, 'edit'])->name('transaksi.edit');
+    Route::post('/transaksi', [App\Http\Controllers\Backend\CheckoutController::class, 'store'])->name('transaksi.store');
+    Route::delete('/transaksi/{id}', [App\Http\Controllers\Backend\CheckoutController::class, 'destroy'])->name('transaksi.destroy');
+    Route::post('/transaksi/tolak', [App\Http\Controllers\Backend\CheckoutController::class, 'tolak'])->name('transaksi.tolak');
+    Route::post('/transaksi/proses', [App\Http\Controllers\Backend\CheckoutController::class, 'proses'])->name('transaksi.proses');
+    Route::post('/transaksi/selesai', [App\Http\Controllers\Backend\CheckoutController::class, 'selesai'])->name('transaksi.selesai');
+    Route::post('/transaksi/update/resi', [App\Http\Controllers\Backend\CheckoutController::class, 'updateResi'])->name('transaksi.updateResi');
+
     Route::get('/rekening', [App\Http\Controllers\Backend\RekeningController::class, 'index'])->name('rekening.index');
     Route::get('/rekening/tambah', [App\Http\Controllers\Backend\RekeningController::class, 'create'])->name('rekening.create');
     Route::get('/rekening/{id}/edit', [App\Http\Controllers\Backend\RekeningController::class, 'edit'])->name('rekening.edit');

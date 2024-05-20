@@ -153,6 +153,7 @@ class CheckoutController extends Controller
                             'kode_checkout' => $transactionCode,
                             'user_id' => auth()->user()->id,
                             'address_id' => $request->address,
+                            'ongkir' => $request->total_ongkir,
                             'total_biaya' => $request->total_pembayaran,
                             'bukti_pembayaran' => $randomFileName,
                             'tanggal_pembayaran' => now(),
