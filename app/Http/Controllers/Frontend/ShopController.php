@@ -12,7 +12,10 @@ class ShopController extends Controller
     public function index()
     {
         $category = Category::orderBy('nama', 'asc')->get();
-        $product = Product::orderBy('nama', 'asc')->where('status', 0)->paginate(12);
+        $product = Product::where('status', 0)
+            ->where('stok', '>', 0)
+            ->orderBy('created_at', 'asc')
+            ->paginate(12);
 
         foreach ($product as $row) {
             $row->featured_photo = $row->photos()->first();

@@ -24,16 +24,15 @@
         <!--- Sidemenu -->
         <ul class="side-nav">
             <li class="side-nav-title">Main</li>
-            @if (auth()->user()->type == 'Pelanggan')
+            @if (auth()->user()->type == 'Administrator' || auth()->user()->type == 'Pelanggan')
                 <li class="side-nav-item {{ request()->routeIs(['beranda.index']) ? 'menuitem-active' : '' }}">
                     <a href="{{ route('beranda.index') }}"
                         class="side-nav-link {{ request()->routeIs(['beranda.index']) ? 'active' : '' }}">
-                        <i class="ri-home-2-line"></i>
-                        <span> Beranda </span>
+                        <i class="ri-time-line"></i>
+                        <span> Riwayat Transaksi </span>
                     </a>
                 </li>
             @endif
-
             @if (auth()->user()->type == 'Administrator')
                 <li class="side-nav-item {{ request()->routeIs(['dashboard.index']) ? 'menuitem-active' : '' }}">
                     <a href="{{ route('dashboard.index') }}"

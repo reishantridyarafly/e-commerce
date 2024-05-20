@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/pembayaran/get-address-details/{id}', [App\Http\Controllers\Frontend\CheckoutController::class, 'getAddressDetails'])->name('pembayaran.get-address-details');
     Route::post('/pembayaran/check-ongkir', [App\Http\Controllers\Frontend\CheckoutController::class, 'checkOngkir'])->name('pembayaran.check-ongkir');
     Route::post('/pembayaran/store', [App\Http\Controllers\Frontend\CheckoutController::class, 'store'])->name('pembayaran.store');
+    Route::post('/pembayaran/store/keranjang', [App\Http\Controllers\Frontend\CheckoutController::class, 'storeCart'])->name('pembayaran.storeCart');
+    Route::post('/pembayaran/keranjang', [App\Http\Controllers\Frontend\CheckoutController::class, 'cartCheckout'])->name('pembayaran.cartCheckout');
 
     Route::get('/profile', [App\Http\Controllers\Backend\ProfileController::class, 'index'])->name('profile.index');
     Route::post('/profile/change/password', [App\Http\Controllers\Backend\ProfileController::class, 'changePassword'])->name('profile.changePassword');

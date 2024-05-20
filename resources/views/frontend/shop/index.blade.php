@@ -156,7 +156,7 @@
                             </div>
                             <div class="widget">
                                 <h2 class="widget__title">
-                                    <span>Kategori</span>
+                                    <span>Katalog</span>
                                 </h2>
                                 <ul class="widget__category">
                                     @forelse ($category as $row)

@@ -55,10 +55,12 @@
                                                 </a>
                                             </td>
                                             <td class="product-name" data-title="Product">
-                                                <a href="{{ route('belanja.detail', $row->product->slug) }}">{{ $row->product->nama }}</a>
+                                                <a
+                                                    href="{{ route('belanja.detail', $row->product->slug) }}">{{ $row->product->nama }}</a>
                                             </td>
                                             <td class="product-price" data-title="Price">
-                                                <span class="woocommerce-Price-amount amount">{{ 'Rp ' . number_format($row->product->harga_jual, 0, ',', '.') }}</span>
+                                                <span
+                                                    class="woocommerce-Price-amount amount">{{ 'Rp ' . number_format($row->product->harga_jual, 0, ',', '.') }}</span>
                                             </td>
                                             <td class="product-quantity" data-title="Quantity">
                                                 <div class="quantity">
@@ -93,13 +95,16 @@
                                 </table>
 
                                 <div class="wc-proceed-to-checkout">
-                                    <a href="#!"
-                                        class="checkout-button thm-btn thm-btn__2 no-icon br-0 alt wc-forward">
-                                        <span class="btn-wrap">
-                                            <span>Pembayaran</span>
-                                            <span>Pembayaran</span>
-                                        </span>
-                                    </a>
+                                    <form action="{{ route('pembayaran.cartCheckout') }}" method="post">
+                                        @csrf
+                                        <button type="submit"
+                                            class="checkout-button thm-btn thm-btn__2 no-icon br-0 alt wc-forward">
+                                            <span class="btn-wrap">
+                                                <span>Pembayaran</span>
+                                                <span>Pembayaran</span>
+                                            </span>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -175,7 +180,7 @@
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         console.error(xhr.status + "\n" + xhr.responseText + "\n" +
-                        thrownError);
+                            thrownError);
                     }
                 });
             });
@@ -195,7 +200,7 @@
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         console.error(xhr.status + "\n" + xhr.responseText + "\n" +
-                        thrownError);
+                            thrownError);
                     }
                 });
             });
