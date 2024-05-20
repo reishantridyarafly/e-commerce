@@ -17,13 +17,22 @@
                  <div class="footer__widget col-lg-4 col-md-6 mt-40">
                      <h2 class="title">Katalog</h2>
                      <ul class="quick-links">
-                         <li><a href="#!">Laptops & Computers</a></li>
-                         <li><a href="#!">Cameras & Photography</a></li>
-                         <li><a href="#!">Smart Phones & Tablets</a></li>
-                         <li><a href="#!">Video Games & Consoles</a></li>
-                         <li><a href="#!">TV & Audio</a></li>
-                         <li><a href="#!">Gadgets</a></li>
-                         <li><a href="#!">Waterproof Headphones</a></li>
+                         @php
+                             use App\Models\Category;
+                             
+                             $category = Category::whereHas('products', function ($query) {
+                                 $query->where('status', 0)->where('stok', '>', 0);
+                             })
+                                 ->orderBy('nama', 'asc')
+                                 ->get();
+                         @endphp
+
+                         @forelse ($category as $row)
+                             <li><a href="{{ route('belanja.category', $row->slug) }}">{{ $row->nama }}</a></li>
+                         @empty
+                             <li><a href="#!">Data tidak tersedia</a></li>
+                         @endforelse
+
                      </ul>
                  </div>
 

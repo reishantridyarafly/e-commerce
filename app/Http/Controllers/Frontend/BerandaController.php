@@ -11,7 +11,10 @@ class BerandaController extends Controller
 {
     public function index()
     {
-        $category = Category::orderBy('nama', 'asc')->get();
+        $category = Category::whereHas('products', function ($query) {
+            $query->where('status', 0)
+                ->where('stok', '>', 0);
+        })->orderBy('nama', 'asc')->get();
         $product = Product::where('status', 0)
             ->where('stok', '>', 0)
             ->orderBy('created_at', 'asc')

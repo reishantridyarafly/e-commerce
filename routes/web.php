@@ -23,6 +23,7 @@ Route::get('/belanja/katalog/{slug}', [App\Http\Controllers\Frontend\ShopControl
 Route::get('/belanja/detail/{slug}', [App\Http\Controllers\Frontend\ShopController::class, 'detail'])->name('belanja.detail');
 
 Route::get('/kontak', [App\Http\Controllers\Frontend\ContactController::class, 'index'])->name('kontak.index');
+Route::post('/kontak', [App\Http\Controllers\Frontend\ContactController::class, 'store'])->name('kontak.store');
 
 
 Auth::routes();
@@ -63,6 +64,9 @@ Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
     Route::get('/katalog/{id}/edit', [App\Http\Controllers\Backend\CategoryController::class, 'edit'])->name('katalog.edit');
     Route::post('/katalog', [App\Http\Controllers\Backend\CategoryController::class, 'store'])->name('katalog.store');
     Route::delete('/katalog/{id}', [App\Http\Controllers\Backend\CategoryController::class, 'destroy'])->name('katalog.destroy');
+
+    Route::get('/pesan-kontak', [App\Http\Controllers\Backend\ContactMessageController::class, 'index'])->name('pesan.index');
+    Route::delete('/pesan-kontak/{id}', [App\Http\Controllers\Backend\ContactMessageController::class, 'destroy'])->name('pesan.destroy');
 
     Route::get('/transaksi', [App\Http\Controllers\Backend\CheckoutController::class, 'index'])->name('transaksi.index');
     Route::get('/transaksi/{id}/detail', [App\Http\Controllers\Backend\CheckoutController::class, 'detail'])->name('transaksi.detail');

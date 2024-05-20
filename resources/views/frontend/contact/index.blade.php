@@ -24,30 +24,33 @@
             <div class="row justify-content-center mt-none-30">
                 <div class="col-xl-4 col-lg-4 col-md-6 mt-30">
                     <div class="contact-info__item d-flex">
-                        <span class="icon"><img src="{{ asset('frontend/assets') }}/img/icon/mail.svg" alt=""></span>
+                        <span class="icon"><img src="{{ asset('frontend/assets') }}/img/icon/mail.svg"
+                                alt=""></span>
                         <div class="content">
-                            <h3>Mail address</h3>
+                            <h3>Email</h3>
                             <a href="mailto:radios.info@gmail.com">radios.info@gmail.com</a>
-                            <a href="tel:998757478492">+998757478492</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mt-30">
                     <div class="contact-info__item active d-flex">
-                        <span class="icon"><img src="{{ asset('frontend/assets') }}/img/icon/location.svg" alt=""></span>
+                        <span class="icon"><img src="{{ asset('frontend/assets') }}/img/icon/location.svg"
+                                alt=""></span>
                         <div class="content">
-                            <h3>Office Location</h3>
-                            <p>4517 Washington Ave. Manch <br> ester, Kentucky 39495</p>
+                            <h3>Lokasi</h3>
+                            <p>Jln. Mohamad Toha No. 11, Kasturi - Kuningan, Rest Area Cirendang (Depan Kantor BPJS
+                                Kuningan)</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mt-30">
                     <div class="contact-info__item d-flex">
-                        <span class="icon"><img src="{{ asset('frontend/assets') }}/img/icon/call-2.svg" alt=""></span>
+                        <span class="icon"><img src="{{ asset('frontend/assets') }}/img/icon/call-2.svg"
+                                alt=""></span>
                         <div class="content">
-                            <h3>Phone Number</h3>
-                            <a href="tel:404555012834">+405 - 555 - 0128 - 34</a>
-                            <a href="tel:404555012863">+405 - 555 - 0128 - 63</a>
+                            <h3>No Telepon</h3>
+                            <a href="tel:404555012834">0852-2400-4888</a>
+                            <a href="tel:404555012863">0896-1714-4066</a>
                         </div>
                     </div>
                 </div>
@@ -67,43 +70,37 @@
                 </div>
                 <div class="col-lg-7">
                     <div class="contact-from__wrap pl-55">
-                        <form class="contact-from" action="#">
+                        <form class="contact-from" id="form">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="contact-from__field">
-                                        <input type="text" placeholder="Enter your name*">
+                                        <input type="text" name="nama" id="nama" placeholder="Nama Lengkap">
+                                        <small class="text-danger errorNama"></small>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="contact-from__field">
-                                        <input type="email" placeholder="Enter your mail*">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="contact-from__field">
-                                        <input type="number" placeholder="Enter your number*">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="contact-from__field">
-                                        <input type="text" placeholder="Weabsite Link*">
+                                        <input type="text" name="email" id="email" placeholder="Email">
+                                        <small class="text-danger errorEmail"></small>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="contact-from__field">
-                                        <textarea name="message" id="message" cols="30" rows="10" placeholder="Enter your Massage*"></textarea>
+                                        <input type="number" name="no_telepon" id="no_telepon"placeholder="No Telepon">
+                                        <small class="text-danger errorNoTelepon"></small>
                                     </div>
                                 </div>
-                                <div class="contact-from__chekbox">
-                                    <input class="form-check-input" type="checkbox" name="checkbox" id="checkbox">
-                                    <label for="checkbox">Save my name, email, and website in this browser for
-                                        the next time I comment.</label>
+                                <div class="col-md-12">
+                                    <div class="contact-from__field">
+                                        <textarea name="pesan" id="pesan" cols="30" rows="10" placeholder="Pesan"></textarea>
+                                        <small class="text-danger errorPesan"></small>
+                                    </div>
                                 </div>
-                                <div class="contact-from__btn mt-35">
-                                    <button class="thm-btn thm-btn__2">
+                                <div class="contact-from__btn mt-20">
+                                    <button class="thm-btn thm-btn__2" type="submit" id="simpan">
                                         <span class="btn-wrap">
-                                            <span>Send Messege</span>
-                                            <span>Send Messege</span>
+                                            <span>Kirim Pesan</span>
+                                            <span>Kirim Pesan</span>
                                         </span>
                                         <i class="far fa-long-arrow-right"></i>
                                     </button>
@@ -116,4 +113,88 @@
         </div>
     </section>
     <!-- contact end -->
+@endsection
+
+@section('javascript')
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#form').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    data: $(this).serialize(),
+                    url: "{{ route('kontak.store') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    beforeSend: function() {
+                        $('#simpan').attr('disable', 'disabled');
+                        $('#simpan').html(`<span class="btn-wrap">
+                                                <span>Proses...</span>
+                                                <span>Proses...</span>
+                                            </span>`);
+                    },
+                    complete: function() {
+                        $('#simpan').removeAttr('disable');
+                        $('#simpan').html(`<span class="btn-wrap">
+                                                <span>Kirim Pesan</span>
+                                                <span>Kirim Pesan</span>
+                                            </span>
+                                            <i class="far fa-long-arrow-right"></i>`);
+                    },
+                    success: function(response) {
+                        if (response.errors) {
+                            if (response.errors.nama) {
+                                $('#nama').addClass('is-invalid');
+                                $('.errorNama').html(response.errors.nama);
+                            } else {
+                                $('#nama').removeClass('is-invalid');
+                                $('.errorNama').html('');
+                            }
+
+                            if (response.errors.email) {
+                                $('#email').addClass('is-invalid');
+                                $('.errorEmail').html(response.errors.email);
+                            } else {
+                                $('#email').removeClass('is-invalid');
+                                $('.errorEmail').html('');
+                            }
+
+                            if (response.errors.no_telepon) {
+                                $('#no_telepon').addClass('is-invalid');
+                                $('.errorNoTelepon').html(response.errors.no_telepon);
+                            } else {
+                                $('#no_telepon').removeClass('is-invalid');
+                                $('.errorNoTelepon').html('');
+                            }
+
+                            if (response.errors.pesan) {
+                                $('#pesan').addClass('is-invalid');
+                                $('.errorPesan').html(response.errors.pesan);
+                            } else {
+                                $('#pesan').removeClass('is-invalid');
+                                $('.errorPesan').html('');
+                            }
+                        } else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Sukses',
+                                text: response.message,
+                            }).then(function() {
+                                window.location.href = window.location.href;
+                            });
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.error(xhr.status + "\n" + xhr.responseText + "\n" +
+                            thrownError);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

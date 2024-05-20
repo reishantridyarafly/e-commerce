@@ -1,5 +1,5 @@
 @extends('layouts.backend.main')
-@section('title', 'Transaksi')
+@section('title', 'Pesan Kontak')
 @section('css')
     <!-- Datatables css -->
     <link href="{{ asset('backend/assets') }}/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet"
@@ -44,15 +44,16 @@
                                     <thead>
                                         <tr>
                                             <th width="1">#</th>
-                                            <th>Kode Transaksi</th>
                                             <th>Nama</th>
-                                            <th>Total Transaksi</th>
-                                            <th>Status</th>
+                                            <th>Email</th>
+                                            <th>No Telepon</th>
+                                            <th>Pesan</th>
                                             <th width="20">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
                                 </table>
+
                             </div> <!-- end card body-->
                         </div> <!-- end card -->
                     </div><!-- end col-->
@@ -96,7 +97,7 @@
             $('#datatable').DataTable({
                 processing: true,
                 serverside: true,
-                ajax: "{{ route('transaksi.index') }}",
+                ajax: "{{ route('pesan.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -104,20 +105,20 @@
                         searchable: false
                     },
                     {
-                        data: 'kode_checkout',
-                        name: 'kode_checkout'
+                        data: 'nama',
+                        name: 'nama'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'email',
+                        name: 'email'
                     },
                     {
-                        data: 'total_biaya',
-                        name: 'total_biaya'
+                        data: 'no_telepon',
+                        name: 'no_telepon'
                     },
                     {
-                        data: 'status',
-                        name: 'status'
+                        data: 'pesan',
+                        name: 'pesan'
                     },
                     {
                         data: 'aksi',
@@ -141,7 +142,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "DELETE",
-                            url: "{{ url('transaksi/"+id+"') }}",
+                            url: "{{ url('pesan-kontak/"+id+"') }}",
                             data: {
                                 id: id
                             },
@@ -157,7 +158,7 @@
                                 }
                             },
                             error: function(xhr, ajaxOptions, thrownError) {
-                                alert(xhr.status + "\n" + xhr.responseText + "\n" +
+                                console.log(xhr.status + "\n" + xhr.responseText + "\n" +
                                     thrownError);
                             }
                         })

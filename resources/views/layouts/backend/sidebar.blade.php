@@ -62,6 +62,13 @@
                         <span> Produk </span>
                     </a>
                 </li>
+                <li class="side-nav-item {{ request()->routeIs(['pesan.*']) ? 'menuitem-active' : '' }}">
+                    <a href="{{ route('pesan.index') }}"
+                        class="side-nav-link {{ request()->routeIs(['pesan.*']) ? 'active' : '' }}">
+                        <i class="ri-book-line"></i>
+                        <span> Pesan Kontak </span>
+                    </a>
+                </li>
                 <li class="side-nav-item {{ request()->routeIs(['pelanggan.*']) ? 'menuitem-active' : '' }}">
                     <a href="{{ route('pelanggan.index') }}"
                         class="side-nav-link {{ request()->routeIs(['pelanggan.*']) ? 'active' : '' }}">
