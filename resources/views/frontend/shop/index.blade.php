@@ -108,13 +108,17 @@
                                             <div class="product-info">
                                                 <div class="product__review ul_li">
                                                     <ul class="rating-star ul_li mr-10">
-                                                        <li><i class="fas fa-star"></i></li>
-                                                        <li><i class="fas fa-star"></i></li>
-                                                        <li><i class="fas fa-star"></i></li>
-                                                        <li><i class="far fa-star"></i></li>
-                                                        <li><i class="far fa-star"></i></li>
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $row->average_rating)
+                                                                <li><i class="fas fa-star"></i></li>
+                                                            @elseif ($i - $row->average_rating <= 0.5)
+                                                                <li><i class="fas fa-star-half-alt"></i></li>
+                                                            @else
+                                                                <li><i class="far fa-star"></i></li>
+                                                            @endif
+                                                        @endfor
                                                     </ul>
-                                                    <span>(126) Review</span>
+                                                    <span>({{ $row->ratings_count }})</span>
                                                 </div>
                                                 <h2 class="product__title"><a
                                                         href="{{ route('belanja.detail', $row->slug) }}">{{ $row->nama }}</a>

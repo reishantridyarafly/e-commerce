@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -16,10 +17,16 @@ class ShopController extends Controller
                 ->where('stok', '>', 0);
         })->orderBy('nama', 'asc')->get();
 
-        $product = Product::where('status', 0)
+        $product = Product::with('ratings')->where('status', 0)
             ->where('stok', '>', 0)
             ->orderBy('created_at', 'asc')
             ->paginate(12);
+
+        $product->getCollection()->transform(function ($product) {
+            $product->average_rating = $product->ratings->avg('rating');
+            $product->ratings_count = $product->ratings->count();
+            return $product;
+        });
 
         foreach ($product as $row) {
             $row->featured_photo = $row->photos()->first();
@@ -30,7 +37,14 @@ class ShopController extends Controller
     public function detail($slug)
     {
         $product = Product::with('category', 'photos')->where('slug', $slug)->first();
-        return view('frontend.shop.detail', compact(['product']));
+        if ($product) {
+            $product->average_rating = $product->ratings->avg('rating');
+            $product->ratings_count = $product->ratings->count();
+
+            $reviews = Rating::where('product_id', $product->id)->get();
+        }
+
+        return view('frontend.shop.detail', compact(['product', 'reviews']));
     }
 
     public function search(Request $request)

@@ -15,11 +15,17 @@ class BerandaController extends Controller
             $query->where('status', 0)
                 ->where('stok', '>', 0);
         })->orderBy('nama', 'asc')->get();
-        $product = Product::where('status', 0)
+
+        $products = Product::with('ratings')->where('status', 0)
             ->where('stok', '>', 0)
             ->orderBy('created_at', 'asc')
-            ->get();
+            ->get()
+            ->map(function ($product) {
+                $product->average_rating = $product->ratings->avg('rating');
+                $product->ratings_count = $product->ratings->count();
+                return $product;
+            });
 
-        return view('frontend.beranda.index', compact(['category', 'product']));
+        return view('frontend.beranda.index', compact(['category', 'products']));
     }
 }

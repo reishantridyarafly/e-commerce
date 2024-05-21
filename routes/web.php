@@ -104,3 +104,9 @@ Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
     Route::get('/pelanggan/{id}/edit', [App\Http\Controllers\Backend\CustomersController::class, 'edit'])->name('pelanggan.edit');
     Route::delete('/pelanggan/{id}', [App\Http\Controllers\Backend\CustomersController::class, 'destroy'])->name('pelanggan.destroy');
 });
+
+Route::middleware(['auth', 'user-access:Pelanggan'])->group(function () {
+    Route::get('/rating', [App\Http\Controllers\Backend\RatingsController::class, 'index'])->name('rating.index');
+    Route::get('/rating/tambah', [App\Http\Controllers\Backend\RatingsController::class, 'create'])->name('rating.create');
+    Route::post('/rating', [App\Http\Controllers\Backend\RatingsController::class, 'store'])->name('rating.store');
+});

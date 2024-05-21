@@ -29,7 +29,7 @@ class CheckoutController extends Controller
                         $status = '<span class="badge badge-outline-secondary rounded-pill">Pending</span>';
                     } elseif ($data->status == 'process') {
                         $status = '<span class="badge badge-outline-primary rounded-pill">Proses</span>';
-                    } elseif ($data->status == 'complated') {
+                    } elseif ($data->status == 'completed') {
                         $status = '<span class="badge badge-outline-success rounded-pill">Selesai</span>';
                     } else {
                         $status = '<span class="badge badge-outline-danger rounded-pill">Gagal</span>';
@@ -98,7 +98,7 @@ class CheckoutController extends Controller
     public function selesai(Request $request)
     {
         $checkout = Checkouts::find($request->id);
-        $checkout->status = 'complated';
+        $checkout->status = 'completed';
         $checkout->save();
         return response()->json(['message' => 'Data berhasil di simpan.']);
     }

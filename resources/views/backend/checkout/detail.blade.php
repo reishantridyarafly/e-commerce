@@ -72,7 +72,7 @@
                                                 @elseif ($checkout->status == 'process')
                                                     <span
                                                         class="badge badge-outline-primary rounded-pill float-end">Proses</span>
-                                                @elseif ($checkout->status == 'complated')
+                                                @elseif ($checkout->status == 'completed')
                                                     <span
                                                         class="badge badge-outline-info rounded-pil float-end">Selesai</span>
                                                 @elseif ($checkout->status == 'failed')
@@ -186,7 +186,7 @@
                                                 data-id="{{ $checkout->id }}"><i class="ri-check-line"></i>
                                                 Selesai</button>
                                         @endif
-                                        @if ($checkout->status == 'complated')
+                                        @if ($checkout->status == 'completed')
                                             <button type="button" onclick="javascript:window.print()"
                                                 class="btn btn-primary"><i class="ri-printer-line"></i> Print</button>
                                         @endif

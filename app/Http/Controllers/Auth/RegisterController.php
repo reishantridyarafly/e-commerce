@@ -58,14 +58,13 @@ class RegisterController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'last_name' => 'max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'no_telepon' => 'required|unique:users|max:15',
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required',
         ], [
             'first_name.required' => 'Silakan isi nama depan terlebih dahulu!',
-            'last_name.required' => 'Silakan isi nama belakang terlebih dahulu!',
             'email.required' => 'Silakan isi email terlebih dahulu!',
             'email.email' => 'Format email tidak valid!',
             'email.unique' => 'Email sudah terdaftar!',

@@ -151,10 +151,10 @@
                                 <div class="tab-pane fade show active" id="vd-tab4" role="tabpanel"
                                     aria-labelledby="vd-tab-04">
                                     <div class="rd-tab-product__slide">
-                                        @forelse ($product as $row)
+                                        @forelse ($products as $row)
                                             <div class="tab-product__item tx-product text-center">
                                                 <div class="thumb">
-                                                    <a href="shop-single.html"><img
+                                                    <a href="{{ route('belanja.detail', $row->slug) }}"><img
                                                             src="{{ asset('storage/uploads/products/' . $row->photos->first()->photo_name) }}"
                                                             alt=""></a>
                                                     <ul class="product__action style-2 ul_li">
@@ -165,17 +165,26 @@
                                                 <div class="content">
                                                     <div class="product__review ul_li_center">
                                                         <ul class="rating-star ul_li mr-10">
-                                                            <li><i class="fas fa-star"></i></li>
-                                                            <li><i class="fas fa-star"></i></li>
-                                                            <li><i class="fas fa-star"></i></li>
-                                                            <li><i class="far fa-star"></i></li>
-                                                            <li><i class="far fa-star"></i></li>
+                                                            @for ($i = 1; $i <= 5; $i++)
+                                                                @if ($i <= $row->average_rating)
+                                                                    <li><i class="fas fa-star"></i></li>
+                                                                @elseif ($i - $row->average_rating <= 0.5)
+                                                                    <li><i class="fas fa-star-half-alt"></i></li>
+                                                                @else
+                                                                    <li><i class="far fa-star"></i></li>
+                                                                @endif
+                                                            @endfor
                                                         </ul>
-                                                        <span>(126)</span>
+                                                        <span>({{ $row->ratings_count }})</span>
                                                     </div>
-                                                    <h3 class="title"><a href="shop-single.html">{{ $row->nama }}</a></h3>
-                                                    <span class="price">{{ 'Rp ' . number_format($row->harga_jual, 0, ',', '.') }} <br> <span class="old-price">{{ 'Rp ' . number_format($row->harga, 0, ',', '.') }}</span>
-                                                        </span>
+                                                    <h3 class="title"><a
+                                                            href="{{ route('belanja.detail', $row->slug) }}">{{ $row->nama }}</a>
+                                                    </h3>
+                                                    <span
+                                                        class="price">{{ 'Rp ' . number_format($row->harga_jual, 0, ',', '.') }}
+                                                        <br> <span
+                                                            class="old-price">{{ 'Rp ' . number_format($row->harga, 0, ',', '.') }}</span>
+                                                    </span>
                                                 </div>
                                             </div>
                                         @empty

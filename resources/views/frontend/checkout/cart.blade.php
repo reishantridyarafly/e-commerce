@@ -158,6 +158,7 @@
                                             <th><small>Ongkos Kirim</small></th>
                                             <td>
                                                 <small id="pembayaran_ongkir"></small>
+                                                <input type="hidden" name="total_ongkir" id="total_ongkir">
                                             </td>
                                         </tr>
 
@@ -312,6 +313,7 @@
                 $('#pembayaran_ongkir').text(formatCurrency(ongkir));
                 $('#total').text(formatCurrency(total));
                 $('#total_pembayaran').val(total);
+                $('#total_ongkir').val(ongkir);
             });
 
             $('#form').submit(function(e) {

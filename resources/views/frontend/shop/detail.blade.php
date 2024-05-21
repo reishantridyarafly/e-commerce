@@ -65,13 +65,18 @@
                     <div class="product-details">
                         <h2>{{ $product->nama }}</h2>
                         <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>(2 Customer review)</span>
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $product->average_rating)
+                                    <i class="fas fa-star"></i>
+                                @elseif ($i - $product->average_rating <= 0.5)
+                                    <i class="fas fa-star-half-alt"></i>
+                                @else
+                                    <i class="far fa-star"></i>
+                                @endif
+                            @endfor
+                            <span>({{ $product->ratings_count }})</span>
                         </div>
+
                         <div class="price">
                             <span class="current">{{ 'Rp ' . number_format($product->harga_jual, 0, ',', '.') }}</span>
                             <span class="old">{{ 'Rp ' . number_format($product->harga, 0, ',', '.') }}</span>
@@ -94,7 +99,8 @@
                                 <input type="hidden" name="id" id="id" value="{{ $product->id }}">
                                 <div class="product-row">
                                     <div>
-                                        <input class="product-count" type="text" value="1" name="qty" id="qty">
+                                        <input class="product-count" type="text" value="1" name="qty"
+                                            id="qty">
                                     </div>
                                     <div class="add-to-cart-btn">
                                         <button class="thm-btn thm-btn__2 no-icon" type="button" id="addCart"
@@ -127,7 +133,7 @@
                                 <li><button class="active" id="pills-home-tab" data-bs-toggle="pill"
                                         data-bs-target="#tb-01">Detail Produk</button></li>
                                 <li><button id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#tb-03">Ulasan
-                                        (09)</button></li>
+                                        ({{ $product->ratings_count }})</button></li>
                             </ul>
                         </div>
 
@@ -138,146 +144,44 @@
                             </div>
                             <div class="tab-pane fade" id="tb-03">
                                 <div class="row">
-                                    <div class="col-lg-6 col-sm-12 col-xs-12">
-                                        <div class="client-rv">
-                                            <div class="client-pic">
-                                                <img src="{{ asset('frontend/assets') }}/img/avatar/comments/img_01.jpg"
-                                                    alt>
-                                            </div>
-                                            <div class="details">
-                                                <div class="name-rating-time">
-                                                    <div class="name-rating">
-                                                        <div>
-                                                            <h4>Mice</h4>
-                                                        </div>
-                                                        <div class="rating">
-                                                            <i class="fi flaticon-star"></i>
-                                                            <i class="fi flaticon-star"></i>
-                                                            <i class="fi flaticon-star"></i>
-                                                            <i class="fi flaticon-star"></i>
-                                                            <i class="fi flaticon-star"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="time">
-                                                        <span>1 day ago</span>
-                                                    </div>
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        @forelse ($reviews as $review)
+                                            <div class="client-rv">
+                                                <div class="client-pic">
+                                                    <img src="{{ $review->user->avatar == '' ? 'https://ui-avatars.com/api/?background=random&name=' . $review->user->first_name . ' ' . $review->user->last_name : asset('storage/avatar/' . $review->user->avatar) }}"
+                                                        alt>
                                                 </div>
-                                                <div class="review-body">
-                                                    <p>Helplessly as he looked What's happened to me he thought. It wasn't a
-                                                        dreamtrated magazine and housed in a nice, gilded frame. It showed a
-                                                        lady fitted</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="client-rv">
-                                            <div class="client-pic">
-                                                <img src="{{ asset('frontend/assets') }}/img/avatar/comments/img_02.jpg"
-                                                    alt>
-                                            </div>
-                                            <div class="details">
-                                                <div class="name-rating-time">
-                                                    <div class="name-rating">
-                                                        <div>
-                                                            <h4>Hone</h4>
+                                                <div class="details">
+                                                    <div class="name-rating-time">
+                                                        <div class="name-rating">
+                                                            <div>
+                                                                <h4>{{ $review->user->first_name . ' ' . $review->user->last_name }}
+                                                                </h4>
+                                                            </div>
+                                                            <div class="rating">
+                                                                @for ($i = 1; $i <= 5; $i++)
+                                                                    @if ($i <= $review->rating)
+                                                                        <i class="fas fa-star"></i>
+                                                                    @elseif ($i - $review->rating <= 0.5)
+                                                                        <i class="fas fa-star-half-alt"></i>
+                                                                    @else
+                                                                        <i class="far fa-star"></i>
+                                                                    @endif
+                                                                @endfor
+                                                            </div>
                                                         </div>
-                                                        <div class="rating">
-                                                            <i class="fi flaticon-star"></i>
-                                                            <i class="fi flaticon-star"></i>
-                                                            <i class="fi flaticon-star"></i>
-                                                            <i class="fi flaticon-star"></i>
-                                                            <i class="fi flaticon-star"></i>
+                                                        <div class="time">
+                                                            <span>{{ $review->created_at->diffForHumans() }}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="time">
-                                                        <span>1 day ago</span>
+                                                    <div class="review-body">
+                                                        <p>{{ $review->comment }}</p>
                                                     </div>
                                                 </div>
-                                                <div class="review-body">
-                                                    <p>Helplessly as he looked What's happened to me he thought. It wasn't a
-                                                        dreamtrated magazine and housed in a nice, gilded frame. It showed a
-                                                        lady fitted</p>
-                                                </div>
                                             </div>
-                                        </div>
-
-                                        <div class="client-rv">
-                                            <div class="client-pic">
-                                                <img src="{{ asset('frontend/assets') }}/img/avatar/comments/img_01.jpg"
-                                                    alt>
-                                            </div>
-                                            <div class="details">
-                                                <div class="name-rating-time">
-                                                    <div class="name-rating">
-                                                        <div>
-                                                            <h4>Piloa</h4>
-                                                        </div>
-                                                        <div class="rating">
-                                                            <i class="fi flaticon-star"></i>
-                                                            <i class="fi flaticon-star"></i>
-                                                            <i class="fi flaticon-star"></i>
-                                                            <i class="fi flaticon-star"></i>
-                                                            <i class="fi flaticon-star"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="time">
-                                                        <span>2 days ago</span>
-                                                    </div>
-                                                </div>
-                                                <div class="review-body">
-                                                    <p>Helplessly as he looked What's happened to me he thought. It wasn't a
-                                                        dreamtrated magazine and housed in a nice, gilded frame. It showed a
-                                                        lady fitted</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @empty
+                                        @endforelse
                                     </div> <!-- end col -->
-
-                                    <div class="col-lg-6 col-sm-12 col-xs-12 review-form-wrapper">
-                                        <div class="review-form">
-                                            <h4>Here you can review the item</h4>
-                                            <form>
-                                                <div>
-                                                    <input type="text" class="form-control" placeholder="Name *"
-                                                        required>
-                                                </div>
-                                                <div>
-                                                    <input type="email" class="form-control" placeholder="Email *"
-                                                        required>
-                                                </div>
-                                                <div>
-                                                    <textarea class="form-control" placeholder="Review *"></textarea>
-                                                </div>
-                                                <div class="rating-wrapper">
-                                                    <div class="rating">
-                                                        <a href="#!" class="star-1">
-                                                            <i class="fal fa-star"></i>
-                                                        </a>
-                                                        <a href="#!" class="star-1">
-                                                            <i class="fal fa-star"></i>
-                                                        </a>
-                                                        <a href="#!" class="star-1">
-                                                            <i class="fal fa-star"></i>
-                                                        </a>
-                                                        <a href="#!" class="star-1">
-                                                            <i class="fal fa-star"></i>
-                                                        </a>
-                                                        <a href="#!" class="star-1">
-                                                            <i class="fal fa-star"></i>
-                                                        </a>
-                                                    </div>
-                                                    <div class="submit">
-                                                        <button class="thm-btn thm-btn__2 no-icon" type="submit">
-                                                            <span class="btn-wrap">
-                                                                <span>Shop Now</span>
-                                                                <span>Shop Now</span>
-                                                            </span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -336,13 +240,17 @@
                                     <div class="product-info">
                                         <div class="product__review ul_li">
                                             <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= $product->average_rating)
+                                                        <li><i class="fas fa-star"></i></li>
+                                                    @elseif ($i - $product->average_rating <= 0.5)
+                                                        <li><i class="fas fa-star-half-alt"></i></li>
+                                                    @else
+                                                        <li><i class="far fa-star"></i></li>
+                                                    @endif
+                                                @endfor
                                             </ul>
-                                            <span>(126) Review</span>
+                                            <span>({{ $product->ratings_count }})</span>
                                         </div>
                                         <h2 class="product__title"><a href="shop-single.html">Tab M10 Plus, FHD Android
                                                 Tablet, Processor</a></h2>

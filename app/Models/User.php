@@ -92,4 +92,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Checkouts::class, 'user_id');
     }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
 }
