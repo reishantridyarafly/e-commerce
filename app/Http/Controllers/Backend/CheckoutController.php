@@ -37,9 +37,14 @@ class CheckoutController extends Controller
                     return $status;
                 })
                 ->addColumn('aksi', function ($data) {
-                    $btn = '<a href="' . route('transaksi.detail', $data->id) . '" class="btn btn-warning btn-sm me-1" id="btnEdit"><i class="ri-pencil-line"></i></a>';
-                    $btn .= '<button type="button" class="btn btn-danger btn-sm" data-id="' . $data->id . '" id="btnDelete"><i class="ri-delete-bin-line"></i></button>';
-                    return $btn;
+                    if (auth()->user()->type == 'Administrator') {
+                        $btn = '<a href="' . route('transaksi.detail', $data->id) . '" class="btn btn-info btn-sm me-1" id="btnEdit"><i class="ri-eye-line"></i></i></a>';
+                        $btn .= '<button type="button" class="btn btn-danger btn-sm" data-id="' . $data->id . '" id="btnDelete"><i class="ri-delete-bin-line"></i></button>';
+                        return $btn;
+                    } else {
+                        $btn = '<a href="' . route('transaksi.detail', $data->id) . '" class="btn btn-info btn-sm me-1" id="btnEdit"><i class="ri-eye-line"></i></i></a>';
+                        return $btn;
+                    }
                 })
                 ->rawColumns(['status', 'aksi'])
                 ->make(true);
@@ -94,7 +99,7 @@ class CheckoutController extends Controller
         $checkout->save();
         return response()->json(['message' => 'Data berhasil di simpan.']);
     }
-    
+
     public function selesai(Request $request)
     {
         $checkout = Checkouts::find($request->id);

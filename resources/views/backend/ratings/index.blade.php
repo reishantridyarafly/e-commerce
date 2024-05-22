@@ -60,7 +60,9 @@
                                             <th>Product</th>
                                             <th>Rating</th>
                                             <th>Komen</th>
-                                            <th width="20">Aksi</th>
+                                            @if (auth()->user()->type == 'Pelanggan')
+                                                <th width="20">Aksi</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -190,37 +192,42 @@
                 }
             });
 
+            let columns = [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'nama',
+                    name: 'nama'
+                },
+                {
+                    data: 'product',
+                    name: 'product'
+                },
+                {
+                    data: 'ratings',
+                    name: 'ratings'
+                },
+                {
+                    data: 'comment',
+                    name: 'comment'
+                }
+            ];
+
+            @if (auth()->user()->type == 'Pelanggan')
+                columns.push({
+                    data: 'aksi',
+                    name: 'aksi'
+                });
+            @endif
+
             $('#datatable').DataTable({
                 processing: true,
-                serverside: true,
+                serverSide: true,
                 ajax: "{{ route('rating.index') }}",
-                columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'nama',
-                        name: 'nama'
-                    },
-                    {
-                        data: 'product',
-                        name: 'product'
-                    },
-                    {
-                        data: 'ratings',
-                        name: 'ratings'
-                    },
-                    {
-                        data: 'comment',
-                        name: 'comment'
-                    },
-                    {
-                        data: 'aksi',
-                        name: 'aksi'
-                    }
-                ]
+                columns: columns
             });
 
             $('body').on('click', '#btnRating', function() {

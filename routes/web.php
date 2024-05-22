@@ -70,8 +70,6 @@ Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
     Route::get('/pesan-kontak', [App\Http\Controllers\Backend\ContactMessageController::class, 'index'])->name('pesan.index');
     Route::delete('/pesan-kontak/{id}', [App\Http\Controllers\Backend\ContactMessageController::class, 'destroy'])->name('pesan.destroy');
 
-    Route::get('/transaksi', [App\Http\Controllers\Backend\CheckoutController::class, 'index'])->name('transaksi.index');
-    Route::get('/transaksi/{id}/detail', [App\Http\Controllers\Backend\CheckoutController::class, 'detail'])->name('transaksi.detail');
     Route::get('/transaksi/{id}/edit', [App\Http\Controllers\Backend\CheckoutController::class, 'edit'])->name('transaksi.edit');
     Route::post('/transaksi', [App\Http\Controllers\Backend\CheckoutController::class, 'store'])->name('transaksi.store');
     Route::delete('/transaksi/{id}', [App\Http\Controllers\Backend\CheckoutController::class, 'destroy'])->name('transaksi.destroy');
@@ -108,7 +106,13 @@ Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
 });
 
 Route::middleware(['auth', 'user-access:Pelanggan'])->group(function () {
-    Route::get('/rating', [App\Http\Controllers\Backend\RatingsController::class, 'index'])->name('rating.index');
     Route::get('/rating/tambah', [App\Http\Controllers\Backend\RatingsController::class, 'create'])->name('rating.create');
     Route::post('/rating', [App\Http\Controllers\Backend\RatingsController::class, 'store'])->name('rating.store');
+});
+
+Route::middleware(['auth', 'user-access:Pelanggan,Administrator'])->group(function () {
+    Route::get('/transaksi', [App\Http\Controllers\Backend\CheckoutController::class, 'index'])->name('transaksi.index');
+    Route::get('/transaksi/{id}/detail', [App\Http\Controllers\Backend\CheckoutController::class, 'detail'])->name('transaksi.detail');
+
+    Route::get('/rating', [App\Http\Controllers\Backend\RatingsController::class, 'index'])->name('rating.index');
 });

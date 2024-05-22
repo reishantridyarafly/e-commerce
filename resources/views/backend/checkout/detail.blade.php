@@ -166,34 +166,36 @@
                                 </div>
                                 <!-- end row-->
 
-                                <div class="d-print-none mt-4">
-                                    <div class="text-center">
-                                        @if ($checkout->status == 'pending')
-                                            <button type="button" class="btn btn-danger me-1" id="btnTolak"
-                                                data-id="{{ $checkout->id }}"><i class="ri-close-line"></i>
-                                                Tolak</button>
-                                            <button type="button" class="btn btn-primary" id="btnProses"
-                                                data-id="{{ $checkout->id }}"><i class="ri-restart-line"></i>
-                                                Proses</button>
-                                        @endif
-                                        @if ($checkout->status == 'process' && $checkout->resi == null)
-                                            <button type="button" class="btn btn-primary me-1" id="btnUpdateResi"><i
-                                                    class="ri-pencil-line"></i>
-                                                Update Resi</button>
-                                        @endif
-                                        @if ($checkout->status == 'process' && $checkout->resi != null)
-                                            <button type="button" class="btn btn-success me-1" id="btnSelesai"
-                                                data-id="{{ $checkout->id }}"><i class="ri-check-line"></i>
-                                                Selesai</button>
-                                        @endif
-                                        @if ($checkout->status == 'completed')
-                                            <button type="button" onclick="javascript:window.print()"
-                                                class="btn btn-primary"><i class="ri-printer-line"></i> Print</button>
-                                        @endif
+                                @if (auth()->user()->type == 'Administrator')
+                                    <div class="d-print-none mt-4">
+                                        <div class="text-center">
+                                            @if ($checkout->status == 'pending')
+                                                <button type="button" class="btn btn-danger me-1" id="btnTolak"
+                                                    data-id="{{ $checkout->id }}"><i class="ri-close-line"></i>
+                                                    Tolak</button>
+                                                <button type="button" class="btn btn-primary" id="btnProses"
+                                                    data-id="{{ $checkout->id }}"><i class="ri-restart-line"></i>
+                                                    Proses</button>
+                                            @endif
+                                            @if ($checkout->status == 'process' && $checkout->resi == null)
+                                                <button type="button" class="btn btn-primary me-1" id="btnUpdateResi"><i
+                                                        class="ri-pencil-line"></i>
+                                                    Update Resi</button>
+                                            @endif
+                                            @if ($checkout->status == 'process' && $checkout->resi != null)
+                                                <button type="button" class="btn btn-success me-1" id="btnSelesai"
+                                                    data-id="{{ $checkout->id }}"><i class="ri-check-line"></i>
+                                                    Selesai</button>
+                                            @endif
+                                            @if ($checkout->status == 'completed')
+                                                <button type="button" onclick="javascript:window.print()"
+                                                    class="btn btn-primary"><i class="ri-printer-line"></i> Print</button>
+                                            @endif
 
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- end buttons -->
+                                    <!-- end buttons -->
+                                @endif
 
                             </div> <!-- end card-body-->
                         </div> <!-- end card -->

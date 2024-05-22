@@ -16,53 +16,75 @@ class RatingsController extends Controller
 {
     public function index()
     {
-        if (request()->ajax()) {
-            $products = DB::table('products')
-                ->leftJoin('ratings', function ($join) {
-                    $join->on('products.id', '=', 'ratings.product_id')
-                        ->where('ratings.user_id', '=', auth()->user()->id);
-                })
-                ->join('checkout_items', 'products.id', '=', 'checkout_items.product_id')
-                ->join('checkouts', 'checkout_items.checkout_id', '=', 'checkouts.id')
-                ->join('users', 'checkouts.user_id', '=', 'users.id')
-                ->select(
-                    'products.id',
-                    'products.nama',
-                    'users.first_name as first_name',
-                    'users.last_name as last_name',
-                    'ratings.rating as rating',
-                    'ratings.comment as comment'
-                )
-                ->where('checkouts.status', '=', 'completed')
-                ->where('checkouts.user_id', '=', auth()->user()->id)
-                ->groupBy('products.id', 'products.nama', 'users.first_name', 'users.last_name', 'ratings.rating', 'ratings.comment')
-                ->get();
+        if (auth()->user()->type == 'Administrator') {
+            if (request()->ajax()) {
+                $products = Rating::with('user', 'product')->latest()->get();
+                return DataTables::of($products)
+                    ->addIndexColumn()
+                    ->addColumn('nama', function ($data) {
+                        return $data->user->first_name . ' ' . $data->user->last_name;
+                    })
+                    ->addColumn('product', function ($data) {
+                        return $data->product->nama;
+                    })
+                    ->addColumn('ratings', function ($data) {
+                        return $this->generateStarsHTML($data->rating);
+                    })
+                    ->addColumn('comment', function ($data) {
+                        return $data->comment;
+                    })
+                    ->rawColumns(['ratings'])
+                    ->make(true);
+            }
+        } else {
+            if (request()->ajax()) {
+                $products = DB::table('products')
+                    ->leftJoin('ratings', function ($join) {
+                        $join->on('products.id', '=', 'ratings.product_id')
+                            ->where('ratings.user_id', '=', auth()->user()->id);
+                    })
+                    ->join('checkout_items', 'products.id', '=', 'checkout_items.product_id')
+                    ->join('checkouts', 'checkout_items.checkout_id', '=', 'checkouts.id')
+                    ->join('users', 'checkouts.user_id', '=', 'users.id')
+                    ->select(
+                        'products.id',
+                        'products.nama',
+                        'users.first_name as first_name',
+                        'users.last_name as last_name',
+                        'ratings.rating as rating',
+                        'ratings.comment as comment'
+                    )
+                    ->where('checkouts.status', '=', 'completed')
+                    ->where('checkouts.user_id', '=', auth()->user()->id)
+                    ->groupBy('products.id', 'products.nama', 'users.first_name', 'users.last_name', 'ratings.rating', 'ratings.comment')
+                    ->get();
 
-            return DataTables::of($products)
-                ->addIndexColumn()
-                ->addColumn('nama', function ($data) {
-                    return $data->first_name . ' ' . $data->last_name;
-                })
-                ->addColumn('product', function ($data) {
-                    return $data->nama;
-                })
-                ->addColumn('ratings', function ($data) {
-                    return $this->generateStarsHTML($data->rating);
-                })
-                ->addColumn('comment', function ($data) {
-                    return $data->comment;
-                })
-                ->addColumn('aksi', function ($data) {
-                    $btn = '';
-                    if ($data->rating == '') {
-                        $btn = '<button type="button" class="btn btn-warning btn-sm me-1" data-id="' . $data->id . '" data-product="' . $data->nama . '" id="btnRating"><i class="ri-star-line"></i> Rating</button>';
-                    } else {
-                        $btn = '<span class="badge badge-outline-primary rounded-pill">Sudah Rating</span>';
-                    }
-                    return $btn;
-                })
-                ->rawColumns(['ratings', 'aksi'])
-                ->make(true);
+                return DataTables::of($products)
+                    ->addIndexColumn()
+                    ->addColumn('nama', function ($data) {
+                        return $data->first_name . ' ' . $data->last_name;
+                    })
+                    ->addColumn('product', function ($data) {
+                        return $data->nama;
+                    })
+                    ->addColumn('ratings', function ($data) {
+                        return $this->generateStarsHTML($data->rating);
+                    })
+                    ->addColumn('comment', function ($data) {
+                        return $data->comment;
+                    })
+                    ->addColumn('aksi', function ($data) {
+                        $btn = '';
+                        if ($data->rating == '') {
+                            $btn = '<button type="button" class="btn btn-warning btn-sm me-1" data-id="' . $data->id . '" data-product="' . $data->nama . '" id="btnRating"><i class="ri-star-line"></i> Rating</button>';
+                        } else {
+                            $btn = '<span class="badge badge-outline-primary rounded-pill">Sudah Rating</span>';
+                        }
+                        return $btn;
+                    })
+                    ->rawColumns(['ratings', 'aksi'])
+                    ->make(true);
+            }
         }
         return view('backend.ratings.index');
     }

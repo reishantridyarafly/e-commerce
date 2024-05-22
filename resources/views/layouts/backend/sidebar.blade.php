@@ -101,15 +101,15 @@
                         <span> Transaksi </span>
                     </a>
                 </li>
-
-                <li class="side-nav-item {{ request()->routeIs(['rating.*']) ? 'menuitem-active' : '' }}">
-                    <a href="{{ route('rating.index') }}"
-                        class="side-nav-link {{ request()->routeIs(['rating.*']) ? 'active' : '' }}">
-                        <i class="ri-star-line"></i>
-                        <span> Rating </span>
-                    </a>
-                </li>
             @endif
+
+            <li class="side-nav-item {{ request()->routeIs(['rating.*']) ? 'menuitem-active' : '' }}">
+                <a href="{{ route('rating.index') }}"
+                    class="side-nav-link {{ request()->routeIs(['rating.*']) ? 'active' : '' }}">
+                    <i class="ri-star-line"></i>
+                    <span> Rating </span>
+                </a>
+            </li>
             <li class="side-nav-item {{ request()->routeIs(['alamat.*']) ? 'menuitem-active' : '' }}">
                 <a href="{{ route('alamat.index') }}"
                     class="side-nav-link {{ request()->routeIs(['alamat.*']) ? 'active' : '' }}">
