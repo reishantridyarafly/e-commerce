@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Rating;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ShopController extends Controller
 {
@@ -37,20 +38,42 @@ class ShopController extends Controller
     public function detail($slug)
     {
         $product = Product::with('category', 'photos')->where('slug', $slug)->first();
+
         if ($product) {
             $product->average_rating = $product->ratings->avg('rating');
             $product->ratings_count = $product->ratings->count();
 
             $reviews = Rating::where('product_id', $product->id)->get();
-        }
 
-        return view('frontend.shop.detail', compact(['product', 'reviews']));
+            $popularProductViews = DB::table('product_views')
+                ->select('product_id', DB::raw('COUNT(*) as views'))
+                ->where('product_id', '!=', $product->id)
+                ->groupBy('product_id')
+                ->orderByDesc('views')
+                ->take(4)
+                ->get();
+
+            $recommendedProducts = [];
+            foreach ($popularProductViews as $popularProductView) {
+                $recommendedProduct = Product::find($popularProductView->product_id);
+                if ($recommendedProduct) {
+                    $recommendedProducts[] = $recommendedProduct;
+                }
+            }
+            return view('frontend.shop.detail', compact('product', 'reviews', 'recommendedProducts'));
+        } else {
+            return redirect()->route('not_found_page');
+        }
     }
+
 
     public function search(Request $request)
     {
         $keyword = $request->input('search');
-        $category = Category::orderBy('nama', 'asc')->get();
+        $category = Category::whereHas('products', function ($query) {
+            $query->where('status', 0)
+                ->where('stok', '>', 0);
+        })->orderBy('nama', 'asc')->get();
         $product = Product::where('nama', 'LIKE', "%{$keyword}%")
             ->orWhere('deskripsi', 'LIKE', "%{$keyword}%")
             ->where('status', 0)
@@ -64,7 +87,10 @@ class ShopController extends Controller
 
     public function category($slug)
     {
-        $category = Category::orderBy('nama', 'asc')->get();
+        $category = Category::whereHas('products', function ($query) {
+            $query->where('status', 0)
+                ->where('stok', '>', 0);
+        })->orderBy('nama', 'asc')->get();
         $categoryId = Category::where('slug', $slug)->first()->id;
         $product = Product::where('kategori_id', $categoryId)->where('status', 0)->paginate(12);
 

@@ -25,6 +25,8 @@ Route::get('/belanja/detail/{slug}', [App\Http\Controllers\Frontend\ShopControll
 Route::get('/kontak', [App\Http\Controllers\Frontend\ContactController::class, 'index'])->name('kontak.index');
 Route::post('/kontak', [App\Http\Controllers\Frontend\ContactController::class, 'store'])->name('kontak.store');
 
+Route::post('/product-views', [App\Http\Controllers\Frontend\ProductViewsController::class, 'store'])->name('productViews.store');
+
 
 Auth::routes();
 Route::middleware('auth')->group(function () {

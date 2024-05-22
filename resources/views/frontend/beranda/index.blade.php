@@ -7,8 +7,8 @@
             <div class="banner__wrapper d-flex">
                 <div class="category-nav">
                     <ul class="category-nav__list list-unstyled">
-                        @forelse ($category as $row)
-                            <li><a href="{{ route('belanja.category', $row->slug) }}">{{ $row->nama }}</a></li>
+                        @forelse ($categories as $category)
+                            <li><a href="{{ route('belanja.category', $category->slug) }}">{{ $category->nama }}</a></li>
                         @empty
                             <li><a href="#!">Data tidak tersedia</a></li>
                         @endforelse
@@ -48,63 +48,24 @@
     <div class="banner-slide pt-35">
         <div class="container mxw_1360">
             <div class="banner-slide__active">
-                <div class="banner-slide__single">
-                    <div class="banner-slide__item ul_li bg_img">
-                        <div class="banner-slide__img">
-                            <img src="{{ asset('frontend/assets') }}/img/product/img_122.png" alt="">
-                        </div>
-                        <div class="banner-slide__content">
-                            <span class="offer">Get 30% off</span>
-                            <h3>Smart Phone</h3>
-                            <h4 class="price">Starting <span>560.99</span></h4>
-                            <a href="shop.html">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="banner-slide__single">
-                    <div class="banner-slide__item ul_li bg_img"
-                        data-background="{{ asset('frontend/assets') }}/img/bg/bg_20.jpg">
-                        <div class="banner-slide__img">
-                            <img src="{{ asset('frontend/assets') }}/img/product/img_123.png" alt="">
-                        </div>
-                        <div class="banner-slide__content">
-                            <span class="offer">Get 30% off</span>
-                            <h3>Montblanc Watch</h3>
-                            <h4 class="price">Starting <span>560.99</span></h4>
-                            <a href="shop.html">Buy Now</a>
+                @foreach ($latest_products as $latest_product)
+                    <div class="banner-slide__single">
+                        <div class="banner-slide__item ul_li bg_img">
+                            <div class="banner-slide__img">
+                                <img src="{{ asset('storage/uploads/products/' . $latest_product->photos->first()->photo_name) }}"
+                                    alt="">
+                            </div>
+                            <div class="banner-slide__content">
+                                <h3>{{ $latest_product->nama }}</h3>
+                                <h4 class="price">Harga
+                                    <span>{{ 'Rp ' . number_format($latest_product->harga_jual, 0, ',', '.') }}</span>
+                                </h4>
+                                <a href="{{ route('belanja.detail', $latest_product->slug) }}" class="product-view"
+                                    data-id="{{ $latest_product->id }}">Beli Sekarang</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="banner-slide__single">
-                    <div class="banner-slide__item ul_li bg_img">
-                        <div class="banner-slide__img">
-                            <img src="{{ asset('frontend/assets') }}/img/product/img_124.png" alt="">
-                        </div>
-                        <div class="banner-slide__content">
-                            <span class="offer">Get 30% off</span>
-                            <h3>SAMSUNG Galaxy</h3>
-                            <h4 class="price">Starting <span>560.99</span></h4>
-                            <a href="shop.html">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="banner-slide__single">
-                    <div class="banner-slide__item ul_li bg_img"
-                        data-background="{{ asset('frontend/assets') }}/img/bg/bg_20.jpg">
-                        <div class="banner-slide__img">
-                            <img src="{{ asset('frontend/assets') }}/img/product/img_123.png" alt="">
-                        </div>
-                        <div class="banner-slide__content">
-                            <span class="offer">Get 30% off</span>
-                            <h3>Montblanc Watch</h3>
-                            <h4 class="price">Starting <span>560.99</span></h4>
-                            <a href="shop.html">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -151,11 +112,12 @@
                                 <div class="tab-pane fade show active" id="vd-tab4" role="tabpanel"
                                     aria-labelledby="vd-tab-04">
                                     <div class="rd-tab-product__slide">
-                                        @forelse ($products as $row)
+                                        @forelse ($popular_products as $row)
                                             <div class="tab-product__item tx-product text-center">
                                                 <div class="thumb">
                                                     <a href="{{ route('belanja.detail', $row->slug) }}"><img
                                                             src="{{ asset('storage/uploads/products/' . $row->photos->first()->photo_name) }}"
+                                                            class="product-view" data-id="{{ $row->id }}"
                                                             alt=""></a>
                                                     <ul class="product__action style-2 ul_li">
                                                         <li><a href="#!"><i class="far fa-shopping-basket"></i></a>
@@ -177,8 +139,9 @@
                                                         </ul>
                                                         <span>({{ $row->ratings_count }})</span>
                                                     </div>
-                                                    <h3 class="title"><a
-                                                            href="{{ route('belanja.detail', $row->slug) }}">{{ $row->nama }}</a>
+                                                    <h3 class="title"><a href="{{ route('belanja.detail', $row->slug) }}"
+                                                            class="product-view"
+                                                            data-id="{{ $row->id }}">{{ $row->nama }}</a>
                                                     </h3>
                                                     <span
                                                         class="price">{{ 'Rp ' . number_format($row->harga_jual, 0, ',', '.') }}
@@ -207,848 +170,94 @@
             <div class="row mt-none-30">
                 <div class="col-lg-12 mt-30">
                     <div class="product__nav-wrap style-2 ul_li_between">
-                        <h2 class="section-heading"><span>Rekomendasi Barang</span></h2>
+                        <h2 class="section-heading"><span>Populer Berdasarkan Kategori</span></h2>
                         <ul class="product__nav recent-product__nav nav nav-tabs" id="vdr-myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="vdr-tab-01" data-bs-toggle="tab"
-                                    data-bs-target="#vdr-tab1" type="button" role="tab" aria-controls="vdr-tab1"
-                                    aria-selected="true">Teleevision</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="vdr-tab-02" data-bs-toggle="tab" data-bs-target="#vdr-tab2"
-                                    type="button" role="tab" aria-controls="vdr-tab2"
-                                    aria-selected="false">Computer & Laptop</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="vdr-tab-03" data-bs-toggle="tab" data-bs-target="#vdr-tab3"
-                                    type="button" role="tab" aria-controls="vd-tab3"
-                                    aria-selected="false">Lamp</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="vdr-tab-04" data-bs-toggle="tab" data-bs-target="#vdr-tab4"
-                                    type="button" role="tab" aria-controls="vd-tab4"
-                                    aria-selected="false">Accesories</button>
-                            </li>
+                            @foreach ($categories->take(5) as $category)
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link {{ $loop->first ? 'active' : '' }}"
+                                        id="vdr-tab-{{ $category->id }}" data-bs-toggle="tab"
+                                        data-bs-target="#vdr-tab{{ $category->id }}" type="button" role="tab"
+                                        aria-controls="vdr-tab{{ $category->id }}"
+                                        aria-selected="{{ $loop->first ? 'true' : 'false' }}">{{ $category->nama }}</button>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="tab-content" id="vdr-myTabContent">
-                        <div class="tab-pane animated fadeInUp show active" id="vdr-tab1" role="tabpanel"
-                            aria-labelledby="vdr-tab-01">
-                            <div class="row justify-content-md-center">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_39.png"
-                                                    alt=""></a>
+                        @foreach ($categories as $category)
+                            <div class="tab-pane animated fadeInUp{{ $loop->first ? ' show active' : '' }}"
+                                id="vdr-tab{{ $category->id }}" role="tabpanel"
+                                aria-labelledby="vdr-tab-{{ $category->id }}">
+                                <div class="row justify-content-md-center">
+                                    @foreach ($top_products_by_category[$category->id] as $product)
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="recent-product__item tx-product ul_li mt-30">
+                                                <div class="thumb">
+                                                    <a href="{{ route('belanja.detail', $product->slug) }}"
+                                                        class="product-view" data-id="{{ $product->id }}"><img
+                                                            src="{{ asset('storage/uploads/products/' . $product->photos->first()->photo_name) }}"
+                                                            alt=""></a>
+                                                </div>
+                                                <div class="recent-product__content">
+                                                    <ul class="rating-star ul_li mr-10">
+                                                        @for ($i = 0; $i < 5; $i++)
+                                                            <li><i
+                                                                    class="{{ $i < $product->average_rating ? 'fas' : 'far' }} fa-star"></i>
+                                                            </li>
+                                                        @endfor
+                                                    </ul>
+                                                    <h3><a href="{{ route('belanja.detail', $product->slug) }}"
+                                                            class="product-view"
+                                                            data-id="{{ $product->id }}">{{ $product->nama }}</a>
+                                                    </h3>
+                                                    <h4 class="product__price"><span
+                                                            class="new">{{ 'Rp ' . number_format($latest_product->harga_jual, 0, ',', '.') }}</span><span
+                                                            class="old">{{ 'Rp ' . number_format($latest_product->harga, 0, ',', '.') }}</span>
+                                                    </h4>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Portable 2TB External Hard Drive Portable</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_40.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Freestanding Portable Air Conditioner
-                                                    Indoor</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_41.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Galaxy S20 FE 5G Cell Phone, Factory
-                                                    Unlocked</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_42.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Tab M10 Plus, FHD Android Tablet, Processor</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_43.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">JBL Tune 510BT Wireless On-Ear Head phones</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_44.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Freestanding Portable Air Conditioner
-                                                    Indoor</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_45.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Ninja Compact Smoothie & Food Processing
-                                                    Blender</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_46.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Portable 2TB External Hard Drive Portable</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_47.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Freestanding Portable Air Conditioner
-                                                    Indoor</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
-                        </div>
-                        <div class="tab-pane animated fadeInUp" id="vdr-tab2" role="tabpanel"
-                            aria-labelledby="vdr-tab-02">
-                            <div class="row justify-content-md-center">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_39.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Portable 2TB External Hard Drive Portable</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_40.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Freestanding Portable Air Conditioner
-                                                    Indoor</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_41.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Galaxy S20 FE 5G Cell Phone, Factory
-                                                    Unlocked</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_42.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Tab M10 Plus, FHD Android Tablet, Processor</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_43.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">JBL Tune 510BT Wireless On-Ear Head phones</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_44.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Freestanding Portable Air Conditioner
-                                                    Indoor</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_45.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Ninja Compact Smoothie & Food Processing
-                                                    Blender</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_46.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Portable 2TB External Hard Drive Portable</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_47.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Freestanding Portable Air Conditioner
-                                                    Indoor</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane animated fadeInUp" id="vdr-tab3" role="tabpanel"
-                            aria-labelledby="vdr-tab-03">
-                            <div class="row justify-content-md-center">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_39.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Portable 2TB External Hard Drive Portable</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_40.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Freestanding Portable Air Conditioner
-                                                    Indoor</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_41.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Galaxy S20 FE 5G Cell Phone, Factory
-                                                    Unlocked</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_42.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Tab M10 Plus, FHD Android Tablet, Processor</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_43.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">JBL Tune 510BT Wireless On-Ear Head phones</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_44.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Freestanding Portable Air Conditioner
-                                                    Indoor</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_45.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Ninja Compact Smoothie & Food Processing
-                                                    Blender</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_46.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Portable 2TB External Hard Drive Portable</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_47.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Freestanding Portable Air Conditioner
-                                                    Indoor</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane animated fadeInUp" id="vdr-tab4" role="tabpanel"
-                            aria-labelledby="vdr-tab-04">
-                            <div class="row justify-content-md-center">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_39.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Portable 2TB External Hard Drive Portable</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_40.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Freestanding Portable Air Conditioner
-                                                    Indoor</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_41.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Galaxy S20 FE 5G Cell Phone, Factory
-                                                    Unlocked</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_42.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Tab M10 Plus, FHD Android Tablet, Processor</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_43.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">JBL Tune 510BT Wireless On-Ear Head phones</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_44.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Freestanding Portable Air Conditioner
-                                                    Indoor</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_45.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Ninja Compact Smoothie & Food Processing
-                                                    Blender</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_46.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Portable 2TB External Hard Drive Portable</a>
-                                            </h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="recent-product__item tx-product ul_li mt-30">
-                                        <div class="thumb">
-                                            <a href="shop-single.html"><img
-                                                    src="{{ asset('frontend/assets') }}/img/product/img_47.png"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="recent-product__content">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <h3><a href="shop-signle.html">Freestanding Portable Air Conditioner
-                                                    Indoor</a></h3>
-                                            <h4 class="product__price"><span class="new">$30.52</span><span
-                                                    class="old">$28.52</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
+
                 </div>
 
             </div>
         </div>
     </div>
     <!-- recent product end -->
+@endsection
+
+@section('javascript')
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('body').on('click', '.product-view', function() {
+                let productId = $(this).data('id');
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('productViews.store') }}",
+                    data: {
+                        product_id: productId
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log(response.message);
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            });
+
+        });
+    </script>
 @endsection

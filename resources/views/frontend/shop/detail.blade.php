@@ -192,147 +192,64 @@
             <div class="row">
                 <div class="col col-xs-12">
                     <div class="realted-porduct">
-                        <h3>Related product</h3>
+                        <h3>Rekomendasi Produk</h3>
                         <div class="shop-area">
                             <ul class="products clearfix">
-                                <li class="product">
-                                    <div class="product-holder">
-                                        <a href="shop-single.html"><img
-                                                src="{{ asset('frontend/assets') }}/img/product/img_165.png" alt></a>
-                                        <ul class="product__action">
-                                            <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
-                                            <li><a href="#!"><i class="far fa-shopping-basket"></i></a></li>
-                                            <li><a href="#!"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="product-info">
-                                        <div class="product__review ul_li">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
+                                @foreach ($recommendedProducts as $recommendedProduct)
+                                    @php
+                                        $recommendedProductRating = $recommendedProduct->ratings->avg('rating');
+                                        $recommendedProductRatingCount = $recommendedProduct->ratings->count();
+                                    @endphp
+                                    <li class="product">
+                                        <div class="product-holder">
+                                            <a href="{{ route('belanja.detail', $recommendedProduct->slug) }}"><img
+                                                    src="{{ asset('storage/uploads/products/' . $recommendedProduct->photos->first()->photo_name) }}"
+                                                    alt="{{ $recommendedProduct->nama }}"></a>
+                                            <ul class="product__action">
+                                                <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
+                                                <li><a href="#!"><i class="far fa-shopping-basket"></i></a></li>
+                                                <li><a href="#!"><i class="far fa-heart"></i></a></li>
                                             </ul>
-                                            <span>(126) Review</span>
                                         </div>
-                                        <h2 class="product__title"><a href="shop-single.html">Rokinon Xeen CF 16mm T2.6
-                                                Pro Cinema Wide</a></h2>
-                                        <span class="product__available">Available: <span>334</span></span>
-                                        <div class="product__progress progress color-primary">
-                                            <div class="progress-bar" role="progressbar" style="width: 50%"
-                                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="product-info">
+                                            <div class="product__review ul_li">
+                                                <ul class="rating-star ul_li mr-10">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= $recommendedProductRating)
+                                                            <li><i class="fas fa-star"></i></li>
+                                                        @elseif ($i - $recommendedProductRating <= 0.5)
+                                                            <li><i class="fas fa-star-half-alt"></i></li>
+                                                        @else
+                                                            <li><i class="far fa-star"></i></li>
+                                                        @endif
+                                                    @endfor
+                                                </ul>
+                                                <span>({{ $recommendedProductRatingCount }}) Review</span>
+                                            </div>
+                                            <h2 class="product__title"><a
+                                                    href="{{ route('belanja.detail', $recommendedProduct->slug) }}">{{ $recommendedProduct->nama }}</a>
+                                            </h2>
+                                            <span class="product__available">Available:
+                                                <span>{{ $recommendedProduct->stok }}</span></span>
+                                            <div class="product__progress progress color-primary">
+                                                <div class="progress-bar" role="progressbar" style="width: 100%"
+                                                    aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <h4 class="product__price"><span
+                                                    class="new">{{ 'Rp ' . number_format($recommendedProduct->harga_jual, 0, ',', '.') }}</span><span
+                                                    class="old">{{ 'Rp ' . number_format($recommendedProduct->harga, 0, ',', '.') }}</span>
+                                            </h4>
                                         </div>
-                                        <h4 class="product__price"><span class="new">$30.52</span><span
-                                                class="old">$28.52</span></h4>
-                                    </div>
-                                </li>
-                                <li class="product">
-                                    <div class="product-holder">
-                                        <a href="shop-single.html"><img
-                                                src="{{ asset('frontend/assets') }}/img/product/img_166.png" alt></a>
-                                        <ul class="product__action">
-                                            <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
-                                            <li><a href="#!"><i class="far fa-shopping-basket"></i></a></li>
-                                            <li><a href="#!"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="product-info">
-                                        <div class="product__review ul_li">
-                                            <ul class="rating-star ul_li mr-10">
-                                                @for ($i = 1; $i <= 5; $i++)
-                                                    @if ($i <= $product->average_rating)
-                                                        <li><i class="fas fa-star"></i></li>
-                                                    @elseif ($i - $product->average_rating <= 0.5)
-                                                        <li><i class="fas fa-star-half-alt"></i></li>
-                                                    @else
-                                                        <li><i class="far fa-star"></i></li>
-                                                    @endif
-                                                @endfor
-                                            </ul>
-                                            <span>({{ $product->ratings_count }})</span>
-                                        </div>
-                                        <h2 class="product__title"><a href="shop-single.html">Tab M10 Plus, FHD Android
-                                                Tablet, Processor</a></h2>
-                                        <span class="product__available">Available: <span>334</span></span>
-                                        <div class="product__progress progress color-primary">
-                                            <div class="progress-bar" role="progressbar" style="width: 50%"
-                                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <h4 class="product__price"><span class="new">$30.52</span><span
-                                                class="old">$28.52</span></h4>
-                                    </div>
-                                    <span class="product__badge color-2"><span>New</span></span>
-                                </li>
-                                <li class="product">
-                                    <div class="product-holder">
-                                        <a href="shop-single.html"><img
-                                                src="{{ asset('frontend/assets') }}/img/product/img_167.png" alt></a>
-                                        <ul class="product__action">
-                                            <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
-                                            <li><a href="#!"><i class="far fa-shopping-basket"></i></a></li>
-                                            <li><a href="#!"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="product-info">
-                                        <div class="product__review ul_li">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <span>(126) Review</span>
-                                        </div>
-                                        <h2 class="product__title"><a href="shop-single.html">Portable 2TB External Hard
-                                                Drive Portable HDD USB</a></h2>
-                                        <span class="product__available">Available: <span>334</span></span>
-                                        <div class="product__progress progress color-primary">
-                                            <div class="progress-bar" role="progressbar" style="width: 50%"
-                                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <h4 class="product__price"><span class="new">$30.52</span><span
-                                                class="old">$28.52</span></h4>
-                                    </div>
-                                </li>
-                                <li class="product">
-                                    <div class="product-holder">
-                                        <a href="shop-single.html"><img
-                                                src="{{ asset('frontend/assets') }}/img/product/img_168.png" alt></a>
-                                        <ul class="product__action">
-                                            <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
-                                            <li><a href="#!"><i class="far fa-shopping-basket"></i></a></li>
-                                            <li><a href="#!"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="product-info">
-                                        <div class="product__review ul_li">
-                                            <ul class="rating-star ul_li mr-10">
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="fas fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                                <li><i class="far fa-star"></i></li>
-                                            </ul>
-                                            <span>(126) Review</span>
-                                        </div>
-                                        <h2 class="product__title"><a href="shop-single.html">Skullcandy Dime True In-Ear
-                                                Earbuds – Golden</a></h2>
-                                        <span class="product__available">Available: <span>334</span></span>
-                                        <div class="product__progress progress color-primary">
-                                            <div class="progress-bar" role="progressbar" style="width: 50%"
-                                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <h4 class="product__price"><span class="new">$30.52</span><span
-                                                class="old">$28.52</span></h4>
-                                    </div>
-                                </li>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
 
         </div> <!-- end of container -->
     </section>

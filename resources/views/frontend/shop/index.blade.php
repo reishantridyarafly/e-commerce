@@ -79,24 +79,14 @@
                                         </div>
                                     </a>
                                 </div>
-                                <form class="woocommerce-ordering" method="get">
-                                    <select name="orderby" class="orderby">
-                                        <option value="menu_order" selected='selected'>Default sorting</option>
-                                        <option value="popularity">Sort by popularity</option>
-                                        <option value="rating">Sort by average rating</option>
-                                        <option value="date">Sort by newness</option>
-                                        <option value="price">Sort by price: low to high</option>
-                                        <option value="price-desc">Sort by price: high to low</option>
-                                    </select>
-                                    <input type="hidden" name="post_type" value="product" />
-                                </form>
                             </div>
                             <div class="woocommerce-content-inner">
                                 <ul class="products three-column clearfix">
                                     @forelse ($product as $row)
                                         <li class="product">
                                             <div class="product-holder">
-                                                <a href="{{ route('belanja.detail', $row->slug) }}"><img
+                                                <a href="{{ route('belanja.detail', $row->slug) }}" class="product-view"
+                                                    data-id="{{ $row->id }}"><img
                                                         src="{{ asset('storage/uploads/products/' . $row->featured_photo->photo_name) }}"
                                                         alt=""></a>
                                                 <ul class="product__action">
@@ -121,7 +111,9 @@
                                                     <span>({{ $row->ratings_count }})</span>
                                                 </div>
                                                 <h2 class="product__title"><a
-                                                        href="{{ route('belanja.detail', $row->slug) }}">{{ $row->nama }}</a>
+                                                        href="{{ route('belanja.detail', $row->slug) }}"
+                                                        class="product-view"
+                                                        data-id="{{ $row->id }}">{{ $row->nama }}</a>
                                                 </h2>
                                                 <div class="product__progress progress color-primary">
                                                     <div class="progress-bar" role="progressbar" style="width: 100%">
@@ -191,6 +183,23 @@
                 }
             });
 
+            $('body').on('click', '.product-view', function() {
+                let productId = $(this).data('id');
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('productViews.store') }}",
+                    data: {
+                        product_id: productId
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log(response.message);
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            });
 
             $('body').on('click', '#addCart', function() {
                 let id = $(this).data('id');
