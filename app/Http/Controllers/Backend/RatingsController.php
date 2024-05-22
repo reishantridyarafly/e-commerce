@@ -18,7 +18,12 @@ class RatingsController extends Controller
     {
         if (auth()->user()->type == 'Administrator') {
             if (request()->ajax()) {
-                $products = Rating::with('user', 'product')->latest()->get();
+                if (auth()->user()->type == 'Pelanggan') {
+                    $products = Rating::with('user', 'product')->latest()->where('user_id', auth()->user()->id)->get();
+                } else {
+                    $products = Rating::with('user', 'product')->latest()->get();
+                }
+
                 return DataTables::of($products)
                     ->addIndexColumn()
                     ->addColumn('nama', function ($data) {

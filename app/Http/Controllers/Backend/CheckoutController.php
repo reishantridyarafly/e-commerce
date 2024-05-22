@@ -14,7 +14,11 @@ class CheckoutController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $checkout = Checkouts::with('user')->orderBy('tanggal_pembayaran', 'asc')->get();
+            if (auth()->user()->type == 'Pelanggan') {
+                $checkout = Checkouts::with('user')->orderBy('tanggal_pembayaran', 'asc')->where('user_id', auth()->user()->id)->get();
+            } else {
+                $checkout = Checkouts::with('user')->orderBy('tanggal_pembayaran', 'asc')->get();
+            }
             return DataTables::of($checkout)
                 ->addIndexColumn()
                 ->addColumn('name', function ($data) {

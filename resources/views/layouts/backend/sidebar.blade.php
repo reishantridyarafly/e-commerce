@@ -23,7 +23,7 @@
     <div class="h-100" id="leftside-menu-container" data-simplebar>
         <!--- Sidemenu -->
         <ul class="side-nav">
-            @if (auth()->user()->type == 'Administrator')
+            @if (auth()->user()->type == 'Administrator' || auth()->user()->type == 'Pemilik')
                 <li class="side-nav-title">Main</li>
                 <li class="side-nav-item {{ request()->routeIs(['dashboard.index']) ? 'menuitem-active' : '' }}">
                     <a href="{{ route('dashboard.index') }}"
@@ -40,6 +40,15 @@
                         <span> Transaksi </span>
                     </a>
                 </li>
+                <li class="side-nav-item {{ request()->routeIs(['pesan.*']) ? 'menuitem-active' : '' }}">
+                    <a href="{{ route('pesan.index') }}"
+                        class="side-nav-link {{ request()->routeIs(['pesan.*']) ? 'active' : '' }}">
+                        <i class="ri-book-line"></i>
+                        <span> Pesan Kontak </span>
+                    </a>
+                </li>
+            @endif
+            @if (auth()->user()->type == 'Administrator')
                 <li class="side-nav-item {{ request()->routeIs(['katalog.*']) ? 'menuitem-active' : '' }}">
                     <a href="{{ route('katalog.index') }}"
                         class="side-nav-link {{ request()->routeIs(['katalog.*']) ? 'active' : '' }}">
@@ -60,13 +69,6 @@
                         class="side-nav-link {{ request()->routeIs(['produk.*']) ? 'active' : '' }}">
                         <i class="ri-box-3-line"></i>
                         <span> Produk </span>
-                    </a>
-                </li>
-                <li class="side-nav-item {{ request()->routeIs(['pesan.*']) ? 'menuitem-active' : '' }}">
-                    <a href="{{ route('pesan.index') }}"
-                        class="side-nav-link {{ request()->routeIs(['pesan.*']) ? 'active' : '' }}">
-                        <i class="ri-book-line"></i>
-                        <span> Pesan Kontak </span>
                     </a>
                 </li>
                 <li class="side-nav-item {{ request()->routeIs(['pelanggan.*']) ? 'menuitem-active' : '' }}">
@@ -117,6 +119,17 @@
                     <span> Alamat </span>
                 </a>
             </li>
+
+            @if (auth()->user()->type == 'Pemilik')
+                <li class="side-nav-title">Laporan</li>
+                <li class="side-nav-item {{ request()->routeIs(['laporan_penjualan.*']) ? 'menuitem-active' : '' }}">
+                    <a href="{{ route('laporan_penjualan.index') }}"
+                        class="side-nav-link {{ request()->routeIs(['laporan_penjualan.*']) ? 'active' : '' }}">
+                        <i class="ri-file-line"></i>
+                        <span> Penjualan </span>
+                    </a>
+                </li>
+            @endif
         </ul>
         <!--- End Sidemenu -->
 

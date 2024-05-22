@@ -56,19 +56,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/alamat/{id}/edit', [App\Http\Controllers\Backend\AddressController::class, 'edit'])->name('alamat.edit');
     Route::post('/alamat/{id}', [App\Http\Controllers\Backend\AddressController::class, 'update'])->name('alamat.update');
     Route::delete('/alamat/{id}', [App\Http\Controllers\Backend\AddressController::class, 'destroy'])->name('alamat.destroy');
+
+    Route::get('/transaksi', [App\Http\Controllers\Backend\CheckoutController::class, 'index'])->name('transaksi.index');
+    Route::get('/transaksi/{id}/detail', [App\Http\Controllers\Backend\CheckoutController::class, 'detail'])->name('transaksi.detail');
+
+    Route::get('/rating', [App\Http\Controllers\Backend\RatingsController::class, 'index'])->name('rating.index');
 });
 
 Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard.index');
-
     Route::get('/katalog', [App\Http\Controllers\Backend\CategoryController::class, 'index'])->name('katalog.index');
     Route::get('/katalog/tambah', [App\Http\Controllers\Backend\CategoryController::class, 'create'])->name('katalog.create');
     Route::get('/katalog/{id}/edit', [App\Http\Controllers\Backend\CategoryController::class, 'edit'])->name('katalog.edit');
     Route::post('/katalog', [App\Http\Controllers\Backend\CategoryController::class, 'store'])->name('katalog.store');
     Route::delete('/katalog/{id}', [App\Http\Controllers\Backend\CategoryController::class, 'destroy'])->name('katalog.destroy');
-
-    Route::get('/pesan-kontak', [App\Http\Controllers\Backend\ContactMessageController::class, 'index'])->name('pesan.index');
-    Route::delete('/pesan-kontak/{id}', [App\Http\Controllers\Backend\ContactMessageController::class, 'destroy'])->name('pesan.destroy');
 
     Route::get('/transaksi/{id}/edit', [App\Http\Controllers\Backend\CheckoutController::class, 'edit'])->name('transaksi.edit');
     Route::post('/transaksi', [App\Http\Controllers\Backend\CheckoutController::class, 'store'])->name('transaksi.store');
@@ -110,9 +110,14 @@ Route::middleware(['auth', 'user-access:Pelanggan'])->group(function () {
     Route::post('/rating', [App\Http\Controllers\Backend\RatingsController::class, 'store'])->name('rating.store');
 });
 
-Route::middleware(['auth', 'user-access:Pelanggan,Administrator'])->group(function () {
-    Route::get('/transaksi', [App\Http\Controllers\Backend\CheckoutController::class, 'index'])->name('transaksi.index');
-    Route::get('/transaksi/{id}/detail', [App\Http\Controllers\Backend\CheckoutController::class, 'detail'])->name('transaksi.detail');
+Route::middleware(['auth', 'user-access:Pemilik,Administrator'])->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard.index');
 
-    Route::get('/rating', [App\Http\Controllers\Backend\RatingsController::class, 'index'])->name('rating.index');
+    Route::get('/pesan-kontak', [App\Http\Controllers\Backend\ContactMessageController::class, 'index'])->name('pesan.index');
+    Route::delete('/pesan-kontak/{id}', [App\Http\Controllers\Backend\ContactMessageController::class, 'destroy'])->name('pesan.destroy');
+});
+
+Route::middleware(['auth', 'user-access:Pemilik'])->group(function () {
+    Route::get('/cetak-laporan/penjualan', [App\Http\Controllers\Report\PenjualanController::class, 'index'])->name('laporan_penjualan.index');
+    Route::post('/cetak-laporan/penjualan/print', [App\Http\Controllers\Report\PenjualanController::class, 'print'])->name('laporan_penjualan.print');
 });
