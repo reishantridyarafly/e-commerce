@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\BannerSettings;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductViews;
@@ -58,6 +59,9 @@ class BerandaController extends Controller
 
         $latest_products = Product::orderBy('created_at', 'desc')->get();
 
-        return view('frontend.beranda.index', compact('categories', 'popular_products', 'top_products_by_category', 'latest_products'));
+        $banner_1 = BannerSettings::with('product')->where('type', 1)->first();
+        $banner_2 = BannerSettings::with('product')->where('type', 2)->first();
+
+        return view('frontend.beranda.index', compact('categories', 'popular_products', 'top_products_by_category', 'latest_products', 'banner_1', 'banner_2'));
     }
 }

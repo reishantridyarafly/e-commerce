@@ -17,15 +17,16 @@
                 <div class="banner__main banner__height ul_li bg_img"
                     data-background="{{ asset('frontend/assets') }}/img/bg/bg_19.jpg">
                     <div class="hero-banner__content">
-                        <span class="subtitle">100% organic Food</span>
-                        <h2 class="title text-uppercase">100% Fresh Grocery <br> Combo Pack</h2>
-                        <p class="content">Sumptuous, filling, and temptingly healthy.</p>
-                        <h4 class="price">From <span>$99.00</span></h4>
+                        <h2 class="title text-uppercase">{{ $banner_1->title }}</h2>
+                        <h4 class="price">Harga
+                            <span>{{ 'Rp ' . number_format($banner_1->product->harga_jual, 0, ',', '.') }}</span>
+                        </h4>
                         <div class="banner__btn mt-30">
-                            <a class="thm-btn" href="shop.html">
+                            <a class="thm-btn product-view" data-id="{{ $banner_1->product->id }}"
+                                href="{{ route('belanja.detail', $banner_1->product->slug) }}">
                                 <span class="btn-wrap">
-                                    <span>Shop Now</span>
-                                    <span>Shop Now</span>
+                                    <span>Beli Sekarang</span>
+                                    <span>Beli Sekarang</span>
                                 </span>
                                 <i class="far fa-long-arrow-right"></i>
                             </a>
@@ -33,10 +34,6 @@
                     </div>
                     <div class="banner__img">
                         <img src="{{ asset('frontend/assets') }}/img/product/img_121.png" alt="">
-                    </div>
-                    <div class="banner__ofer-box">
-                        <img src="{{ asset('frontend/assets') }}/img/icon/offer_bg.png" alt="">
-                        <span class="offer-text"><span class="discount">30<span>%</span></span> <br> <span>OFF</span></span>
                     </div>
                 </div>
             </div>
@@ -79,25 +76,18 @@
                     <div class="add-banner__wrap pr-90">
                         <div class="add-banner bg_img add-banner__2 add-banner__h444"
                             data-background="{{ asset('frontend/assets') }}/img/bg/bg_07.jpg">
-                            <span>New</span>
-                            <h2>Cloud Cam, <br>Security Camera</h2>
-                            <div class="upto-offer ul_li mb-35">
-                                <span class="upto">Up <br> To</span>
-                                <span class="offer-no">70 <span>%</span></span>
-                            </div>
-                            <a class="thm-btn thm-btn__transparent" href="shop.html">
+                            <h2 class="mt-4">{{ $banner_2->title }}</h2>
+                            <a class="thm-btn thm-btn__transparent product-view"
+                                href="{{ route('belanja.detail', $banner_1->product->slug) }}">
                                 <span class="btn-wrap">
-                                    <span>Shop Now</span>
-                                    <span>Shop Now</span>
+                                    <span>Beli Sekarang</span>
+                                    <span>Beli Sekarang</span>
                                 </span>
                                 <i class="far fa-long-arrow-right"></i>
                             </a>
                             <div class="add-banner__img">
-                                <img src="{{ asset('frontend/assets') }}/img/product/img_63.png" alt="">
-                            </div>
-                            <div class="add-banner__text-box add-banner__text-box--2">
-                                25% <br>
-                                <span>off</span>
+                                <img src="{{ asset('storage/uploads/products/' . $banner_2->product->photos->first()->photo_name) }}"
+                                    alt="">
                             </div>
                         </div>
                     </div>

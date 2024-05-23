@@ -64,6 +64,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
+    Route::get('/pengaturan/banner', [App\Http\Controllers\Backend\BannerSettingsController::class, 'index'])->name('banner.index');
+    Route::post('/pengaturan/banner', [App\Http\Controllers\Backend\BannerSettingsController::class, 'store'])->name('banner.store');
+
     Route::get('/katalog', [App\Http\Controllers\Backend\CategoryController::class, 'index'])->name('katalog.index');
     Route::get('/katalog/tambah', [App\Http\Controllers\Backend\CategoryController::class, 'create'])->name('katalog.create');
     Route::get('/katalog/{id}/edit', [App\Http\Controllers\Backend\CategoryController::class, 'edit'])->name('katalog.edit');

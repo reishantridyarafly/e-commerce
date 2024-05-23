@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 
-class Product extends Model
+class BannerSettings extends Model
 {
     use HasFactory;
 
-    protected $table = 'products';
+    protected $table = 'banner_settings';
     protected $guarded = [];
 
     public $incrementing = false;
@@ -35,28 +35,8 @@ class Product extends Model
         return 'string';
     }
 
-    public function photos()
+    public function product()
     {
-        return $this->hasMany(ProductPhoto::class);
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class, 'kategori_id');
-    }
-
-    public function ratings()
-    {
-        return $this->hasMany(Rating::class);
-    }
-
-    public function productViews()
-    {
-        return $this->hasMany(ProductViews::class);
-    }
-
-    public function bannerSettings()
-    {
-        return $this->hasMany(BannerSettings::class);
+        return $this->belongsTo(Product::class);
     }
 }

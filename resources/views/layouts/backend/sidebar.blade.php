@@ -129,6 +129,17 @@
                     </a>
                 </li>
             @endif
+
+            @if (auth()->user()->type == 'Administrator')
+                <li class="side-nav-title">Pengaturan</li>
+                <li class="side-nav-item {{ request()->routeIs(['banner.*']) ? 'menuitem-active' : '' }}">
+                    <a href="{{ route('banner.index') }}"
+                        class="side-nav-link {{ request()->routeIs(['banner.*']) ? 'active' : '' }}">
+                        <i class="ri-folder-settings-line"></i>
+                        <span> Banner </span>
+                    </a>
+                </li>
+            @endif
         </ul>
         <!--- End Sidemenu -->
 
