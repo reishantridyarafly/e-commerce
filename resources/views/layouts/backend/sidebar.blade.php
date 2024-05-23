@@ -56,19 +56,18 @@
                         <span> Katalog </span>
                     </a>
                 </li>
-
-                <li class="side-nav-item {{ request()->routeIs(['rekening.*']) ? 'menuitem-active' : '' }}">
-                    <a href="{{ route('rekening.index') }}"
-                        class="side-nav-link {{ request()->routeIs(['rekening.*']) ? 'active' : '' }}">
-                        <i class="ri-wallet-2-line"></i>
-                        <span> Rekening </span>
-                    </a>
-                </li>
                 <li class="side-nav-item {{ request()->routeIs(['produk.*']) ? 'menuitem-active' : '' }}">
                     <a href="{{ route('produk.index') }}"
                         class="side-nav-link {{ request()->routeIs(['produk.*']) ? 'active' : '' }}">
                         <i class="ri-box-3-line"></i>
                         <span> Produk </span>
+                    </a>
+                </li>
+                <li class="side-nav-item {{ request()->routeIs(['rekening.*']) ? 'menuitem-active' : '' }}">
+                    <a href="{{ route('rekening.index') }}"
+                        class="side-nav-link {{ request()->routeIs(['rekening.*']) ? 'active' : '' }}">
+                        <i class="ri-wallet-2-line"></i>
+                        <span> Rekening </span>
                     </a>
                 </li>
                 <li class="side-nav-item {{ request()->routeIs(['pelanggan.*']) ? 'menuitem-active' : '' }}">
