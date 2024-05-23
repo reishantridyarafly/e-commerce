@@ -78,7 +78,7 @@
                             data-background="{{ asset('frontend/assets') }}/img/bg/bg_07.jpg">
                             <h2 class="mt-4">{{ $banner_2->title }}</h2>
                             <a class="thm-btn thm-btn__transparent product-view"
-                                href="{{ route('belanja.detail', $banner_1->product->slug) }}">
+                                href="{{ route('belanja.detail', $banner_2->product->slug) }}">
                                 <span class="btn-wrap">
                                     <span>Beli Sekarang</span>
                                     <span>Beli Sekarang</span>
