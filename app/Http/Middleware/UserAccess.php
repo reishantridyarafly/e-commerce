@@ -25,7 +25,7 @@ class UserAccess
                 return $next($request);
             }
             Auth::logout();
-            return redirect()->route('login')->with('error', 'Your account is inactive. Please contact the administrator.');
+            return redirect()->route('login')->with('error', 'Akun Anda tidak aktif. Silakan hubungi administrator.');
         }
 
         return abort(403, 'Access denied');

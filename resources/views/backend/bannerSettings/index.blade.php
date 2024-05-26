@@ -25,34 +25,6 @@
 
                 <div class="card">
                     <div class="card-body border-secondary border">
-                        <div class="col-xl-12 col-sm-6">
-                            <div class="card">
-                                <div class="card-header bg-primary text-white">
-                                    <div class="card-widgets">
-                                        <a href="javascript:;" data-bs-toggle="reload"><i class="ri-refresh-line"></i></a>
-                                        <a data-bs-toggle="collapse" href="#card-collapse1" role="button"
-                                            aria-expanded="false" aria-controls="card-collapse1"><i
-                                                class="ri-subtract-line"></i></a>
-                                    </div>
-                                    <h5 class="card-title mb-0">Banner - 1</h5>
-                                </div>
-                                <div id="card-collapse1" class="collapse show">
-                                    <div class="card-body">
-                                        <img src="{{ asset('backend/assets/images/banner-1.png') }}" alt=""
-                                            style="width: 100%;">
-                                    </div>
-
-                                    <div class="text-end">
-                                        <button type="button" class="btn btn-primary btn-sm m-2 banner" data-banner_id="1">
-                                            <i class="mdi mdi-pencil"></i> Update Banner
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end card-->
-                        </div>
-                        <!-- end col -->
-
                         <div class="col-xl-12 col-sm-6 mt-3">
                             <div class="card">
                                 <div class="card-header bg-primary text-white">
@@ -62,7 +34,7 @@
                                             aria-expanded="false" aria-controls="card-collapse2"><i
                                                 class="ri-subtract-line"></i></a>
                                     </div>
-                                    <h5 class="card-title mb-0">Banner - 2</h5>
+                                    <h5 class="card-title mb-0">Banner</h5>
                                 </div>
                                 <div id="card-collapse2" class="collapse show">
                                     <div class="card-body">
@@ -70,7 +42,7 @@
                                             style="width: 100%;">
                                         <div class="text-end">
                                             <button type="button" class="btn btn-primary btn-sm m-2 banner"
-                                                data-banner_id="2">
+                                                data-banner_id="1">
                                                 <i class="mdi mdi-pencil"></i> Update Banner
                                             </button>
                                         </div>

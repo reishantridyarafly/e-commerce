@@ -17,23 +17,23 @@
                 <div class="banner__main banner__height ul_li bg_img"
                     data-background="{{ asset('frontend/assets') }}/img/bg/bg_19.jpg">
                     <div class="hero-banner__content">
-                        <h2 class="title text-uppercase">{{ $banner_1->title }}</h2>
-                        <h4 class="price">Harga
-                            <span>{{ 'Rp ' . number_format($banner_1->product->harga_jual, 0, ',', '.') }}</span>
-                        </h4>
+                        <span class="subtitle">Laptop Murah Kuningan</span>
+                        <h2 class="title text-uppercase">Egyd <br>Komputer</h2>
+                        <p class="content">JUAL BELI (BARU & SECOND) & SERVICE
+                            LAPTOP, PC, <br> PROJECTOR,PRINTER, JARINGAN dll.</p>
                         <div class="banner__btn mt-30">
-                            <a class="thm-btn product-view" data-id="{{ $banner_1->product->id }}"
-                                href="{{ route('belanja.detail', $banner_1->product->slug) }}">
+                            <a class="thm-btn" href="{{ route('belanja.index') }}">
                                 <span class="btn-wrap">
-                                    <span>Beli Sekarang</span>
-                                    <span>Beli Sekarang</span>
+                                    <span>Belanja Sekarang</span>
+                                    <span>Belanja Sekarang</span>
                                 </span>
                                 <i class="far fa-long-arrow-right"></i>
                             </a>
                         </div>
                     </div>
                     <div class="banner__img">
-                        <img src="{{ asset('frontend/assets') }}/img/product/img_121.png" alt="">
+                        <img src="{{ asset('frontend/assets') }}/img/product/img_55.png" alt=""
+                            style="height: 300px; margin: 100px;">
                     </div>
                 </div>
             </div>
@@ -76,19 +76,23 @@
                     <div class="add-banner__wrap pr-90">
                         <div class="add-banner bg_img add-banner__2 add-banner__h444"
                             data-background="{{ asset('frontend/assets') }}/img/bg/bg_07.jpg">
-                            <h2 class="mt-4">{{ $banner_2->title }}</h2>
-                            <a class="thm-btn thm-btn__transparent product-view"
-                                href="{{ route('belanja.detail', $banner_2->product->slug) }}">
-                                <span class="btn-wrap">
-                                    <span>Beli Sekarang</span>
-                                    <span>Beli Sekarang</span>
-                                </span>
-                                <i class="far fa-long-arrow-right"></i>
-                            </a>
-                            <div class="add-banner__img">
-                                <img src="{{ asset('storage/uploads/products/' . $banner_2->product->photos->first()->photo_name) }}"
-                                    alt="">
-                            </div>
+                            @if ($banner_1)
+                                <h2 class="pt-50">{{ $banner_1->product->nama }}</h2>
+                                <a class="thm-btn thm-btn__transparent product-view"
+                                    href="{{ route('belanja.detail', $banner_1->product->slug) }}"
+                                    data-id="{{ $banner_1->product->id }}">
+                                    <span class="btn-wrap">
+                                        <span>Beli Sekarang</span>
+                                        <span>Beli Sekarang</span>
+                                    </span>
+                                    <i class="far fa-long-arrow-right"></i>
+                                </a>
+                                <div class="add-banner__img pb-60">
+                                    <img src="{{ asset('storage/uploads/products/' . $banner_1->product->photos->first()->photo_name) }}" alt="">
+                                </div>
+                            @else
+                                <h6>Data tidak tersedia</h6>
+                            @endif
                         </div>
                     </div>
                 </div>
