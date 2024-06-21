@@ -26,7 +26,9 @@
                 </ul>
                 <ul class="header__top-right ul_li mt-10">
                     <li><i class="far fa-city"></i>Kuningan</li>
-                    <li><a href="javascript:void(0);" id="logout-link"><i class="fas fa-sign-out-alt"></i>Keluar</a>
+                    @auth
+                        <li><a href="javascript:void(0);" id="logout-link"><i class="fas fa-sign-out-alt"></i>Keluar</a>
+                        @endauth
                     </li>
                 </ul>
             </div>

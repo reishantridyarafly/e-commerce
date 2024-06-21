@@ -1,7 +1,7 @@
 <div class="leftside-menu">
 
     <!-- Brand Logo Light -->
-    <a href="{{ route('dashboard.index') }}" class="logo logo-light">
+    <a href="{{ route('beranda.index') }}" class="logo logo-light">
         <span class="logo-lg">
             <img src="{{ asset('backend/assets') }}/images/logo.png" alt="logo" style="height: 55px">
         </span>
@@ -10,7 +10,7 @@
         </span>
     </a>
 
-    <a href="{{ route('dashboard.index') }}" class="logo logo-dark">
+    <a href="{{ route('beranda.index') }}" class="logo logo-dark">
         <span class="logo-lg">
             <img src="{{ asset('backend/assets') }}/images/logo.png" alt="logo" style="height: 55px">
         </span>
