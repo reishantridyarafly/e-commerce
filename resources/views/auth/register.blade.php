@@ -205,7 +205,7 @@
                                 text: 'Data berhasil disimpan',
                             }).then(function() {
                                 top.location.href =
-                                    "{{ route('login.index') }}";
+                                    "{{ route('login') }}";
                             });
                         }
                     },
