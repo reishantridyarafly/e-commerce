@@ -35,25 +35,41 @@ class CategoryController extends Controller
             $request->all(),
             [
                 'nama' => 'required|unique:categories,nama,' . $id,
+                'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ],
             [
                 'nama.required' => 'Silakan isi nama katalog terlebih dahulu.',
-                'nama.unique' => 'Nama katalog sudah tersedia.'
+                'nama.unique' => 'Nama katalog sudah tersedia.',
+                'foto.required' => 'Silakan isi foto katalog terlebih dahulu.',
+                'foto.image' => 'File yang diunggah harus berupa gambar.',
+                'foto.mimes' => 'Format gambar harus jpeg, png, jpg, gif, atau svg.',
+                'foto.max' => 'Ukuran gambar maksimal adalah 2MB.',
             ]
         );
 
         if ($validated->fails()) {
             return response()->json(['errors' => $validated->errors()]);
         } else {
-            $category = Category::updateOrCreate([
-                'id' => $id
-            ], [
-                'nama' => $request->nama,
-                'slug' => Str::slug($request->nama),
-            ]);
+            $filename = null;
+            if ($request->hasFile('foto')) {
+                $foto = $request->file('foto');
+                $filename = time() . '_' . $foto->getClientOriginalName();
+                $foto->storeAs('uploads/katalog', $filename, 'public');
+            }
+
+            $category = Category::updateOrCreate(
+                ['id' => $id],
+                [
+                    'nama' => $request->nama,
+                    'slug' => Str::slug($request->nama),
+                    'foto' => $filename
+                ]
+            );
+
             return response()->json($category);
         }
     }
+
 
     public function edit($id)
     {

@@ -4,16 +4,16 @@
     <!-- Datatables css -->
     <link href="{{ asset('backend/assets') }}/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet"
         type="text/css" />
-    <link href="{{ asset('backend/assets') }}/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet"
-        type="text/css" />
+    <link href="{{ asset('backend/assets') }}/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css"
+        rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/assets') }}/vendor/datatables.net-fixedcolumns-bs5/css/fixedColumns.bootstrap5.min.css"
         rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/assets') }}/vendor/datatables.net-fixedheader-bs5/css/fixedHeader.bootstrap5.min.css"
         rel="stylesheet" type="text/css" />
-    <link href="{{ asset('backend/assets') }}/vendor/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet"
-        type="text/css" />
-    <link href="{{ asset('backend/assets') }}/vendor/datatables.net-select-bs5/css/select.bootstrap5.min.css" rel="stylesheet"
-        type="text/css" />
+    <link href="{{ asset('backend/assets') }}/vendor/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css"
+        rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/assets') }}/vendor/datatables.net-select-bs5/css/select.bootstrap5.min.css"
+        rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -80,8 +80,14 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <input type="hidden" name="id" id="id">
+                            <label for="foto" class="form-label">Foto Katalog</label>
+                            <input type="file" id="foto" name="foto" class="form-control" accept="image/*"
+                                autofocus>
+                            <small class="text-danger errorFoto"></small>
+                        </div>
+                        <div class="mb-3">
                             <label for="nama" class="form-label">Nama Katalog</label>
-                            <input type="text" id="nama" name="nama" class="form-control" autofocus>
+                            <input type="text" id="nama" name="nama" class="form-control">
                             <small class="text-danger errorNama"></small>
                         </div>
                     </div>
@@ -100,9 +106,12 @@
     <script src="{{ asset('backend/assets') }}/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('backend/assets') }}/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
     <script src="{{ asset('backend/assets') }}/vendor/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="{{ asset('backend/assets') }}/vendor/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
-    <script src="{{ asset('backend/assets') }}/vendor/datatables.net-fixedcolumns-bs5/js/fixedColumns.bootstrap5.min.js"></script>
-    <script src="{{ asset('backend/assets') }}/vendor/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="{{ asset('backend/assets') }}/vendor/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js">
+    </script>
+    <script src="{{ asset('backend/assets') }}/vendor/datatables.net-fixedcolumns-bs5/js/fixedColumns.bootstrap5.min.js">
+    </script>
+    <script src="{{ asset('backend/assets') }}/vendor/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js">
+    </script>
     <script src="{{ asset('backend/assets') }}/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
     <script src="{{ asset('backend/assets') }}/vendor/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
     <script src="{{ asset('backend/assets') }}/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
@@ -155,6 +164,9 @@
 
                 $('#nama').removeClass('is-invalid');
                 $('.errorNama').html('');
+
+                $('#foto').removeClass('is-invalid');
+                $('.errorFoto').html('');
             });
 
             $('body').on('click', '#btnEdit', function() {
@@ -170,6 +182,9 @@
 
                         $('#nama').removeClass('is-invalid');
                         $('.errorNama').html('');
+
+                        $('#foto').removeClass('is-invalid');
+                        $('.errorFoto').html('');
 
                         $('#id').val(response.id);
                         $('#nama').val(response.nama);
@@ -219,10 +234,13 @@
             $('#form').submit(function(e) {
                 e.preventDefault();
                 $.ajax({
-                    data: $(this).serialize(),
+                    data: new FormData(this),
                     url: "{{ route('katalog.store') }}",
                     type: "POST",
                     dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
                     beforeSend: function() {
                         $('#simpan').attr('disable', 'disabled');
                         $('#simpan').text('Proses...');
@@ -233,6 +251,14 @@
                     },
                     success: function(response) {
                         if (response.errors) {
+                            if (response.errors.foto) {
+                                $('#foto').addClass('is-invalid');
+                                $('.errorFoto').html(response.errors.foto);
+                            } else {
+                                $('#foto').removeClass('is-invalid');
+                                $('.errorFoto').html('');
+                            }
+
                             if (response.errors.nama) {
                                 $('#nama').addClass('is-invalid');
                                 $('.errorNama').html(response.errors.nama);
