@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
@@ -50,8 +51,12 @@ class CategoryController extends Controller
         if ($validated->fails()) {
             return response()->json(['errors' => $validated->errors()]);
         } else {
-            $filename = null;
+            $category = Category::find($id);
+            $filename = $category ? $category->foto : null;
             if ($request->hasFile('foto')) {
+                if ($category && $category->foto) {
+                    Storage::disk('public')->delete('uploads/katalog/' . $category->foto);
+                }
                 $foto = $request->file('foto');
                 $filename = time() . '_' . $foto->getClientOriginalName();
                 $foto->storeAs('uploads/katalog', $filename, 'public');
@@ -79,7 +84,16 @@ class CategoryController extends Controller
 
     public function destroy(Request $request)
     {
-        $category = Category::where('id', $request->id)->delete();
-        return Response()->json(['category' => $category, 'success' => 'Data berhasil dihapus']);
+        $category = Category::find($request->id);
+
+        if ($category) {
+            if ($category->foto) {
+                Storage::disk('public')->delete('uploads/katalog/' . $category->foto);
+            }
+            $category->delete();
+            return response()->json(['success' => 'Data dan foto berhasil dihapus']);
+        }
+
+        return response()->json(['error' => 'Kategori tidak ditemukan'], 404);
     }
 }

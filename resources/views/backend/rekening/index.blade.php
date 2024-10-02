@@ -87,13 +87,19 @@
                         </div>
                         <div class="mb-3">
                             <label for="no_rekening" class="form-label">No Rekening</label>
-                            <input type="number" id="no_rekening" name="no_rekening" class="form-control" autofocus>
+                            <input type="number" id="no_rekening" name="no_rekening" class="form-control">
                             <small class="text-danger errorNoRekening"></small>
                         </div>
                         <div class="mb-3">
                             <label for="nama_bank" class="form-label">Nama Bank</label>
-                            <input type="text" id="nama_bank" name="nama_bank" class="form-control" autofocus>
+                            <input type="text" id="nama_bank" name="nama_bank" class="form-control">
                             <small class="text-danger errorNamaBank"></small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="foto" class="form-label">Foto</label>
+                            <input type="file" id="foto" name="foto" class="form-control" accept="image/*"
+                                autofocus>
+                            <small class="text-danger errorFoto"></small>
                         </div>
                     </div>
 
@@ -180,6 +186,9 @@
 
                 $('#no_rekening').removeClass('is-invalid');
                 $('.errorNoRekening').html('');
+
+                $('#foto').removeClass('is-invalid');
+                $('.errorFoto').html('');
             });
 
             $('body').on('click', '#btnEdit', function() {
@@ -201,6 +210,9 @@
 
                         $('#no_rekening').removeClass('is-invalid');
                         $('.errorNoRekening').html('');
+
+                        $('#foto').removeClass('is-invalid');
+                        $('.errorFoto').html('');
 
                         $('#id').val(response.id);
                         $('#nama').val(response.nama);
@@ -252,10 +264,13 @@
             $('#form').submit(function(e) {
                 e.preventDefault();
                 $.ajax({
-                    data: $(this).serialize(),
+                    data: new FormData(this),
                     url: "{{ route('rekening.store') }}",
                     type: "POST",
                     dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
                     beforeSend: function() {
                         $('#simpan').attr('disable', 'disabled');
                         $('#simpan').text('Proses...');
@@ -286,6 +301,14 @@
                             } else {
                                 $('#nama_bank').removeClass('is-invalid');
                                 $('.errorNamaBank').html('');
+                            }
+
+                            if (response.errors.foto) {
+                                $('#foto').addClass('is-invalid');
+                                $('.errorFoto').html(response.errors.foto);
+                            } else {
+                                $('#foto').removeClass('is-invalid');
+                                $('.errorFoto').html('');
                             }
                         } else {
                             Swal.fire({
