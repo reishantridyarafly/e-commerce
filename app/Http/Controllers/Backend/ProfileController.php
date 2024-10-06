@@ -23,7 +23,6 @@ class ProfileController extends Controller
             $request->all(),
             [
                 'first_name' => 'required|string',
-                'last_name' => 'required|string',
                 'email' => 'required|string|unique:users,email,' . $id,
                 'photo' => 'image|mimes:jpg,png,jpeg,webp,svg|file|max:5120',
                 'no_telepon' => 'required|min:11|unique:users,no_telepon,' . $id,

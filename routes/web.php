@@ -109,6 +109,8 @@ Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
 });
 
 Route::middleware(['auth', 'user-access:Pelanggan'])->group(function () {
+    Route::get('/administrator', [App\Http\Controllers\Backend\AdministratorController::class, 'index'])->name('administrator.index');
+
     Route::get('/rating/tambah', [App\Http\Controllers\Backend\RatingsController::class, 'create'])->name('rating.create');
     Route::post('/rating', [App\Http\Controllers\Backend\RatingsController::class, 'store'])->name('rating.store');
 });

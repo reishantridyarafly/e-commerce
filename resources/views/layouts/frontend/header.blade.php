@@ -48,7 +48,7 @@
                         <a href="https://wa.me/6285224004888" target="_blank"><i class="fab fa-whatsapp"></i></a>
                         <a href="https://instagram.com/laptopmurahkuningan" target="_blank"><i
                                 class="fab fa-instagram"></i></a>
-                        <a href="#!"><i class="fab fa-youtube"></i></a>
+                        <a href="{{ route('administrator.index') }}"><i class="fas fa-envelope"></i></a>
                     </div>
                 </div>
             </div>

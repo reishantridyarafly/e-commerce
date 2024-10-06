@@ -102,6 +102,13 @@
                         <span> Transaksi </span>
                     </a>
                 </li>
+                <li class="side-nav-item {{ request()->routeIs(['administrator.*']) ? 'menuitem-active' : '' }}">
+                    <a href="{{ route('administrator.index') }}"
+                        class="side-nav-link {{ request()->routeIs(['administrator.*']) ? 'active' : '' }}">
+                        <i class="ri-admin-line"></i>
+                        <span> Administrator </span>
+                    </a>
+                </li>
             @endif
 
             <li class="side-nav-item {{ request()->routeIs(['rating.*']) ? 'menuitem-active' : '' }}">
