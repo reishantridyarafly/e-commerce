@@ -20,10 +20,10 @@ class ProductController extends Controller
             return DataTables::of($product)
                 ->addIndexColumn()
                 ->addColumn('harga', function ($data) {
-                    return 'Ro ' . number_format($data->harga, 0, ',', '.');
+                    return 'Rp ' . number_format($data->harga, 0, ',', '.');
                 })
                 ->addColumn('harga_jual', function ($data) {
-                    return 'Ro ' . number_format($data->harga_jual, 0, ',', '.');
+                    return 'Rp ' . number_format($data->harga_jual, 0, ',', '.');
                 })
                 ->addColumn('aktif_status', function ($data) {
                     $aktif_status = $data->status == 0 ? '<div class="form-check form-switch">
@@ -62,7 +62,6 @@ class ProductController extends Controller
                 'nama' => 'required|string|unique:products,nama',
                 'deskripsi' => 'required|string',
                 'deskripsi_singkat' => 'required|string',
-                'harga' => 'required',
                 'harga_jual' => 'required',
                 'stok' => 'required|string',
                 'foto' => 'required|max:5120',
@@ -78,7 +77,6 @@ class ProductController extends Controller
                 'deskripsi_singkat.required' => 'Silakan isi deskripsi singkat terlebih dahulu.',
                 'deskripsi_singkat.string' => 'Deskripsi singkat harus berupa teks.',
                 'deskripsi_singkat.string' => 'Deskripsi singkat harus berupa teks.',
-                'harga.required' => 'Silakan isi harga terlebih dahulu.',
                 'harga_jual.required' => 'Silakan isi harga jual terlebih dahulu.',
                 'stok.required' => 'Silakan isi stok terlebih dahulu.',
                 'stok.string' => 'Stok harus berupa teks.',
@@ -101,7 +99,7 @@ class ProductController extends Controller
             $product->slug = Str::slug($request->nama);
             $product->deskripsi = $request->deskripsi;
             $product->deskripsi_singkat = $request->deskripsi_singkat;
-            $product->harga = str_replace(['Rp', ' ', '.'], '', $request->harga);
+            $product->harga = $request->harga ? str_replace(['Rp', ' ', '.'], '', $request->harga) : null;
             $product->harga_jual = str_replace(['Rp', ' ', '.'], '', $request->harga_jual);
             $product->stok = $request->stok;
             $product->kategori_id = $request->kategori;

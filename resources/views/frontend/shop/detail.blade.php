@@ -79,7 +79,8 @@
 
                         <div class="price">
                             <span class="current">{{ 'Rp ' . number_format($product->harga_jual, 0, ',', '.') }}</span>
-                            <span class="old">{{ 'Rp ' . number_format($product->harga, 0, ',', '.') }}</span>
+                            <span
+                                class="old">{{ $product->harga ? 'Rp ' . number_format($product->harga, 0, ',', '.') : '' }}</span>
                         </div>
                         <p>{{ $product->deskripsi_singkat }}</p>
 
@@ -94,7 +95,8 @@
                         </div>
 
                         <div class="product-option">
-                            <form class="form" method="POST" action="{{ route('pembayaran.directCheckout') }}">
+                            <form class="form" method="POST" action="{{ route('pembayaran.directCheckout') }}"
+                                id="buyNowForm">
                                 @csrf
                                 <input type="hidden" name="id" id="id" value="{{ $product->id }}">
                                 <div class="product-row">
@@ -104,13 +106,14 @@
                                     </div>
                                     <div class="add-to-cart-btn">
                                         <button class="thm-btn thm-btn__2 no-icon" type="button" id="addCart"
-                                            data-id="{{ $product->id }}">
+                                            data-id="{{ $product->id }}" data-stok="{{ $product->stok }}">
                                             <span class="btn-wrap">
                                                 <span>Keranjang</span>
                                                 <span>Keranjang</span>
                                             </span>
                                         </button>
-                                        <button class="thm-btn thm-btn__2 no-icon" type="submit">
+                                        <button class="thm-btn thm-btn__2 no-icon" type="submit" id="buyNow"
+                                            data-id="{{ $product->id }}" data-stok="{{ $product->stok }}">
                                             <span class="btn-wrap">
                                                 <span>Beli Sekarang</span>
                                                 <span>Beli Sekarang</span>
@@ -267,53 +270,103 @@
 
             $('body').on('click', '#addCart', function() {
                 let id = $(this).data('id');
-                let qty = $('#qty').val();
-                $.ajax({
-                    type: "POST",
-                    url: "/keranjang/tambah/" + id,
-                    data: {
-                        id: id,
-                        qty: qty,
-                    },
-                    dataType: 'json',
-                    beforeSend: function() {
-                        $('#addCart').attr('disable', 'disabled');
-                        $('#addCart').html(`<span class="btn-wrap">
-                                                <span>Proses...</span>
-                                                <span>Proses...</span>
-                                            </span>`);
-                    },
-                    complete: function() {
-                        $('#addCart').removeAttr('disable');
-                        $('#addCart').html(`<span class="btn-wrap">
-                                                <span>Keranjang</span>
-                                                <span>Keranjang</span>
-                                            </span>`);
-                    },
-                    success: function(response) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "success",
-                            title: response.message
-                        });
-                        updateCartCount();
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        console.error(xhr.status + "\n" + xhr.responseText + "\n" +
-                            thrownError);
-                    }
-                });
+                let qty = parseInt($('#qty').val());
+                let stok = parseInt($(this).data('stok'));
+
+                if (qty > stok) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "error",
+                        title: "Jumlah yang dimasukkan melebihi stok yang tersedia!"
+                    });
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: "/keranjang/tambah/" + id,
+                        data: {
+                            id: id,
+                            qty: qty,
+                        },
+                        dataType: 'json',
+                        beforeSend: function() {
+                            $('#addCart').attr('disabled', 'disabled');
+                            $('#addCart').html(`<span class="btn-wrap">
+                                        <span>Proses...</span>
+                                        <span>Proses...</span>
+                                    </span>`);
+                        },
+                        complete: function() {
+                            $('#addCart').removeAttr('disabled');
+                            $('#addCart').html(`<span class="btn-wrap">
+                                        <span>Keranjang</span>
+                                        <span>Keranjang</span>
+                                    </span>`);
+                        },
+                        success: function(response) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: response.message
+                            });
+                            updateCartCount();
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            console.error(xhr.status + "\n" + xhr.responseText + "\n" +
+                                thrownError);
+                        }
+                    });
+                }
             });
+
+            $('body').on('click', '#buyNow', function(event) {
+                event.preventDefault();
+                let id = $(this).data('id');
+                let qty = parseInt($('#qty').val());
+                let stok = parseInt($(this).data('stok'));
+
+                if (qty > stok) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "error",
+                        title: "Jumlah yang dimasukkan melebihi stok yang tersedia!"
+                    });
+                    return false;
+                } else {
+                    $('#buyNowForm').submit();
+                }
+            });
+
+
         });
     </script>
 @endsection

@@ -122,7 +122,7 @@
                                                 <h4 class="product__price"><span
                                                         class="new">{{ 'Rp ' . number_format($row->harga_jual, 0, ',', '.') }}
                                                     </span><span
-                                                        class="old">{{ 'Rp ' . number_format($row->harga, 0, ',', '.') }}
+                                                        class="old">{{ $row->harga ? 'Rp ' . number_format($row->harga, 0, ',', '.') : '' }}
                                                     </span></h4>
                                                 <p class="product-description">{{ $row->deskripsi_singkat }}</p>
                                             </div>
@@ -207,7 +207,8 @@
                     type: "POST",
                     url: "/keranjang/tambah/" + id,
                     data: {
-                        id: id
+                        id: id,
+                        qty: 1
                     },
                     dataType: 'json',
                     success: function(response) {

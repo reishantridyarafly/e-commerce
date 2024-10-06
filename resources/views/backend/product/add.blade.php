@@ -44,14 +44,14 @@
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="mb-3">
-                                        <label for="harga" class="form-label">Harga</label>
+                                        <label for="harga" class="form-label">Harga Promo</label>
                                         <input type="text" id="harga" name="harga" class="form-control">
                                         <small class="text-danger errorHarga"></small>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="mb-3">
-                                        <label for="harga_jual" class="form-label">Harga Jual</label>
+                                        <label for="harga_jual" class="form-label">Harga Jual (Yang akan ditampilkan)</label>
                                         <input type="text" id="harga_jual" name="harga_jual" class="form-control">
                                         <small class="text-danger errorHargaJual"></small>
                                     </div>

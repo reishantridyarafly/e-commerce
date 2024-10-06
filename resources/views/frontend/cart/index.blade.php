@@ -68,6 +68,7 @@
                                                         value="{{ $row->quantity }}" title="Qty" id="qty"
                                                         data-id="{{ $row->id }}"
                                                         data-price="{{ $row->product->harga_jual }}"
+                                                        data-stok="{{ $row->product->stok }}"
                                                         class="product-count input-text qty text product-count form-control" />
                                                 </div>
                                             </td>
@@ -159,6 +160,28 @@
                 var id = $this.data('id');
                 var newQuantity = $this.val();
                 var productPrice = $this.data('price');
+                var stock = parseInt($this.data('stok'));
+
+                if (newQuantity > stock) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "error",
+                        title: "Jumlah yang dimasukkan melebihi stok yang tersedia!"
+                    });
+                    updateCartTotals();
+                    $this.val(stock);
+                    newQuantity = stock;
+                }
 
                 var subtotal = newQuantity * productPrice;
                 var formattedSubtotal = formatRupiah(subtotal, 'Rp ');
