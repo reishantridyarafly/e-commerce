@@ -24,27 +24,17 @@
     <!-- start cart-section -->
     <section class="cart-section woocommerce-cart pb-80">
         <div class="container">
-            <div class="row">
-                <div class="col col-xs-12">
-                    <div class="woocommerce">
-                        <form>
+            <form action="{{ route('pembayaran.cartCheckout') }}" method="post" id="checkoutForm">
+                @csrf
+                <div class="row">
+                    <div class="col col-xs-12">
+                        <div class="woocommerce">
                             <table class="shop_table shop_table_responsive cart">
-                                <thead>
-                                    <tr>
-                                        <th class="product-remove">&nbsp;</th>
-                                        <th class="product-thumbnail">&nbsp;</th>
-                                        <th class="product-name">Produk</th>
-                                        <th class="product-price">Harga</th>
-                                        <th class="product-quantity">Qty </th>
-                                        <th class="product-subtotal">Total</th>
-                                    </tr>
-                                </thead>
                                 <tbody>
                                     @forelse ($items as $row)
                                         <tr class="cart_single" data-id="{{ $row->id }}">
-                                            <td class="product-remove">
-                                                <a href="#!" class="remove" title="Remove this item"
-                                                    data-id="{{ $row->id }}">&times;</a>
+                                            <td>
+                                                <input type="checkbox" name="selected_items[]" value="{{ $row->product->id }}">
                                             </td>
                                             <td class="product-thumbnail">
                                                 <a href="#!">
@@ -76,42 +66,46 @@
                                                 <span class="woocommerce-Price-amount amount"
                                                     id="subtotal_product">{{ 'Rp ' . number_format($row->quantity * $row->product->harga_jual, 0, ',', '.') }}</span>
                                             </td>
+                                            <td class="product-remove">
+                                                <a href="#!" class="remove" title="Remove this item"
+                                                    data-id="{{ $row->id }}">&times;</a>
+                                            </td>
                                         </tr>
                                     @empty
                                         <h1>Data tidak tersedia</h1>
                                     @endforelse
                                 </tbody>
                             </table>
-                        </form>
 
-                        <div class="cart-collaterals">
-                            <div class="cart_totals calculated_shipping">
-                                <table class="shop_table shop_table_responsive">
-                                    <tr class="order-total">
-                                        <th>Total</th>
-                                        <td data-title="Total"><strong><span class="woocommerce-Price-amount amount"
-                                                    id="cart_total"></span></strong>
-                                        </td>
-                                    </tr>
-                                </table>
+                            <div class="cart-collaterals">
+                                <div class="cart_totals calculated_shipping">
+                                    <table class="shop_table shop_table_responsive">
+                                        <tr class="order-total">
+                                            <th>Total</th>
+                                            <td data-title="Total">
+                                                <strong>
+                                                    <span class="woocommerce-Price-amount amount" id="cart_total"></span>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                    </table>
 
-                                <div class="wc-proceed-to-checkout">
-                                    <form action="{{ route('pembayaran.cartCheckout') }}" method="post">
-                                        @csrf
+                                    <div class="wc-proceed-to-checkout">
                                         <button type="submit"
-                                            class="checkout-button thm-btn thm-btn__2 no-icon br-0 alt wc-forward">
+                                            class="checkout-button thm-btn thm-btn__2 no-icon br-0 alt wc-forward"
+                                            id="checkoutButton">
                                             <span class="btn-wrap">
                                                 <span>Pembayaran</span>
                                                 <span>Pembayaran</span>
                                             </span>
                                         </button>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </section>
     <!-- end cart-section -->
@@ -137,15 +131,20 @@
 
         function updateCartTotals() {
             var subtotal = 0;
-            $('.cart_single').each(function() {
-                var quantity = $(this).find('#qty').val();
-                var price = $(this).find('#qty').data('price');
+            $('input[name="selected_items[]"]:checked').each(function() {
+                var $row = $(this).closest('.cart_single');
+                var quantity = $row.find('#qty').val();
+                var price = $row.find('#qty').data('price');
                 var itemSubtotal = quantity * price;
                 subtotal += itemSubtotal;
             });
 
             var formattedSubtotal = formatRupiah(subtotal, 'Rp ');
+
             $('#cart_total').text(formattedSubtotal);
+            if (subtotal === 0) {
+                $('#cart_total').text('');
+            }
         }
 
         $(document).ready(function() {
@@ -178,7 +177,6 @@
                         icon: "error",
                         title: "Jumlah yang dimasukkan melebihi stok yang tersedia!"
                     });
-                    updateCartTotals();
                     $this.val(stock);
                     newQuantity = stock;
                 }
@@ -219,13 +217,37 @@
                     success: function(response) {
                         $this.closest('tr').remove();
                         updateCartTotals();
-                        console.log(response.message);
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         console.error(xhr.status + "\n" + xhr.responseText + "\n" +
                             thrownError);
                     }
                 });
+            });
+
+            $('body').on('change', 'input[name="selected_items[]"]', function() {
+                updateCartTotals();
+            });
+
+            $('#checkoutButton').on('click', function(e) {
+                if ($('input[name="selected_items[]"]:checked').length === 0) {
+                    e.preventDefault();
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "error",
+                        title: "Silakan pilih setidaknya satu produk sebelum melanjutkan ke pembayaran."
+                    });
+                }
             });
 
             updateCartTotals();

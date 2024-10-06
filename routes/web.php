@@ -78,7 +78,6 @@ Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
     Route::delete('/transaksi/{id}', [App\Http\Controllers\Backend\CheckoutController::class, 'destroy'])->name('transaksi.destroy');
     Route::post('/transaksi/tolak', [App\Http\Controllers\Backend\CheckoutController::class, 'tolak'])->name('transaksi.tolak');
     Route::post('/transaksi/proses', [App\Http\Controllers\Backend\CheckoutController::class, 'proses'])->name('transaksi.proses');
-    Route::post('/transaksi/selesai', [App\Http\Controllers\Backend\CheckoutController::class, 'selesai'])->name('transaksi.selesai');
     Route::post('/transaksi/update/resi', [App\Http\Controllers\Backend\CheckoutController::class, 'updateResi'])->name('transaksi.updateResi');
 
     Route::get('/rekening', [App\Http\Controllers\Backend\RekeningController::class, 'index'])->name('rekening.index');
@@ -106,6 +105,9 @@ Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
     Route::post('/pelanggan/updateActiveStatus', [App\Http\Controllers\Backend\CustomersController::class, 'updateActiveStatus'])->name('pelanggan.updateActiveStatus');
     Route::get('/pelanggan/{id}/edit', [App\Http\Controllers\Backend\CustomersController::class, 'edit'])->name('pelanggan.edit');
     Route::delete('/pelanggan/{id}', [App\Http\Controllers\Backend\CustomersController::class, 'destroy'])->name('pelanggan.destroy');
+});
+Route::middleware(['auth', 'user-access:Pelanggan,Administrator'])->group(function () {
+    Route::post('/transaksi/selesai', [App\Http\Controllers\Backend\CheckoutController::class, 'selesai'])->name('transaksi.selesai');
 });
 
 Route::middleware(['auth', 'user-access:Pelanggan'])->group(function () {

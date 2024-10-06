@@ -166,9 +166,10 @@
                                 </div>
                                 <!-- end row-->
 
-                                @if (auth()->user()->type == 'Administrator')
-                                    <div class="d-print-none mt-4">
-                                        <div class="text-center">
+
+                                <div class="d-print-none mt-4">
+                                    <div class="text-center">
+                                        @if (auth()->user()->type == 'Administrator')
                                             @if ($checkout->status == 'pending')
                                                 <button type="button" class="btn btn-danger me-1" id="btnTolak"
                                                     data-id="{{ $checkout->id }}"><i class="ri-close-line"></i>
@@ -182,20 +183,21 @@
                                                         class="ri-pencil-line"></i>
                                                     Update Resi</button>
                                             @endif
-                                            @if ($checkout->status == 'process' && $checkout->resi != null)
-                                                <button type="button" class="btn btn-success me-1" id="btnSelesai"
-                                                    data-id="{{ $checkout->id }}"><i class="ri-check-line"></i>
-                                                    Selesai</button>
-                                            @endif
-                                            @if ($checkout->status == 'completed')
-                                                <button type="button" onclick="javascript:window.print()"
-                                                    class="btn btn-primary"><i class="ri-printer-line"></i> Print</button>
-                                            @endif
+                                        @endif
+                                        @if ($checkout->status == 'process' && $checkout->resi != null)
+                                            <button type="button" class="btn btn-success me-1" id="btnSelesai"><i
+                                                    class="ri-check-line"></i>
+                                                Selesai</button>
+                                        @endif
+                                        @if ($checkout->status == 'completed')
+                                            <button type="button" onclick="javascript:window.print()"
+                                                class="btn btn-primary"><i class="ri-printer-line"></i> Print</button>
+                                        @endif
 
-                                        </div>
                                     </div>
-                                    <!-- end buttons -->
-                                @endif
+                                </div>
+                                <!-- end buttons -->
+
 
                             </div> <!-- end card-body-->
                         </div> <!-- end card -->
@@ -208,12 +210,13 @@
     </div>
 
     <!-- modal -->
-    <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div id="modalResi" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalResiLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="form">
+                <form id="formResi">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="modalLabel"></h4>
+                        <h4 class="modal-title" id="modalResiLabel"></h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </div>
                     <div class="modal-body">
@@ -226,7 +229,35 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary" id="simpan">Simpan</button>
+                        <button type="submit" class="btn btn-primary" id="simpanResi">Simpan</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- modal -->
+    <div id="modalSelesai" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalSelesaiLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formSelesai">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modalSelesaiLabel"></h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <input type="hidden" name="id" id="id" value="{{ $checkout->id }}">
+                            <label for="bukti_penerimaan" class="form-label">Foto Barang (Opsional)</label>
+                            <input type="file" id="bukti_penerimaan" name="bukti_penerimaan" class="form-control"
+                                accept="image/*" autofocus>
+                            <small class="text-danger errorBuktiPenerimaan"></small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary" id="simpanSelesai">Simpan</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -308,42 +339,16 @@
                 })
             })
 
-            $('body').on('click', '#btnSelesai', function() {
-                let id = $(this).data('id');
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('transaksi.selesai') }}",
-                    data: {
-                        id: id
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Sukses',
-                            text: response.message,
-                        }).then(function() {
-                            window.location.href = window.location.href;
-                        });
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status + "\n" + xhr.responseText +
-                            "\n" +
-                            thrownError);
-                    }
-                })
-            })
-
             $('body').on('click', '#btnUpdateResi', function() {
-                $('#modalLabel').html("Update Resi");
-                $('#modal').modal('show');
-                $('#form').trigger("reset");
+                $('#modalResiLabel').html("Update Resi");
+                $('#modalResi').modal('show');
+                $('#formResi').trigger("reset");
 
                 $('#noResi').removeClass('is-invalid');
                 $('.errorNoResi').html('');
             });
 
-            $('#form').submit(function(e) {
+            $('#formResi').submit(function(e) {
                 e.preventDefault();
                 $.ajax({
                     data: $(this).serialize(),
@@ -351,12 +356,12 @@
                     type: "POST",
                     dataType: 'json',
                     beforeSend: function() {
-                        $('#simpan').attr('disable', 'disabled');
-                        $('#simpan').text('Proses...');
+                        $('#simpanResi').attr('disable', 'disabled');
+                        $('#simpanResi').text('Proses...');
                     },
                     complete: function() {
-                        $('#simpan').removeAttr('disable');
-                        $('#simpan').html('Simpan');
+                        $('#simpanResi').removeAttr('disable');
+                        $('#simpanResi').html('Simpan');
                     },
                     success: function(response) {
                         if (response.errors) {
@@ -373,8 +378,64 @@
                                 title: 'Sukses',
                                 text: response.message,
                             }).then(function() {
-                                $('#modal').modal('hide');
-                                $('#form').trigger("reset");
+                                $('#modalResi').modal('hide');
+                                $('#formResi').trigger("reset");
+                                window.location.href = window.location.href;
+                            });
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.error(xhr.status + "\n" + xhr.responseText + "\n" +
+                            thrownError);
+                    }
+                });
+            });
+
+            $('body').on('click', '#btnSelesai', function() {
+                $('#modalSelesaiLabel').html("Bukti Penerimaan");
+                $('#modalSelesai').modal('show');
+                $('#formSelesai').trigger("reset");
+
+                $('#bukti_penerimaan').removeClass('is-invalid');
+                $('.errorBuktiPenerimaan').html('');
+            })
+
+            $('#formSelesai').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    data: new FormData(this),
+                    url: "{{ route('transaksi.selesai') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    beforeSend: function() {
+                        $('#simpanSelesai').attr('disable', 'disabled');
+                        $('#simpanSelesai').text('Proses...');
+                    },
+                    complete: function() {
+                        $('#simpanSelesai').removeAttr('disable');
+                        $('#simpanSelesai').html('Simpan');
+                    },
+                    success: function(response) {
+                        if (response.errors) {
+                            if (response.errors.bukti_penerimaan) {
+                                $('#bukti_penerimaan').addClass('is-invalid');
+                                $('.errorBuktiPenerimaan').html(response.errors
+                                    .bukti_penerimaan);
+                            } else {
+                                $('#bukti_penerimaan').removeClass('is-invalid');
+                                $('.errorBuktiPenerimaan').html('');
+                            }
+                        } else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Sukses',
+                                text: response.message,
+                            }).then(function() {
+                                $('#modalSelesai').modal('hide');
+                                $('#formSelesai').trigger("reset");
                                 window.location.href = window.location.href;
                             });
                         }

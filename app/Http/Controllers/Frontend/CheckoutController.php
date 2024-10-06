@@ -32,13 +32,17 @@ class CheckoutController extends Controller
     }
 
 
-    public function cartCheckout()
+    public function cartCheckout(Request $request)
     {
         $userId = auth()->id();
         $cart = Carts::where('user_id', $userId)->first();
 
+        $selectedItems = $request->input('selected_items', []);
+
         if ($cart) {
-            $items = $cart->items()->with('product')->get();
+            $items = $cart->items()->with('product')
+                ->whereIn('product_id', $selectedItems)
+                ->get();
         } else {
             $items = collect();
         }
@@ -52,12 +56,14 @@ class CheckoutController extends Controller
 
         $rekening = Rekening::all();
 
+        // Hitung subtotal hanya untuk item yang dipilih
         $subtotal = $items->sum(function ($row) {
             return $row->quantity * $row->product->harga_jual;
         });
 
         return view('frontend.checkout.cart', compact(['items', 'address', 'rekening', 'subtotal']));
     }
+
 
     public function getAddressDetails(Request $request)
     {

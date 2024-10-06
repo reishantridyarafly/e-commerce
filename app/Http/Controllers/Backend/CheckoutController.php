@@ -106,11 +106,42 @@ class CheckoutController extends Controller
 
     public function selesai(Request $request)
     {
-        $checkout = Checkouts::find($request->id);
-        $checkout->status = 'completed';
-        $checkout->save();
-        return response()->json(['message' => 'Data berhasil di simpan.']);
+        $id = $request->id;
+        $validated = Validator::make(
+            $request->all(),
+            [
+                'bukti_penerimaan' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ],
+            [
+                'bukti_penerimaan.image' => 'Bukti penerimaan harus berupa gambar.',
+                'bukti_penerimaan.mimes' => 'Format gambar yang diizinkan adalah jpeg, png, jpg, gif, svg.',
+                'bukti_penerimaan.max' => 'Ukuran gambar maksimal adalah 2 MB.',
+            ]
+        );
+
+        if ($validated->fails()) {
+            return response()->json(['errors' => $validated->errors()]);
+        } else {
+            $checkout = Checkouts::find($id);
+
+            if ($checkout) {
+                if ($request->hasFile('bukti_penerimaan')) {
+                    $file = $request->file('bukti_penerimaan');
+                    $fileName = time() . '.' . $file->getClientOriginalExtension();
+                    $file->storeAs('bukti_penerimaan', $fileName, 'public');
+                    $checkout->bukti_penerimaan = $fileName;
+                }
+
+                $checkout->status = 'completed';
+                $checkout->save();
+
+                return response()->json(['message' => 'Data berhasil disimpan.']);
+            } else {
+                return response()->json(['error' => 'Checkout tidak ditemukan.']);
+            }
+        }
     }
+
 
     public function updateResi(Request $request)
     {
