@@ -111,6 +111,16 @@
                 </li>
             @endif
 
+            @if (auth()->user()->type != 'Pemilik')
+                <li class="side-nav-item {{ request()->routeIs(['return.*']) ? 'menuitem-active' : '' }}">
+                    <a href="{{ route('return.index') }}"
+                        class="side-nav-link {{ request()->routeIs(['return.*']) ? 'active' : '' }}">
+                        <i class="ri-restart-line"></i>
+                        <span> Pengembalian </span>
+                    </a>
+                </li>
+            @endif
+
             <li class="side-nav-item {{ request()->routeIs(['rating.*']) ? 'menuitem-active' : '' }}">
                 <a href="{{ route('rating.index') }}"
                     class="side-nav-link {{ request()->routeIs(['rating.*']) ? 'active' : '' }}">

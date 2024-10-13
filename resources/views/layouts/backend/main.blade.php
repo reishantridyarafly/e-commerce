@@ -277,6 +277,9 @@
     <!-- Vendor js -->
     <script src="{{ asset('backend/assets') }}/js/vendor.min.js"></script>
 
+    <!-- Apex Charts js -->
+    <script src="{{ asset('backend/assets') }}/vendor/apexcharts/apexcharts.min.js"></script>
+
     @yield('javascript')
 
     <!-- App js -->

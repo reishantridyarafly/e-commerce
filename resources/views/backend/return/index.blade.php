@@ -1,5 +1,5 @@
 @extends('layouts.backend.main')
-@section('title', 'Transaksi')
+@section('title', 'Pengembalian')
 @section('css')
     <!-- Datatables css -->
     <link href="{{ asset('backend/assets') }}/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet"
@@ -40,33 +40,19 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row mb-4">
-                                    <div class="col-md-5">
-                                        <input type="date" id="start_date" class="form-control"
-                                            placeholder="Tanggal Mulai">
-                                    </div>
-                                    <div class="col-md-5">
-                                        <input type="date" id="end_date" class="form-control"
-                                            placeholder="Tanggal Akhir">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button id="filter" class="btn btn-primary">Filter</button>
-                                    </div>
-                                </div>
-
                                 <table id="datatable" class="table table-striped dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
                                             <th width="1">#</th>
-                                            <th>Kode Transaksi</th>
+                                            <th>Kode</th>
                                             <th>Nama</th>
-                                            <th>Total Transaksi</th>
                                             <th>Status</th>
                                             <th width="20">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
                                 </table>
+
                             </div> <!-- end card body-->
                         </div> <!-- end card -->
                     </div><!-- end col-->
@@ -107,21 +93,10 @@
                 }
             });
 
-            var table = $('#datatable').DataTable({
+            $('#datatable').DataTable({
                 processing: true,
                 serverside: true,
-                ajax: {
-                    url: "{{ route('transaksi.index') }}",
-                    data: function(d) {
-                        var startDate = $('#start_date').val();
-                        var endDate = $('#end_date').val();
-
-                        if (startDate && endDate) {
-                            d.start_date = startDate;
-                            d.end_date = endDate;
-                        }
-                    }
-                },
+                ajax: "{{ route('return.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -137,10 +112,6 @@
                         name: 'name'
                     },
                     {
-                        data: 'total_biaya',
-                        name: 'total_biaya'
-                    },
-                    {
                         data: 'status',
                         name: 'status'
                     },
@@ -151,21 +122,7 @@
                 ]
             });
 
-            $('#filter').on('click', function() {
-                var startDate = $('#start_date').val();
-                var endDate = $('#end_date').val();
-
-                if (startDate && endDate) {
-                    table.ajax.reload();
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Silakan isi kedua tanggal untuk melakukan filter.",
-                    });
-                }
-            });
-
+         
             $('body').on('click', '#btnDelete', function() {
                 let id = $(this).data('id');
                 Swal.fire({
@@ -181,7 +138,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "DELETE",
-                            url: "{{ url('transaksi/"+id+"') }}",
+                            url: "{{ url('pengembalian/"+id+"') }}",
                             data: {
                                 id: id
                             },
@@ -193,7 +150,7 @@
                                         title: 'Sukses',
                                         text: response.success,
                                     });
-                                    $('#datatable').DataTable().ajax.reload()
+                                    $('#datatable').DataTable().ajax.reload();
                                 }
                             },
                             error: function(xhr, ajaxOptions, thrownError) {

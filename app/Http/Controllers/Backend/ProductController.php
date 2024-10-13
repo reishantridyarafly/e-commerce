@@ -133,7 +133,6 @@ class ProductController extends Controller
                 'nama' => 'required|string|unique:products,nama,' . $id,
                 'deskripsi' => 'required|string',
                 'deskripsi_singkat' => 'required|string',
-                'harga' => 'required|string',
                 'harga_jual' => 'required',
                 'stok' => 'required|string',
                 'foto' => 'max:5120',
@@ -171,7 +170,7 @@ class ProductController extends Controller
             $product->slug = Str::slug($request->nama);
             $product->deskripsi = $request->deskripsi;
             $product->deskripsi_singkat = $request->deskripsi_singkat;
-            $product->harga = str_replace(['Rp', ' ', '.'], '', $request->harga);
+            $product->harga = $request->harga ? str_replace(['Rp', ' ', '.'], '', $request->harga) : null;
             $product->harga_jual = str_replace(['Rp', ' ', '.'], '', $request->harga_jual);
             $product->stok = $request->stok;
             $product->kategori_id = $request->kategori;

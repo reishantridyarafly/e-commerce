@@ -108,6 +108,14 @@ Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
 });
 Route::middleware(['auth', 'user-access:Pelanggan,Administrator'])->group(function () {
     Route::post('/transaksi/selesai', [App\Http\Controllers\Backend\CheckoutController::class, 'selesai'])->name('transaksi.selesai');
+    Route::post('/transaksi/pengembalian', [App\Http\Controllers\Backend\CheckoutController::class, 'return'])->name('transaksi.return');
+
+    Route::get('/pengembalian', [App\Http\Controllers\Backend\ReturnController::class, 'index'])->name('return.index');
+    Route::post('/pengembalian/tolak', [App\Http\Controllers\Backend\ReturnController::class, 'failed'])->name('return.failed');
+    Route::post('/pengembalian/proses', [App\Http\Controllers\Backend\ReturnController::class, 'process'])->name('return.process');
+    Route::post('/pengembalian/selesai', [App\Http\Controllers\Backend\ReturnController::class, 'completed'])->name('return.completed');
+    Route::delete('/pengembalian/{id}', [App\Http\Controllers\Backend\ReturnController::class, 'destroy'])->name('return.destroy');
+    Route::get('/pengembalian/{id}/detail', [App\Http\Controllers\Backend\ReturnController::class, 'detail'])->name('return.detail');
 });
 
 Route::middleware(['auth', 'user-access:Pelanggan'])->group(function () {

@@ -60,4 +60,9 @@ class Checkouts extends Model
             ->where('address.id', $this->address_id)
             ->first();
     }
+
+    public function returnProduct()
+    {
+        return $this->hasMany(ReturnProduct::class, 'checkout_id');
+    }
 }

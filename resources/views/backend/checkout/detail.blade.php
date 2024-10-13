@@ -75,6 +75,9 @@
                                                 @elseif ($checkout->status == 'completed')
                                                     <span
                                                         class="badge badge-outline-info rounded-pil float-end">Selesai</span>
+                                                @elseif ($checkout->status == 'return')
+                                                    <span
+                                                        class="badge badge-outline-warning rounded-pil float-end">Pengembalian</span>
                                                 @elseif ($checkout->status == 'failed')
                                                     <span
                                                         class="badge badge-outline-danger rounded-pill float-end">Gagal</span>
@@ -83,7 +86,6 @@
                                         </div><!-- end col -->
                                     </div>
                                     <!-- end row -->
-
                                     <hr>
                                 </div>
                                 <!-- end row -->
@@ -185,6 +187,9 @@
                                             @endif
                                         @endif
                                         @if ($checkout->status == 'process' && $checkout->resi != null)
+                                            <button type="button" class="btn btn-warning me-1" id="btnReturn"><i
+                                                    class="ri-restart-line"></i>
+                                                Pengembalian</button>
                                             <button type="button" class="btn btn-success me-1" id="btnSelesai"><i
                                                     class="ri-check-line"></i>
                                                 Selesai</button>
@@ -197,8 +202,6 @@
                                     </div>
                                 </div>
                                 <!-- end buttons -->
-
-
                             </div> <!-- end card-body-->
                         </div> <!-- end card -->
                     </div> <!-- end col-->
@@ -249,7 +252,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <input type="hidden" name="id" id="id" value="{{ $checkout->id }}">
-                            <label for="bukti_penerimaan" class="form-label">Foto Barang (Opsional)</label>
+                            <label for="bukti_penerimaan" class="form-label">Foto Penerimaan</label>
                             <input type="file" id="bukti_penerimaan" name="bukti_penerimaan" class="form-control"
                                 accept="image/*" autofocus>
                             <small class="text-danger errorBuktiPenerimaan"></small>
@@ -258,6 +261,39 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-primary" id="simpanSelesai">Simpan</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- modal -->
+    <div id="modalReturn" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalReturnLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formReturn">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modalReturnLabel"></h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <input type="hidden" name="id" id="id" value="{{ $checkout->id }}">
+                            <label for="bukti_pengembalian" class="form-label">Bukti Foto</label>
+                            <input type="file" id="bukti_pengembalian" name="bukti_pengembalian[]"
+                                class="form-control" accept="image/*" multiple autofocus>
+                            <small class="text-danger errorBuktiPengembalian"></small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="alasan" class="form-label">Alasan</label>
+                            <textarea class="form-control" name="alasan" id="alasan" rows="3"></textarea>
+                            <small class="text-danger errorAlasan"></small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary" id="simpanReturn">Simpan</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -436,6 +472,74 @@
                             }).then(function() {
                                 $('#modalSelesai').modal('hide');
                                 $('#formSelesai').trigger("reset");
+                                window.location.href = window.location.href;
+                            });
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.error(xhr.status + "\n" + xhr.responseText + "\n" +
+                            thrownError);
+                    }
+                });
+            });
+
+            $('body').on('click', '#btnReturn', function() {
+                $('#modalReturnLabel').html("Bukti Pengembalian");
+                $('#modalReturn').modal('show');
+                $('#formReturn').trigger("reset");
+
+                $('#bukti_pengembalian').removeClass('is-invalid');
+                $('.errorBuktiPengembalian').html('');
+
+                $('#alasan').removeClass('is-invalid');
+                $('.errorAlasan').html('');
+            })
+
+            $('#formReturn').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    data: new FormData(this),
+                    url: "{{ route('transaksi.return') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    beforeSend: function() {
+                        $('#simpanReturn').attr('disable', 'disabled');
+                        $('#simpanReturn').text('Proses...');
+                    },
+                    complete: function() {
+                        $('#simpanReturn').removeAttr('disable');
+                        $('#simpanReturn').html('Simpan');
+                    },
+                    success: function(response) {
+                        if (response.errors) {
+                            if (response.errors.bukti_pengembalian) {
+                                $('#bukti_pengembalian').addClass('is-invalid');
+                                $('.errorBuktiPengembalian').html(response.errors
+                                    .bukti_pengembalian);
+                            } else {
+                                $('#bukti_pengembalian').removeClass('is-invalid');
+                                $('.errorBuktiPengembalian').html('');
+                            }
+
+                            if (response.errors.alasan) {
+                                $('#alasan').addClass('is-invalid');
+                                $('.errorAlasan').html(response.errors
+                                    .alasan);
+                            } else {
+                                $('#alasan').removeClass('is-invalid');
+                                $('.errorAlasan').html('');
+                            }
+                        } else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Sukses',
+                                text: response.message,
+                            }).then(function() {
+                                $('#modalSelesai').modal('hide');
+                                $('#formReturn').trigger("reset");
                                 window.location.href = window.location.href;
                             });
                         }
